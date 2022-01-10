@@ -1,0 +1,2927 @@
+@prefix : <http://jcr.di.uminho.pt/clav#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://jcr.di.uminho.pt/clav> .
+
+<http://jcr.di.uminho.pt/clav> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#rdfs:label
+:rdfs:label rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#hasTopConcept
+<http://www.w3.org/2004/02/skos/core#hasTopConcept> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#narrower
+<http://www.w3.org/2004/02/skos/core#narrower> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#notation
+<http://www.w3.org/2004/02/skos/core#notation> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+<http://www.w3.org/2004/02/skos/core#prefLabel> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#related
+<http://www.w3.org/2004/02/skos/core#related> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.w3.org/2004/02/skos/core#scopeNote
+<http://www.w3.org/2004/02/skos/core#scopeNote> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#ConceptNotation
+:ConceptNotation rdf:type rdfs:Datatype ;
+                 owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                       owl:onDatatype xsd:string ;
+                                       owl:withRestrictions ( [ xsd:pattern "C[1-9][0-9]*"
+                                                              ]
+                                                            )
+                                     ] .
+
+
+###  http://jcr.di.uminho.pt/clav#EntityNotation
+:EntityNotation rdf:type rdfs:Datatype ;
+                owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                      owl:onDatatype xsd:string ;
+                                      owl:withRestrictions ( [ xsd:pattern "E[1-9][0-9]*"
+                                                             ]
+                                                           )
+                                    ] .
+
+
+###  http://jcr.di.uminho.pt/clav#PropertyNotation
+:PropertyNotation rdf:type rdfs:Datatype ;
+                  owl:equivalentClass [ rdf:type rdfs:Datatype ;
+                                        owl:onDatatype xsd:string ;
+                                        owl:withRestrictions ( [ xsd:pattern "P[1-9][0-9]*"
+                                                               ]
+                                                             )
+                                      ] .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#avaliaDocProduzidaPor
+:avaliaDocProduzidaPor rdf:type owl:ObjectProperty ;
+                       rdfs:label "Avaliação documental Produzida Por"@pt ,
+                                  "Document Evaluation Produced by"@en ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "P1"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#contemEntidade
+:contemEntidade rdf:type owl:ObjectProperty ;
+                owl:inverseOf :pertenceTipologiaEnt ;
+                rdfs:domain :TipologiaEntidade ;
+                rdfs:range :Entidade ;
+                rdfs:label "Contains Entity"@en ,
+                           "Contém Entidade"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P2"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#contemRE
+:contemRE rdf:type owl:ObjectProperty ;
+          rdfs:domain :RADA ;
+          rdfs:range :RelatorioExpositivo ;
+          rdfs:label "Contains Expositive Report"@en ,
+                     "Contém Relatório Expositivo"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P3"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#contemTS
+:contemTS rdf:type owl:ObjectProperty ;
+          rdfs:domain :RADA ;
+          rdfs:range :TabelaSelecaoRada ;
+          rdfs:label "Contains Selection Table"@en ,
+                     "Contém Tabela de Seleção"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P4"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#critTemLegAssoc
+:critTemLegAssoc rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :estaAssocCrit ;
+                 rdfs:domain :CriterioJustificacao ;
+                 rdfs:range :Legislacao ;
+                 rdfs:label "Criterion has associated (legislation)"@en ,
+                            "Critério tem associada (legislação)"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P5"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#critTemProcRel
+:critTemProcRel rdf:type owl:ObjectProperty ;
+                owl:inverseOf :estaRelCrit ;
+                rdfs:domain :CriterioJustificacao ;
+                rdfs:range :Classe_N3 ;
+                rdfs:label "Critério de justificação tem Processo associado"@pt ,
+                           "Justification Criterion has associated Process"@en ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P6"^^:PropertyNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaTipo
+:diplomaTipo rdf:type owl:ObjectProperty ;
+             rdfs:domain :Legislacao ;
+             rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
+
+
+###  http://jcr.di.uminho.pt/clav#eAgregacaoDe
+:eAgregacaoDe rdf:type owl:ObjectProperty ;
+              owl:inverseOf :temAgregacao ;
+              rdfs:domain :Agregacao ;
+              rdfs:range :ZonaControlo ;
+              :rdfs:label "É agragação de"@pt ;
+              rdfs:label "Is Aggregation of"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P8" .
+
+
+###  http://jcr.di.uminho.pt/clav#eAntecessorDe
+:eAntecessorDe rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :temRelProc ;
+               owl:inverseOf :eSucessorDe ;
+               rdfs:label "Is predecessor of"@en ,
+                          "é antecessor de"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P82" .
+
+
+###  http://jcr.di.uminho.pt/clav#eClasseControloDe
+:eClasseControloDe rdf:type owl:ObjectProperty ;
+                   owl:inverseOf :temClasseControlo ;
+                   rdfs:label "Is control class of"@en ,
+                              "É classe de controlo de"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P9" .
+
+
+###  http://jcr.di.uminho.pt/clav#eComplementarDe
+:eComplementarDe rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :temRelProc ;
+                 rdf:type owl:SymmetricProperty ;
+                 rdfs:label "Is complementary of"@en ,
+                            "é complementar de"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P83" .
+
+
+###  http://jcr.di.uminho.pt/clav#eCriterioDe
+:eCriterioDe rdf:type owl:ObjectProperty ;
+             owl:inverseOf :temCriterio ;
+             rdfs:label "is Criterion of"@en ,
+                        "é Critério de"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P10" .
+
+
+###  http://jcr.di.uminho.pt/clav#eCruzadoCom
+:eCruzadoCom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :temRelProc ;
+             rdf:type owl:SymmetricProperty ;
+             rdfs:label "Is crossed with"@en ,
+                        "é cruzado com"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P84" .
+
+
+###  http://jcr.di.uminho.pt/clav#eDFde
+:eDFde rdf:type owl:ObjectProperty ;
+       owl:inverseOf :temDF ;
+       rdfs:label "is Final Destination of"@en ,
+                  "é Destino Final de"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P13" .
+
+
+###  http://jcr.di.uminho.pt/clav#eDaResponsabilidadeDe
+:eDaResponsabilidadeDe rdf:type owl:ObjectProperty ;
+                       rdfs:label "Responsability of"@en ,
+                                  "é da Responsabilidade de"@pt ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "P11" .
+
+
+###  http://jcr.di.uminho.pt/clav#eDetentoraDe
+:eDetentoraDe rdf:type owl:ObjectProperty ;
+              owl:inverseOf :pertenceEntidade ;
+              rdfs:label "Is Owner of"@en ,
+                         "é Detentora de"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P12" .
+
+
+###  http://jcr.di.uminho.pt/clav#eDonoProcesso
+:eDonoProcesso rdf:type owl:ObjectProperty ;
+               owl:inverseOf :temDono ;
+               rdfs:label "is Owner of Process"@en ,
+                          "é Dono do Processo"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P14" .
+
+
+###  http://jcr.di.uminho.pt/clav#eJustificacaoDe
+:eJustificacaoDe rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :temJustificacao ;
+                 rdfs:label "is Justification of"@en ,
+                            "é Justificação de"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P15" .
+
+
+###  http://jcr.di.uminho.pt/clav#eNIde
+:eNIde rdf:type owl:ObjectProperty ;
+       owl:inverseOf :temNI ;
+       :rdfs:label "Is Intervention Nature of"@en ;
+       rdfs:label "É Natureza de Intervenção de"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P16" .
+
+
+###  http://jcr.di.uminho.pt/clav#ePCAde
+:ePCAde rdf:type owl:ObjectProperty ;
+        owl:inverseOf :temPCA ;
+        rdfs:label "Is Administrative Conservation Deadline of"@en ,
+                   "é Prazo de Conservação Administrativa de"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P18" .
+
+
+###  http://jcr.di.uminho.pt/clav#ePaiDeUI
+:ePaiDeUI rdf:type owl:ObjectProperty ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P17" .
+
+
+###  http://jcr.di.uminho.pt/clav#eReferencialClassificativoDe
+:eReferencialClassificativoDe rdf:type owl:ObjectProperty ;
+                              owl:inverseOf :temReferencialClassificativo ;
+                              rdfs:label "Is Classification Referential of"@en ,
+                                         "é Referencial Classificativo de"@pt ;
+                              <http://www.w3.org/2004/02/skos/core#notation> "P19" .
+
+
+###  http://jcr.di.uminho.pt/clav#eRepresentacaoDe
+:eRepresentacaoDe rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :temRepresentacao ;
+                  rdfs:label "Is Representation of"@en ,
+                             "É Representação de"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P20" .
+
+
+###  http://jcr.di.uminho.pt/clav#eResponsavelPor
+:eResponsavelPor rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :temEntidadeResponsavel ;
+                 rdfs:domain :Entidade ;
+                 rdfs:label "Is responsible for"@en ,
+                            "É responsável por"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P21" .
+
+
+###  http://jcr.di.uminho.pt/clav#eSinteseDe
+:eSinteseDe rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :temRelProc ;
+            owl:inverseOf :eSintetizadoPor ;
+            rdfs:label "Is synthesis of"@en ,
+                       "é síntese de"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P85" .
+
+
+###  http://jcr.di.uminho.pt/clav#eSintetizadoPor
+:eSintetizadoPor rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :temRelProc ;
+                 rdfs:label "Is synthetized by"@en ,
+                            "é sintetizado por"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P86" .
+
+
+###  http://jcr.di.uminho.pt/clav#eSucessorDe
+:eSucessorDe rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :temRelProc ;
+             rdfs:label "Is successor of"@en ,
+                        "é sucessor de"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P87" .
+
+
+###  http://jcr.di.uminho.pt/clav#eSuplementoDe
+:eSuplementoDe rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf :temRelProc ;
+               owl:inverseOf :eSuplementoPara ;
+               rdfs:label "Is suplement of"@en ,
+                          "é suplemento de"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P88" .
+
+
+###  http://jcr.di.uminho.pt/clav#eSuplementoPara
+:eSuplementoPara rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf :temRelProc ;
+                 rdfs:label "Is suplemento to"@en ,
+                            "é suplemento para"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P89" .
+
+
+###  http://jcr.di.uminho.pt/clav#eZonaControloDe
+:eZonaControloDe rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :temZonaControlo ;
+                 rdfs:label "Is control area of"@en ,
+                            "É zona de controlo de"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P28" .
+
+
+###  http://jcr.di.uminho.pt/clav#especificaDe
+:especificaDe rdf:type owl:ObjectProperty ;
+              rdfs:comment "Relationship to be established between an application or exclusion note and an organization or organization typology that indicates that the note is specific to that set of organizations."@en ,
+                           "Relação a ser estabelecida entre uma nota de aplicação ou de exclusão e uma organização ou tipologia de organização que indica que a nota é específica daquele conjunto de organizações."^^xsd:string ;
+              rdfs:label "Is specific of"@en ,
+                         "é específica de"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P22" .
+
+
+###  http://jcr.di.uminho.pt/clav#estaAssoc
+:estaAssoc rdf:type owl:ObjectProperty ;
+           owl:inverseOf :temLegislacao ;
+           rdfs:label "Is associated to"@en ,
+                      "está Associada a"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P23" .
+
+
+###  http://jcr.di.uminho.pt/clav#estaAssocClasse
+:estaAssocClasse rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :temTI ;
+                 rdfs:domain :TermoIndice ;
+                 rdfs:range [ rdf:type owl:Class ;
+                              owl:unionOf ( :Classe_N3
+                                            :Classe_N4
+                                          )
+                            ] ;
+                 rdfs:label "Is associated to the class"@en ,
+                            "está Associado à Classe"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P24" .
+
+
+###  http://jcr.di.uminho.pt/clav#estaAssocCrit
+:estaAssocCrit rdf:type owl:ObjectProperty ;
+               rdfs:label "Legislation is associated to the criterion"@en ,
+                          "Legislação está associada ao critério"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P25" .
+
+
+###  http://jcr.di.uminho.pt/clav#estaAssocCriterio
+:estaAssocCriterio rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   owl:inverseOf :temProcessoRelacionado ;
+                   rdfs:label "Is associated to the Criterion"@en ,
+                              "está Associada ao Critério"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P26" .
+
+
+###  http://jcr.di.uminho.pt/clav#estaRelCrit
+:estaRelCrit rdf:type owl:ObjectProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Classe_N3
+                                         :Classe_N4
+                                       )
+                         ] ;
+             rdfs:range :CriterioJustificacao ;
+             rdfs:label "Está relacionado com o critério"@pt ,
+                        "Is associated with criterion"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P27" .
+
+
+###  http://jcr.di.uminho.pt/clav#naPertenceClasse
+:naPertenceClasse rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :temNotaAplicacao ;
+                  rdfs:domain :NotaAplicacao ;
+                  rdfs:label "NA belongs to the Class"@en ,
+                             "NA pertence à Classe"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P29" .
+
+
+###  http://jcr.di.uminho.pt/clav#nePertenceClasse
+:nePertenceClasse rdf:type owl:ObjectProperty ;
+                  owl:inverseOf :temNotaExclusao ;
+                  rdfs:domain :NotaExclusao ;
+                  rdfs:label "NE belongs to the class"@en ,
+                             "NE pertence à Classe"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P30" .
+
+
+###  http://jcr.di.uminho.pt/clav#objeto
+:objeto rdf:type owl:ObjectProperty ;
+        rdfs:domain :RelacaoPesada ;
+        rdfs:label "Has as an object"@en ,
+                   "tem como objeto"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P31" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEm
+:participaEm rdf:type owl:ObjectProperty ;
+             owl:inverseOf :temParticipante ;
+             rdfs:label "Participates in"@en ,
+                        "participa em"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P32" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmApreciando
+:participaEmApreciando rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :participaEm ;
+                       owl:inverseOf :temParticipanteApreciador ;
+                       rdfs:label "Participates as an appraiser in"@en ,
+                                  "participa como Apreciador em"@pt ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "P33" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmAssessorando
+:participaEmAssessorando rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf :participaEm ;
+                         owl:inverseOf :temParticipanteAssessor ;
+                         rdfs:label "Participates as an assessor in"@en ,
+                                    "participa como Assessor em"@pt ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "P34" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmComunicando
+:participaEmComunicando rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :participaEm ;
+                        owl:inverseOf :temParticipanteComunicador ;
+                        rdfs:label "Participates as a comunicator in"@en ,
+                                   "participa como Comunicador em"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "P35" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmDecidindo
+:participaEmDecidindo rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :participaEm ;
+                      owl:inverseOf :temParticipanteDecisor ;
+                      rdfs:label "Participates as a decision maker in"@en ,
+                                 "participa como Decisor em"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P36" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmExecutando
+:participaEmExecutando rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :participaEm ;
+                       owl:inverseOf :temParticipanteExecutor ;
+                       rdfs:label "Participates as an executor in"@en ,
+                                  "participa como Executor em"@pt ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "P37" .
+
+
+###  http://jcr.di.uminho.pt/clav#participaEmIniciando
+:participaEmIniciando rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf :participaEm ;
+                      owl:inverseOf :temParticipanteIniciador ;
+                      rdfs:label "Participates as an iniciator in"@en ,
+                                 "participa como Iniciador em"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P38" .
+
+
+###  http://jcr.di.uminho.pt/clav#pcaFormaContagemNormalizada
+:pcaFormaContagemNormalizada rdf:type owl:ObjectProperty ;
+                             rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
+                             rdfs:label "PCA forma contagem normalizada"@pt ,
+                                        "PCA forms normalized count"@en ;
+                             <http://www.w3.org/2004/02/skos/core#notation> "P39" .
+
+
+###  http://jcr.di.uminho.pt/clav#pcaSubformaContagem
+:pcaSubformaContagem rdf:type owl:ObjectProperty ;
+                     rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
+                     rdfs:label "PCA Subform Count"@en ,
+                                "PCA Subforma Contagem"@pt ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "P40" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceConjOrg
+:pertenceConjOrg rdf:type owl:ObjectProperty ;
+                 owl:inverseOf :temOrg ;
+                 rdfs:label "Belongs to the set of Organizations"@en ,
+                            "pertence ao Conjunto de Organizações"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P41" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceEntidade
+:pertenceEntidade rdf:type owl:ObjectProperty ;
+                  rdfs:domain :PGD ;
+                  rdfs:range :Entidade ;
+                  rdfs:label "Belongs to the entity"@en ,
+                             "Pertence à entidade"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P42" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceLC
+:pertenceLC rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :pertenceReferecialClassificativo ;
+            owl:inverseOf :pertenceTS ;
+            rdfs:range :ListaConsolidada ;
+            rdfs:label "Belongs to the Consolidated List"@en ,
+                       "pertence à Lista Consolidada"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P44" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertencePGD
+:pertencePGD rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf :pertenceReferecialClassificativo ;
+             rdfs:label "Belongs to the Document Management Ordinance"@en ,
+                        "Pertence à Portaria de Gestão de Documentos"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P45" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceReferecialClassificativo
+:pertenceReferecialClassificativo rdf:type owl:ObjectProperty ;
+                                  owl:inverseOf :temClasse ;
+                                  rdfs:label "Belongs to the Classificative Referential"@en ,
+                                             "Pertence ao Referencial Classificativo"@pt ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "P43" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceTS
+:pertenceTS rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :pertenceReferecialClassificativo ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Classe_N1
+                                        :Classe_N2
+                                        :Classe_N3
+                                        :Classe_N4
+                                      )
+                        ] ;
+            rdfs:label "Belongs to the selection table"@en ,
+                       "pertence à Tabela de Seleção"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P46" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceTSRADA
+:pertenceTSRADA rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf :pertenceReferecialClassificativo ;
+                rdfs:domain :TabelaSelecaoRada ;
+                rdfs:range :Area_Organico ,
+                           :Serie ,
+                           :Subserie ;
+                rdfs:label "Belongs to the RADA selection table"@en ,
+                           "Pertence à tabela de seleção RADA"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P47" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceTipologiaEnt
+:pertenceTipologiaEnt rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Entidade ;
+                      rdfs:range :TipologiaEntidade ;
+                      rdfs:label "Belongs to the Entity Typology"@en ,
+                                 "Pertence à Tipologia de Entidade"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P48" .
+
+
+###  http://jcr.di.uminho.pt/clav#pertenceTipologiaOrg
+:pertenceTipologiaOrg rdf:type owl:ObjectProperty ;
+                      owl:inverseOf :temOrg ;
+                      rdfs:label "Belongs to the Organization Typology"@en ,
+                                 "pertence à Tipologia de Organização"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P49" .
+
+
+###  http://jcr.di.uminho.pt/clav#processoTipoVC
+:processoTipoVC rdf:type owl:ObjectProperty ;
+                rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
+                rdfs:label "Process of type Controled Vocabulary"@en ,
+                           "Processo do tipo Vocabulário Controlado"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P50" .
+
+
+###  http://jcr.di.uminho.pt/clav#produzidaPor
+:produzidaPor rdf:type owl:ObjectProperty ;
+              rdfs:label "Produced by"@en ,
+                         "Produzida por"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P51" .
+
+
+###  http://jcr.di.uminho.pt/clav#reguladaPor
+:reguladaPor rdf:type owl:ObjectProperty ;
+             rdfs:label "Regulada por"@pt ,
+                        "Regulated by"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P52" .
+
+
+###  http://jcr.di.uminho.pt/clav#status
+:status rdf:type owl:ObjectProperty ;
+        rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
+        rdfs:label "Status"@en ,
+                   "Status"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P53" .
+
+
+###  http://jcr.di.uminho.pt/clav#sujeito
+:sujeito rdf:type owl:ObjectProperty ;
+         rdfs:domain :RelacaoPesada ;
+         rdfs:label "Has as a subject"@en ,
+                    "tem como sujeito"@pt ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P54" .
+
+
+###  http://jcr.di.uminho.pt/clav#temAgregacao
+:temAgregacao rdf:type owl:ObjectProperty ;
+              rdfs:domain :ZonaControlo ;
+              rdfs:range :Agregacao ;
+              rdfs:label "Has Simple Aggregation"@en ,
+                         "Tem Agregação Simples"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P55" .
+
+
+###  http://jcr.di.uminho.pt/clav#temClasse
+:temClasse rdf:type owl:ObjectProperty ;
+           rdfs:domain :ReferencialClassificativo ;
+           rdfs:label "Has class"@en ,
+                      "Tem a class"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P56" .
+
+
+###  http://jcr.di.uminho.pt/clav#temClasseControlo
+:temClasseControlo rdf:type owl:ObjectProperty ;
+                   rdfs:domain :AutoEliminacao ;
+                   rdfs:range [ rdf:type owl:Class ;
+                                owl:unionOf ( :Classe_N3
+                                              :Classe_N4
+                                              :Classe_PGD
+                                              :Classe_RADA
+                                            )
+                              ] ;
+                   rdfs:label "Has control class"@en ,
+                              "Tem a classe de controlo"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P57" .
+
+
+###  http://jcr.di.uminho.pt/clav#temCriterio
+:temCriterio rdf:type owl:ObjectProperty ;
+             rdfs:domain :Justificacao ;
+             rdfs:range :CriterioJustificacao ;
+             rdfs:label "Has Criterion"@en ,
+                        "tem Critério"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P58" .
+
+
+###  http://jcr.di.uminho.pt/clav#temDF
+:temDF rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Classe_N3
+                                   :Classe_N4
+                                   :Classe_PGD
+                                   :Serie
+                                   :Subserie
+                                 )
+                   ] ;
+       rdfs:range :DestinoFinal ;
+       rdfs:label "Has Final Destination"@en ,
+                  "tem Destino Final"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P59" .
+
+
+###  http://jcr.di.uminho.pt/clav#temDono
+:temDono rdf:type owl:ObjectProperty ;
+         rdfs:range [ rdf:type owl:Class ;
+                      owl:unionOf ( :Entidade
+                                    :TipologiaEntidade
+                                  )
+                    ] ;
+         rdfs:label "Has owner"@en ,
+                    "tem Dono"@pt ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P60" .
+
+
+###  http://jcr.di.uminho.pt/clav#temEntidadeResponsavel
+:temEntidadeResponsavel rdf:type owl:ObjectProperty ;
+                        rdfs:range :Entidade ;
+                        rdfs:label "Has responsible entity"@en ,
+                                   "Tem entidade responsável"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "P61" .
+
+
+###  http://jcr.di.uminho.pt/clav#temExemploNA
+:temExemploNA rdf:type owl:ObjectProperty ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :Classe_N1
+                                          :Classe_N2
+                                          :Classe_N3
+                                        )
+                          ] ;
+              rdfs:range :ExemploNotaAplicacao ;
+              rdfs:label "Has Aplication Note Example"@en ,
+                         "Has Application Note Example"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P62" .
+
+
+###  http://jcr.di.uminho.pt/clav#temFilho
+:temFilho rdf:type owl:ObjectProperty ;
+          owl:inverseOf :temPai ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :Area_Organico
+                                      :Classe_N1
+                                      :Classe_N2
+                                      :Classe_N3
+                                      :Serie
+                                    )
+                      ] ;
+          rdfs:range [ rdf:type owl:Class ;
+                       owl:unionOf ( :Area_Organico
+                                     :Classe_N2
+                                     :Classe_N3
+                                     :Classe_N4
+                                     :Serie
+                                     :Subserie
+                                   )
+                     ] ;
+          rdfs:label "Has child"@en ,
+                     "tem filho"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P63" .
+
+
+###  http://jcr.di.uminho.pt/clav#temJustificacao
+:temJustificacao rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( :DestinoFinal
+                                             :PCA
+                                           )
+                             ] ;
+                 rdfs:range :Justificacao ;
+                 rdfs:label "Has Justification"@en ,
+                            "tem a Justificação"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P64" .
+
+
+###  http://jcr.di.uminho.pt/clav#temLegislacao
+:temLegislacao rdf:type owl:ObjectProperty ;
+               rdfs:range :Legislacao ;
+               rdfs:label "Has Legislation"@en ,
+                          "tem a Legislação"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P65" .
+
+
+###  http://jcr.di.uminho.pt/clav#temNI
+:temNI rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Agregacao
+                                   :ZonaControlo
+                                 )
+                   ] ;
+       rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
+       rdfs:label "Has Intervention Nature"@en ,
+                  "Tem Natureza de Intervenção"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P66" .
+
+
+###  http://jcr.di.uminho.pt/clav#temNotaAplicacao
+:temNotaAplicacao rdf:type owl:ObjectProperty ;
+                  rdfs:domain [ rdf:type owl:Class ;
+                                owl:unionOf ( :Classe_N1
+                                              :Classe_N2
+                                              :Classe_N3
+                                            )
+                              ] ;
+                  rdfs:range :NotaAplicacao ;
+                  rdfs:label "Has Application Note"@en ,
+                             "tem Nota de Aplicação"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P67" .
+
+
+###  http://jcr.di.uminho.pt/clav#temNotaExclusao
+:temNotaExclusao rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( :Classe_N1
+                                             :Classe_N2
+                                             :Classe_N3
+                                           )
+                             ] ;
+                 rdfs:range :NotaExclusao ;
+                 rdfs:label "Has Exclusion Note"@en ,
+                            "tem Nota de Exclusão"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P68" .
+
+
+###  http://jcr.di.uminho.pt/clav#temOrg
+:temOrg rdf:type owl:ObjectProperty ;
+        rdfs:label "Has Organization"@en ,
+                   "tem Organização"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P69" .
+
+
+###  http://jcr.di.uminho.pt/clav#temPCA
+:temPCA rdf:type owl:ObjectProperty ;
+        rdfs:domain [ rdf:type owl:Class ;
+                      owl:unionOf ( :Classe_N3
+                                    :Classe_N4
+                                    :Classe_PGD
+                                    :Serie
+                                    :Subserie
+                                  )
+                    ] ;
+        rdfs:range :PCA ;
+        rdfs:label "Has PCA"@en ,
+                   "tem PCA"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P78" .
+
+
+###  http://jcr.di.uminho.pt/clav#temPai
+:temPai rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:label "Has father"@en ,
+                   "tem pai"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P70" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipante
+:temParticipante rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Classe_N3 ;
+                 rdfs:range [ rdf:type owl:Class ;
+                              owl:unionOf ( :Entidade
+                                            :TipologiaEntidade
+                                          )
+                            ] ;
+                 rdfs:label "Has participant"@en ,
+                            "tem participante"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P71" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteApreciador
+:temParticipanteApreciador rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf :temParticipante ;
+                           rdfs:label "Has an appraiser participant"@en ,
+                                      "tem participante apreciador"@pt ;
+                           <http://www.w3.org/2004/02/skos/core#notation> "P72" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteAssessor
+:temParticipanteAssessor rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf :temParticipante ;
+                         rdfs:label "Has an assessor participant"@en ,
+                                    "tem participante assessor"@pt ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "P73" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteComunicador
+:temParticipanteComunicador rdf:type owl:ObjectProperty ;
+                            rdfs:subPropertyOf :temParticipante ;
+                            rdfs:label "Has a comunicator participant"@en ,
+                                       "tem participante comunicador"@pt ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "P74" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteDecisor
+:temParticipanteDecisor rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf :temParticipante ;
+                        rdfs:label "Has a decision maker participant"@en ,
+                                   "tem participante decisor"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "P75" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteExecutor
+:temParticipanteExecutor rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf :temParticipante ;
+                         rdfs:label "Has an executor participant"@en ,
+                                    "tem participante executor"@pt ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "P76" .
+
+
+###  http://jcr.di.uminho.pt/clav#temParticipanteIniciador
+:temParticipanteIniciador rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf :temParticipante ;
+                          rdfs:label "Has an iniciator participant"@en ,
+                                     "tem participante iniciador"@pt ;
+                          <http://www.w3.org/2004/02/skos/core#notation> "P77" .
+
+
+###  http://jcr.di.uminho.pt/clav#temProcessoRelacionado
+:temProcessoRelacionado rdf:type owl:ObjectProperty ;
+                        rdfs:domain :CriterioJustificacao ;
+                        rdfs:range [ rdf:type owl:Class ;
+                                     owl:unionOf ( :Classe_N3
+                                                   :Classe_N4
+                                                 )
+                                   ] ;
+                        rdfs:label "Has related process"@en ,
+                                   "tem processo relacionado"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "P79" .
+
+
+###  http://jcr.di.uminho.pt/clav#temReferencialClassificativo
+:temReferencialClassificativo rdf:type owl:ObjectProperty ;
+                              rdfs:domain :AutoEliminacao ;
+                              rdfs:range :ReferencialClassificativo ;
+                              rdfs:label "Has classificative referential"@en ,
+                                         "Tem referencial classificativo"@pt ;
+                              <http://www.w3.org/2004/02/skos/core#notation> "P80" .
+
+
+###  http://jcr.di.uminho.pt/clav#temRelProc
+:temRelProc rdf:type owl:ObjectProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Classe_N3
+                                        :Classe_N4
+                                        :Serie
+                                        :Subserie
+                                      )
+                        ] ;
+            rdfs:range [ rdf:type owl:Class ;
+                         owl:unionOf ( :Classe_N3
+                                       :Classe_N4
+                                       :Serie
+                                       :Subserie
+                                     )
+                       ] ;
+            rdfs:label "Has relation with the process"@en ,
+                       "tem relação com o processo"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P81" .
+
+
+###  http://jcr.di.uminho.pt/clav#temRepresentacao
+:temRepresentacao rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Legislacao ;
+                  :rdfs:label "tem a Representação"@pt ;
+                  rdfs:label "Has Representation"@en ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P90" .
+
+
+###  http://jcr.di.uminho.pt/clav#temSuporteMedicao
+:temSuporteMedicao rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Serie ;
+                   rdfs:range :SuporteMedicao ;
+                   rdfs:label "Has Medical Support"@en ,
+                              "tem Suporte Médico"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P91" .
+
+
+###  http://jcr.di.uminho.pt/clav#temTI
+:temTI rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( :Classe_N3
+                                   :Classe_N4
+                                 )
+                   ] ;
+       rdfs:range :TermoIndice ;
+       rdfs:label "Has index term"@en ,
+                  "tem termo de índice"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P92" .
+
+
+###  http://jcr.di.uminho.pt/clav#temZonaControlo
+:temZonaControlo rdf:type owl:ObjectProperty ;
+                 rdfs:domain :AutoEliminacao ;
+                 rdfs:range :ZonaControlo ;
+                 rdfs:label "Has Control Area"@en ,
+                            "tem Zona de Controlo"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P93" .
+
+
+###  http://jcr.di.uminho.pt/clav#usarClasse
+:usarClasse rdf:type owl:ObjectProperty ;
+            rdfs:domain :NotaExclusao ;
+            rdfs:range [ rdf:type owl:Class ;
+                         owl:unionOf ( :Classe_N1
+                                       :Classe_N2
+                                       :Classe_N3
+                                       :Classe_N4
+                                     )
+                       ] ;
+            rdfs:comment "Esta propriedade deve ser usada para associar a uma nota de exclusão a classe que deve ser usada na classificação em substituição da atual."@pt ,
+                         "This property must be used to associate an exclusion note with the class that should be used in the classification instead of the current one."@en ;
+            rdfs:label "Must use the class"@en ,
+                       "deve usar a classe"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P94" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#agregacaoCodigo
+:agregacaoCodigo rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Agregacao ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "O agregacaoCodigo é constituído por um identificador alfanumérico que é único e por isso identifica univocamente à Agregação"@pt ,
+                              "The agregacaoCodigo consists of an alphanumeric identifier that is unique and therefore uniquely identifies the Aggregation"@en ;
+                 rdfs:label "Aggregation Code"@en ,
+                            "Código de Agregação"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P95" .
+
+
+###  http://jcr.di.uminho.pt/clav#agregacaoDataContagem
+:agregacaoDataContagem rdf:type owl:DatatypeProperty ;
+                       rdfs:domain :Agregacao ;
+                       rdfs:range xsd:string ;
+                       rdfs:label "Aggregation Count Date"@en ,
+                                  "Data de Contagem da Agregação"@pt ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "P96" .
+
+
+###  http://jcr.di.uminho.pt/clav#agregacaoTitulo
+:agregacaoTitulo rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Agregacao ;
+                 rdfs:range xsd:string ;
+                 rdfs:label "Aggregation title"@en ,
+                            "Título de Agregação"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P97" .
+
+
+###  http://jcr.di.uminho.pt/clav#autoData
+:autoData rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Data relativa aos Autos de Eliminação"^^xsd:string ,
+                       "Date relative to the Elimination Notice"@en ;
+          rdfs:label "Data de Autos de Eliminação"@pt ,
+                     "Elimination Notice Date"@en ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P120" .
+
+
+###  http://jcr.di.uminho.pt/clav#autoDataAutenticacao
+:autoDataAutenticacao rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf :autoData ;
+                      rdfs:domain :AutoEliminacao ;
+                      rdfs:label "Data de Autenticação do Auto de Eliminação"@pt ,
+                                 "Elimination Notice Authentication Date"@en ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P121" .
+
+
+###  http://jcr.di.uminho.pt/clav#autoNumero
+:autoNumero rdf:type owl:DatatypeProperty ;
+            rdfs:domain :AutoEliminacao ;
+            rdfs:range xsd:string ;
+            rdfs:comment "O autoNumero é constituído por um identificador alfanumérico que é único e por isso identifica univocamente ao Auto de Eliminação"@pt ,
+                         "The autoNumero consists of an alphanumeric identifier that is unique and therefore uniquely identifies the Elimination Notice"@en ;
+            rdfs:label "Elimination Notice Number"@en ,
+                       "Número de Auto de Eliminação"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P98" .
+
+
+###  http://jcr.di.uminho.pt/clav#autoResponsavel
+:autoResponsavel rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :AutoEliminacao ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Nome do responsável pela autenticação do Auto de Eliminação"^^xsd:string ;
+                 rdfs:label "Person responsible for the Elimination Notice"@en ,
+                            "Responsável pelo Auto de Eliminação"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P99" .
+
+
+###  http://jcr.di.uminho.pt/clav#classeStatus
+:classeStatus rdf:type owl:DatatypeProperty ;
+              rdfs:label "Classe Status"@pt ,
+                         "Status Class"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P100" .
+
+
+###  http://jcr.di.uminho.pt/clav#codigo
+:codigo rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:range xsd:string ;
+        rdfs:comment "O código é constituído por um identificador numérico que é único e por isso identifica univocamente a classe"@pt ,
+                     "The code consists of a numeric identifier that is unique and therefore uniquely identifies the class."@en ;
+        rdfs:label "Code"@en ,
+                   "Código"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P101" .
+
+
+###  http://jcr.di.uminho.pt/clav#codigoClassificacao
+:codigoClassificacao rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Classification Code"@en ,
+                                "Código de Classificação"@pt ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "P102" .
+
+
+###  http://jcr.di.uminho.pt/clav#codigoRADA
+:codigoRADA rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string ;
+            rdfs:comment "O código é constituído por um identificador numérico que é único e por isso identifica univocamente a classe RADA."@pt ,
+                         "The code consists of a numeric identifier that is unique and therefore uniquely identifies the RADA class."@en ;
+            rdfs:label "Código RADA"@pt ,
+                       "RADA Code"@en ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P103" .
+
+
+###  http://jcr.di.uminho.pt/clav#conteudo
+:conteudo rdf:type owl:DatatypeProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :Justificacao
+                                      :NotaAplicacao
+                                      :NotaExclusao
+                                    )
+                      ] ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Data Property que deve ser usada para guardar o conteúdo duma nota de aplicação ou de exclusão."@pt ,
+                       "Data Property which should be used to store the contents of an application or exclusion note."@en ;
+          rdfs:label "Content"@en ,
+                     "Conteúdo"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P104" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataAprovacao
+:dataAprovacao rdf:type owl:DatatypeProperty ;
+               rdfs:label "Approval Date"@en ,
+                          "Data de Aprovação"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P105" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataCriacao
+:dataCriacao rdf:type owl:DatatypeProperty ;
+             rdfs:domain :ReferencialClassificativo ;
+             rdfs:range xsd:string ;
+             rdfs:label "Creation Date"@en ,
+                        "Data de Criação"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P106" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataFim
+:dataFim rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :autoData ;
+         rdfs:domain :ZonaControlo ;
+         rdfs:label "Data de Fim do Auto de Eliminação"@pt ,
+                    "End Date of the Elimination Notice"@en ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P122" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataFinal
+:dataFinal rdf:type owl:DatatypeProperty ;
+           rdfs:label "Data Final"@pt ,
+                      "Final Date"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P107" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataInicial
+:dataInicial rdf:type owl:DatatypeProperty ;
+             rdfs:label "Data Inicial"@pt ,
+                        "Initial Date"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P108" .
+
+
+###  http://jcr.di.uminho.pt/clav#dataInicio
+:dataInicio rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :autoData ;
+            rdfs:domain :ZonaControlo ;
+            rdfs:label "Data de Início do Auto de Eliminação"@pt ,
+                       "Start Date of the Elimination Notice"@en ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P123" .
+
+
+###  http://jcr.di.uminho.pt/clav#descricao
+:descricao rdf:type owl:DatatypeProperty ;
+           rdfs:range xsd:string ;
+           rdfs:label "Description"@en ,
+                      "Descrição"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P109" .
+
+
+###  http://jcr.di.uminho.pt/clav#designacao
+:designacao rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string ;
+            rdfs:label "Designation"@en ,
+                       "Designação"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P110" .
+
+
+###  http://jcr.di.uminho.pt/clav#dfNota
+:dfNota rdf:type owl:DatatypeProperty ;
+        rdfs:label "Final Destination note"@en ,
+                   "Nota de Destino Final"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P111" .
+
+
+###  http://jcr.di.uminho.pt/clav#dfValor
+:dfValor rdf:type owl:DatatypeProperty ;
+         rdfs:label "Final Destination value"@en ,
+                    "Valor de Destino Final"@pt ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P112" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaData
+:diplomaData rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Legislacao ;
+             rdfs:label "Data do Diploma Legislativo"@pt ,
+                        "Legislative Diploma Date"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P113" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaDataRevogacao
+:diplomaDataRevogacao rdf:type owl:DatatypeProperty ;
+                      rdfs:label "Data de Revogação do Diploma Legislativo"@pt ,
+                                 "Date of Repeal of Legislative Diploma"@en ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "P114" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaEstado
+:diplomaEstado rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Legislacao ;
+               rdfs:label "Estado do Diploma Legislativo"@pt ,
+                          "State of Legislative Diploma"@en ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P115" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaFonte
+:diplomaFonte rdf:type owl:DatatypeProperty ;
+              rdfs:domain :Legislacao ;
+              rdfs:label "Fonte do Diploma Legislativo"@pt ,
+                         "Source of Legislative Diploma"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P116" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaLink
+:diplomaLink rdf:type owl:DatatypeProperty ;
+             rdfs:domain :Legislacao ;
+             rdfs:label "Link do Diploma Legislativo"@pt ,
+                        "Link to the Legislative Diploma"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P117" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaNumero
+:diplomaNumero rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Legislacao ;
+               rdfs:label "Legislative Diploma Number"@en ,
+                          "Número do Diploma Legislativo"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P118" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaSumario
+:diplomaSumario rdf:type owl:DatatypeProperty ;
+                rdfs:domain :Legislacao ;
+                rdfs:label "Summary of the Legislative Diploma"@en ,
+                           "Sumário do Diploma Legislativo"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P119" .
+
+
+###  http://jcr.di.uminho.pt/clav#diplomaTipo
+:diplomaTipo rdf:type owl:DatatypeProperty .
+
+
+###  http://jcr.di.uminho.pt/clav#entDataCriacao
+:entDataCriacao rdf:type owl:DatatypeProperty ;
+                rdfs:label "Data de Criação da Entidade"@pt ,
+                           "Entitiy Creation Date"@en ;
+                <http://www.w3.org/2004/02/skos/core#notation> "P124" .
+
+
+###  http://jcr.di.uminho.pt/clav#entDataExtincao
+:entDataExtincao rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Data de Extinção da Entidade"@pt ,
+                            "Entity Extinction Date"@en ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P125" .
+
+
+###  http://jcr.di.uminho.pt/clav#entDesignacao
+:entDesignacao rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Entidade ;
+               rdfs:label "Designação da Entidade"@pt ,
+                          "Entity Designation"@en ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P126" .
+
+
+###  http://jcr.di.uminho.pt/clav#entEstado
+:entEstado rdf:type owl:DatatypeProperty ;
+           rdfs:domain :Entidade ;
+           rdfs:label "Entity State"@en ,
+                      "Estado da Entidade"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P127" .
+
+
+###  http://jcr.di.uminho.pt/clav#entInternacional
+:entInternacional rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :Entidade ;
+                  rdfs:label "Entidade Internacional"@pt ,
+                             "International Entity"@en ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P128" .
+
+
+###  http://jcr.di.uminho.pt/clav#entSIOE
+:entSIOE rdf:type owl:DatatypeProperty ;
+         rdfs:domain :Entidade ;
+         rdfs:label "Entity's SIOE"@en ,
+                    "SIOE da Entidade"@pt ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P130" .
+
+
+###  http://jcr.di.uminho.pt/clav#entSigla
+:entSigla rdf:type owl:DatatypeProperty ;
+          rdfs:domain :Entidade ;
+          rdfs:label "Entity Acronym"@en ,
+                     "Sigla da Entidade"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P129" .
+
+
+###  http://jcr.di.uminho.pt/clav#estado
+:estado rdf:type owl:DatatypeProperty ;
+        rdfs:range xsd:string ;
+        rdfs:label "Estado"@pt ,
+                   "State"@en ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P131" .
+
+
+###  http://jcr.di.uminho.pt/clav#estadoConservacao
+:estadoConservacao rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Conservation State"@en ,
+                              "Estado de Conservação"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P132" .
+
+
+###  http://jcr.di.uminho.pt/clav#exemploNA
+:exemploNA rdf:type owl:DatatypeProperty ;
+           rdfs:comment "Example of an application note."@en ,
+                        "Exemplo de uma nota de aplicação."@pt ;
+           rdfs:label "Exemplo NA"@pt ,
+                      "NA Example"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P133" .
+
+
+###  http://jcr.di.uminho.pt/clav#fundo
+:fundo rdf:type owl:DatatypeProperty ;
+       rdfs:domain :AutoEliminacao ;
+       rdfs:range xsd:string ;
+       rdfs:comment "Reference to the financing entity"@en ,
+                    "Referencia à entidade financiadora"@pt ;
+       rdfs:label "Background"@en ,
+                  "Fundo"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P134" .
+
+
+###  http://jcr.di.uminho.pt/clav#histAdministrativa
+:histAdministrativa rdf:type owl:DatatypeProperty ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "P135" .
+
+
+###  http://jcr.di.uminho.pt/clav#histCustodial
+:histCustodial rdf:type owl:DatatypeProperty ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P136" .
+
+
+###  http://jcr.di.uminho.pt/clav#localizacao
+:localizacao rdf:type owl:DatatypeProperty ;
+             rdfs:label "Localization"@en ,
+                        "Localização"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P137" .
+
+
+###  http://jcr.di.uminho.pt/clav#medicao
+:medicao rdf:type owl:DatatypeProperty ;
+         rdfs:label "Measurement"@en ,
+                    "Medição"@pt ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P138" .
+
+
+###  http://jcr.di.uminho.pt/clav#medicaoUIsDigital
+:medicaoUIsDigital rdf:type owl:DatatypeProperty ;
+                   rdfs:label "Measurement of digital installation units"@en ,
+                              "Medição de Unidades de Instalação Digital"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "P139" .
+
+
+###  http://jcr.di.uminho.pt/clav#medicaoUIsOutros
+:medicaoUIsOutros rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Measurement of other installation units"@en ,
+                             "Medição de outras unidades de instalação"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P140" .
+
+
+###  http://jcr.di.uminho.pt/clav#medicaoUIsPapel
+:medicaoUIsPapel rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Measurement of paper installation units"@en ,
+                            "Medição de unidades de instalação em papel"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P141" .
+
+
+###  http://jcr.di.uminho.pt/clav#nivel
+:nivel rdf:type owl:DatatypeProperty ;
+       rdfs:label "Level"@en ,
+                  "Nível"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P142" .
+
+
+###  http://jcr.di.uminho.pt/clav#numeroSeries
+:numeroSeries rdf:type owl:DatatypeProperty ;
+              rdfs:label "Número de séries"@pt ,
+                         "Series Number"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P143" .
+
+
+###  http://jcr.di.uminho.pt/clav#numeroSubseries
+:numeroSubseries rdf:type owl:DatatypeProperty ;
+                 rdfs:label "Número de Subséries"@pt ,
+                            "Subseries Number"@en ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P144" .
+
+
+###  http://jcr.di.uminho.pt/clav#numeroUIs
+:numeroUIs rdf:type owl:DatatypeProperty ;
+           rdfs:label "Instalation Unit Number"@en ,
+                      "Número de Unidade de Instalação"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P145" .
+
+
+###  http://jcr.di.uminho.pt/clav#orgNome
+:orgNome rdf:type owl:DatatypeProperty ;
+         rdfs:label "Nome da Organização"@pt ,
+                    "Organization Name"@en ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P146" .
+
+
+###  http://jcr.di.uminho.pt/clav#orgSigla
+:orgSigla rdf:type owl:DatatypeProperty ;
+          rdfs:label "Organization Acronym"@en ,
+                     "Sigla da Organização"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P147" .
+
+
+###  http://jcr.di.uminho.pt/clav#pcaFormaContagem
+:pcaFormaContagem rdf:type owl:DatatypeProperty ;
+                  rdfs:label "Forma de Contagem de PCA"@pt ,
+                             "PCA Counting Form"@en ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "P148" .
+
+
+###  http://jcr.di.uminho.pt/clav#pcaNota
+:pcaNota rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf owl:topDataProperty ;
+         rdfs:label "Nota de PCA"@pt ,
+                    "PCA Note"@en ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P149" .
+
+
+###  http://jcr.di.uminho.pt/clav#pcaValor
+:pcaValor rdf:type owl:DatatypeProperty ;
+          rdfs:label "PCA Value"@en ,
+                     "Valor de PCA"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P150" .
+
+
+###  http://jcr.di.uminho.pt/clav#processoTipo
+:processoTipo rdf:type owl:DatatypeProperty ;
+              rdfs:label "Process Type"@en ,
+                         "Tipo de Processo"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P151" .
+
+
+###  http://jcr.di.uminho.pt/clav#processoTransversal
+:processoTransversal rdf:type owl:DatatypeProperty ;
+                     rdfs:label "Processo Transversal"@pt ,
+                                "Transversal Process"@en ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "P152" .
+
+
+###  http://jcr.di.uminho.pt/clav#referencia
+:referencia rdf:type owl:DatatypeProperty ;
+            rdfs:range xsd:string ;
+            rdfs:comment "O código de referencia é constituído por um identificador numérico por isso identifica univocamente a classe RADA."@pt ,
+                         "The reference code consists of a numerical identifier and therefore uniquely identifies the RADA class."@en ;
+            rdfs:label "Reference"@en ,
+                       "Referência"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "P153" .
+
+
+###  http://jcr.di.uminho.pt/clav#referencialClassificativoStatus
+:referencialClassificativoStatus rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain :ReferencialClassificativo ;
+                                 rdfs:label "Classificative Referential Status"@en ,
+                                            "Status do Referencial Classificativo"@pt ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "P154" .
+
+
+###  http://jcr.di.uminho.pt/clav#sistOrganizacao
+:sistOrganizacao rdf:type owl:DatatypeProperty ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "P155" .
+
+
+###  http://jcr.di.uminho.pt/clav#suporte
+:suporte rdf:type owl:DatatypeProperty ;
+         rdfs:label "Suporte"@pt ,
+                    "Support"@en ;
+         <http://www.w3.org/2004/02/skos/core#notation> "P156" .
+
+
+###  http://jcr.di.uminho.pt/clav#termo
+:termo rdf:type owl:DatatypeProperty ;
+       rdfs:domain :TermoIndice ;
+       rdfs:range xsd:string ;
+       rdfs:label "Term"@en ,
+                  "Termo"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P157" .
+
+
+###  http://jcr.di.uminho.pt/clav#teste
+:teste rdf:type owl:DatatypeProperty ;
+       rdfs:label "Test"@en ,
+                  "Teste"@pt ;
+       <http://www.w3.org/2004/02/skos/core#notation> "P158" .
+
+
+###  http://jcr.di.uminho.pt/clav#testeA
+:testeA rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :teste ;
+        rdfs:label "Test A"@en ,
+                   "Teste A"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P159" .
+
+
+###  http://jcr.di.uminho.pt/clav#testeB
+:testeB rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :teste ;
+        rdfs:label "Test B"@en ,
+                   "Teste B"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P160" .
+
+
+###  http://jcr.di.uminho.pt/clav#tipDesignacao
+:tipDesignacao rdf:type owl:DatatypeProperty ;
+               rdfs:domain :TipologiaEntidade ;
+               rdfs:label "Designação do Tipo"@pt ,
+                          "Type Designation"@en ;
+               <http://www.w3.org/2004/02/skos/core#notation> "P161" .
+
+
+###  http://jcr.di.uminho.pt/clav#tipEstado
+:tipEstado rdf:type owl:DatatypeProperty ;
+           rdfs:domain :TipologiaEntidade ;
+           rdfs:label "Estado do Tipo"@pt ,
+                      "Type State"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P162" .
+
+
+###  http://jcr.di.uminho.pt/clav#tipSigla
+:tipSigla rdf:type owl:DatatypeProperty ;
+          rdfs:domain :TipologiaEntidade ;
+          rdfs:label "Sigla do Tipo"@pt ,
+                     "Type acronym"@en ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P165" .
+
+
+###  http://jcr.di.uminho.pt/clav#tipoSerie
+:tipoSerie rdf:type owl:DatatypeProperty ;
+           rdfs:label "Série do Tipo"@pt ,
+                      "Type Series"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "P163" .
+
+
+###  http://jcr.di.uminho.pt/clav#tipoUA
+:tipoUA rdf:type owl:DatatypeProperty ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P164" .
+
+
+###  http://jcr.di.uminho.pt/clav#titulo
+:titulo rdf:type owl:DatatypeProperty ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Atributo titulo da instância de classe."@pt ,
+                     "Title attribute of the class instance."@en ;
+        rdfs:label "Title"@en ,
+                   "Título"@pt ;
+        <http://www.w3.org/2004/02/skos/core#notation> "P166" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_descricao
+:vc_descricao rdf:type owl:DatatypeProperty ;
+              rdfs:label "Concept description"@en ,
+                         "Descrição do Conceito"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "P167" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_valor
+:vc_valor rdf:type owl:DatatypeProperty ;
+          rdfs:label "Concept value"@en ,
+                     "Valor do Conceito"@pt ;
+          <http://www.w3.org/2004/02/skos/core#notation> "P168" .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#Agregacao
+:Agregacao rdf:type owl:Class ;
+           rdfs:comment "Agregação Simples para Auto de Eliminação"@pt ,
+                        "Simple Aggregation for the Elimination Notice"@en ;
+           rdfs:label "Aggregation"@en ,
+                      "Agregacao"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E1"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Area_Organico
+:Area_Organico rdf:type owl:Class ;
+               rdfs:subClassOf :Classe_RADA ;
+               <http://www.w3.org/2004/02/skos/core#notation> "E26"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#AtributoComposto
+:AtributoComposto rdf:type owl:Class ;
+                  rdfs:label "Atributo Composto"@pt ,
+                             "Composite Attribute"@en ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "E2"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#AutoEliminacao
+:AutoEliminacao rdf:type owl:Class ;
+                rdfs:label "Auto de Eliminação"@pt ,
+                           "Elimination Notice"@en ;
+                <http://www.w3.org/2004/02/skos/core#notation> "E19"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_N1
+:Classe_N1 rdf:type owl:Class ;
+           rdfs:comment "As instâncias de classes de nível 1 correspondem a Funções"^^xsd:string ,
+                        "The instances of level 1 classes correspond to Functions"@en ;
+           rdfs:label "Classe de nível 1: Função"@pt ,
+                      "Level 1 Class : Function"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E20"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_N2
+:Classe_N2 rdf:type owl:Class ;
+           rdfs:comment "As instâncias de classes de nível 2 correspondem a Subfunções"^^xsd:string ,
+                        "The instances of level 2 classes correspond to Subfunctions"@en ;
+           rdfs:label "Classe de nível 2: Subfunção"@pt ,
+                      "Level 2 Class : Subfunction"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E21"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_N3
+:Classe_N3 rdf:type owl:Class ;
+           rdfs:comment "As classes de nível 3 correpondem a Processos de Negócio"^^xsd:string ,
+                        "The instances of level 3 classes correspond to Bussiness Processes"@en ;
+           rdfs:label "Classe de nível 3: Processo"@pt ,
+                      "Level 3 Class : Process"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E22"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_N4
+:Classe_N4 rdf:type owl:Class ;
+           rdfs:comment "As classes de nível 4 correspondem a subdivisões dos processos de negócio"^^xsd:string ,
+                        "The instances of level 4 classes correspond to Business Processes Subdivisions"@en ;
+           rdfs:label "Classe de nível 4: subdivisão do processo"@pt ,
+                      "Level 4 Class : Process subdivision"@en ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E23"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_PGD
+:Classe_PGD rdf:type owl:Class ;
+            rdfs:comment "PGD Class Representation"@en ,
+                         "Representação da Classe PGD"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "E24"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Classe_RADA
+:Classe_RADA rdf:type owl:Class ;
+             rdfs:label "RADA Class Representation"@en ,
+                        "Representação da Class RADA"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "E25"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacao
+:CriterioJustificacao rdf:type owl:Class ;
+                      rdfs:subClassOf :AtributoComposto ;
+                      rdfs:label "Criterio Justificacao"@pt ,
+                                 "Justification Criterion"@en ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "E3"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoComplementaridadeInfo
+:CriterioJustificacaoComplementaridadeInfo rdf:type owl:Class ;
+                                           rdfs:subClassOf :CriterioJustificacao ;
+                                           rdfs:label "Critério Complementaridade Informacional"@pt ,
+                                                      "Informational Complementarity Criterion"@en ;
+                                           <http://www.w3.org/2004/02/skos/core#notation> "E4"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoDensidadeInfo
+:CriterioJustificacaoDensidadeInfo rdf:type owl:Class ;
+                                   rdfs:subClassOf :CriterioJustificacao ;
+                                   rdfs:label "Critério Densidade Informacional"@pt ,
+                                              "Informational Density Criterion"@en ;
+                                   <http://www.w3.org/2004/02/skos/core#notation> "E5"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoDensidadeInfoSinDe
+:CriterioJustificacaoDensidadeInfoSinDe rdf:type owl:Class ;
+                                        rdfs:subClassOf :CriterioJustificacaoDensidadeInfo ;
+                                        <http://www.w3.org/2004/02/skos/core#notation> "E6"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoDensidadeInfoSinPor
+:CriterioJustificacaoDensidadeInfoSinPor rdf:type owl:Class ;
+                                         rdfs:subClassOf :CriterioJustificacaoDensidadeInfo ;
+                                         <http://www.w3.org/2004/02/skos/core#notation> "E7"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoGestionario
+:CriterioJustificacaoGestionario rdf:type owl:Class ;
+                                 rdfs:subClassOf :CriterioJustificacao ;
+                                 rdfs:label "Critério Gestionário"@pt ,
+                                            "Managerial Criterion"@en ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "E8"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoLegal
+:CriterioJustificacaoLegal rdf:type owl:Class ;
+                           rdfs:subClassOf :CriterioJustificacao ;
+                           rdfs:label "Critério Legal"@pt ,
+                                      "Legal Criterion"@en ;
+                           <http://www.w3.org/2004/02/skos/core#notation> "E9"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacaoUtilidadeAdministrativa
+:CriterioJustificacaoUtilidadeAdministrativa rdf:type owl:Class ;
+                                             rdfs:subClassOf :CriterioJustificacao ;
+                                             rdfs:label "Administrative Utility Criterion"@en ,
+                                                        "Critério Utilidade Administrativa"@pt ;
+                                             <http://www.w3.org/2004/02/skos/core#notation> "E10"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#DestinoFinal
+:DestinoFinal rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "Destino Final"@pt ,
+                         "Final Destination"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "E11"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Entidade
+:Entidade rdf:type owl:Class ;
+          rdfs:label "Entidade"@pt ,
+                     "Entity"@en ;
+          <http://www.w3.org/2004/02/skos/core#notation> "E29"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#ExemploNotaAplicacao
+:ExemploNotaAplicacao rdf:type owl:Class ;
+                      rdfs:subClassOf :AtributoComposto ;
+                      rdfs:comment "Exemplo de Nota de Aplicação"@pt ;
+                      rdfs:label "Application Note Example"@en ,
+                                 "Exemplo Nota Aplicacao"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "E12"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Justificacao
+:Justificacao rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "Justification"@en ,
+                         "Justificação"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "E13"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#JustificacaoDF
+:JustificacaoDF rdf:type owl:Class ;
+                rdfs:subClassOf :Justificacao ;
+                rdfs:label "Justification of Final Destination"@en ,
+                           "Justificação do Destino Final"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "E14"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#JustificacaoPCA
+:JustificacaoPCA rdf:type owl:Class ;
+                 rdfs:subClassOf :Justificacao ;
+                 rdfs:label "Justification of the PCA (Administrative Conservation Deadline)"@en ,
+                            "Justificação do Prazo de Conservação Administrativa"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "E15"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Legislacao
+:Legislacao rdf:type owl:Class ;
+            rdfs:label "Legislation"@en ,
+                       "Legislação"@pt ;
+            <http://www.w3.org/2004/02/skos/core#notation> "E30"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#ListaConsolidada
+:ListaConsolidada rdf:type owl:Class ;
+                  rdfs:subClassOf :ReferencialClassificativo ;
+                  rdfs:label "Consolidated List"@en ,
+                             "Lista Consolidada"@pt ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "E34"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#NotaAplicacao
+:NotaAplicacao rdf:type owl:Class ;
+               rdfs:subClassOf :AtributoComposto ;
+               rdfs:label "Application Note"@en ,
+                          "Nota de Aplicação"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "E16"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#NotaExclusao
+:NotaExclusao rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "Nota de Exclusão"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "E17"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#PCA
+:PCA rdf:type owl:Class ;
+     rdfs:subClassOf :AtributoComposto ;
+     rdfs:label "Administrative Conservation Deadline"@en ,
+                "Prazo de Conservação Administrativa"@pt ;
+     <http://www.w3.org/2004/02/skos/core#notation> "E18"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#PGD
+:PGD rdf:type owl:Class ;
+     rdfs:subClassOf :ReferencialClassificativo ;
+     <http://www.w3.org/2004/02/skos/core#notation> "E35"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#RADA
+:RADA rdf:type owl:Class ;
+      :rdfs:label "Relatório de Avaliação de Documentação Acumulada"@pt ;
+      <http://www.w3.org/2004/02/skos/core#notation> "E31"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#RADA_Antigo
+:RADA_Antigo rdf:type owl:Class ;
+             rdfs:label "Old RADA"@en ,
+                        "RADA Antigo"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "E32"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#ReferencialClassificativo
+:ReferencialClassificativo rdf:type owl:Class ;
+                           rdfs:comment "Consolidated List or Selection Table"@en ,
+                                        "Lista Consolidada ou uma Tabela de Seleção"@pt ;
+                           rdfs:label "Classificative Referencial"@en ,
+                                      "Referencial Classificativo"@pt ;
+                           <http://www.w3.org/2004/02/skos/core#notation> "E33"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#RelacaoPesada
+:RelacaoPesada rdf:type owl:Class ;
+               rdfs:label "Heavy Relation"@en ,
+                          "Relação Pesada"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "E38"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#RelatorioExpositivo
+:RelatorioExpositivo rdf:type owl:Class ;
+                     :rdfs:label "Expositive Report"@en ,
+                                 "Relatório Expositivo"@pt ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "E39"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Serie
+:Serie rdf:type owl:Class ;
+       rdfs:subClassOf :Classe_RADA ;
+       <http://www.w3.org/2004/02/skos/core#notation> "E27"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#Subserie
+:Subserie rdf:type owl:Class ;
+          rdfs:subClassOf :Classe_RADA ;
+          <http://www.w3.org/2004/02/skos/core#notation> "E28"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#SuporteMedicao
+:SuporteMedicao rdf:type owl:Class ;
+                rdfs:label "Measurment Suport"@en ,
+                           "Suporte de Medição"@pt ;
+                <http://www.w3.org/2004/02/skos/core#notation> "E40"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#TabelaSelecao
+:TabelaSelecao rdf:type owl:Class ;
+               rdfs:subClassOf :ReferencialClassificativo ;
+               rdfs:label "Selection Table"@en ,
+                          "Tabela de Seleção"@pt ;
+               <http://www.w3.org/2004/02/skos/core#notation> "E36"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#TabelaSelecaoRada
+:TabelaSelecaoRada rdf:type owl:Class ;
+                   rdfs:subClassOf :ReferencialClassificativo ;
+                   rdfs:label "RADA Selection Table"@en ,
+                              "Tabela de Seleção RADA"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "E37"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#TermoIndice
+:TermoIndice rdf:type owl:Class ;
+             rdfs:label "Index Term"@en ,
+                        "Termo de Índice"@pt ;
+             <http://www.w3.org/2004/02/skos/core#notation> "E41"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#TipologiaEntidade
+:TipologiaEntidade rdf:type owl:Class ;
+                   :rdfs:label "Entity Typology"@en ,
+                               "Tipologia de Entidade"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "E41"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#UnidadeInstalacao
+:UnidadeInstalacao rdf:type owl:Class ;
+                   rdfs:label "Installation Unit"@en ,
+                              "Unidade de Instalação"@pt ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "E42"^^:EntityNotation .
+
+
+###  http://jcr.di.uminho.pt/clav#ZonaControlo
+:ZonaControlo rdf:type owl:Class ;
+              rdfs:label "Identification and Control Area of ​​Classes related to an Elimination Notice"@en ,
+                         "Zona de Identificação e Controlo das Classes relativas a um Auto de Eliminação"@pt ;
+              <http://www.w3.org/2004/02/skos/core#notation> "E43"^^:EntityNotation .
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+<http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+<http://www.w3.org/2004/02/skos/core#ConceptScheme> rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#lc1
+:lc1 rdf:type owl:NamedIndividual ,
+              :ReferencialClassificativo ;
+     :referencialClassificativoStatus "A" ;
+     :titulo "Lista Consolidada" ;
+     rdfs:comment """Estrutura hierárquica de classes que representam as funções, subfunções de acordo com a MEF – Macroestrutura Funcional –  e os processos de negócio executados pela Administração Pública, numa perspetiva suprainstitucional, transversal e funcional, contemplando a sua descrição e avaliação.
+A LC integra as decisões de avaliação (determinação dos prazos de conservação administrativa e do destino final) para a informação constante nos processos de negócio, com o objetivo de servir de referencial ao desenvolvimento de instrumentos organizacionais ou pluriorganizacionias para a classificação e avaliação da informação pública (Planos de Classificação e Tabelas de Seleção)."""@pt ,
+                  """Hierarchical structure of classes that represent the functions, sub-functions according to the MEF – Functional Macrostructure – and the business processes performed by the Public Administration, in a supra-institutional, transversal and functional perspective, contemplating their description and evaluation.
+The LC integrates evaluation decisions (determination of administrative retention periods and final destination) for the information contained in business processes, with the objective of serving as a reference for the development of organizational or pluriorganizational instruments for the classification and evaluation of public information (Classification Plans and Selection Tables)."""@en ;
+     rdfs:label "Consolidated List for Classification and Evaluation of Public Information (LC)"@en ,
+                "Lista Consolidada para classificação e avaliação da informação pública (LC)"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_dfCriterios
+:vc_dfCriterios rdf:type owl:NamedIndividual ,
+                         <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_dfCriterios_comp ,
+                                                                    :vc_dfCriterios_densidade ,
+                                                                    :vc_dfCriterios_leg ;
+                <http://www.w3.org/2004/02/skos/core#notation> "C1"^^:ConceptNotation ;
+                <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipos de critérios de justificação para o DF."@pt ,
+                                                                "Types of justification criteria for the DF."@en ;
+                <http://www.w3.org/2004/02/skos/core#scopeNote> "List of criteria types that may appear in the DF justification."@en ,
+                                                                "Lista dos tipos de critério que podem aparecer na justificação do DF."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_dfCriterios_comp
+:vc_dfCriterios_comp rdf:type owl:NamedIndividual ,
+                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "C2"^^:ConceptNotation ;
+                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Complementaridade informacional"@pt ,
+                                                                     "Informational Complementarity"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_dfCriterios_densidade
+:vc_dfCriterios_densidade rdf:type owl:NamedIndividual ,
+                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
+                          <http://www.w3.org/2004/02/skos/core#notation> "C3"^^:ConceptNotation ;
+                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Densidade informacional"@pt ,
+                                                                          "Informational density"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_dfCriterios_leg
+:vc_dfCriterios_leg rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C4"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Legal"@en ,
+                                                                    "Legal"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_internacional
+:vc_internacional rdf:type owl:NamedIndividual ,
+                           <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                  <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_internacional_nao ,
+                                                                      :vc_internacional_sim ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "C5"^^:ConceptNotation ;
+                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Boolean indicating whether an entity is international."@en ,
+                                                                  "Booleano que indica se uma entidade é internacional."@pt ;
+                  <http://www.w3.org/2004/02/skos/core#scopeNote> "Simple vocabulary: yes or no."@en ,
+                                                                  "Vocabulário simples: sim ou não."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_internacional_nao
+:vc_internacional_nao rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C6"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "No"@en ,
+                                                                      "Não"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_internacional_sim
+:vc_internacional_sim rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C7"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Sim"@pt ,
+                                                                      "Yes"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legFonte
+:vc_legFonte rdf:type owl:NamedIndividual ,
+                      <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+             <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_legFonte_pgdlc ,
+                                                                 :vc_legFonte_rada ,
+                                                                 :vc_legfonte_pgd ;
+             <http://www.w3.org/2004/02/skos/core#notation> "C8"^^:ConceptNotation ;
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Fonte de legitimação."@pt ,
+                                                             "Source of legitimacy."@en ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "Fonte de legitimação usada na criação de um AE."@pt ,
+                                                             "Legitimation source used in creating an AE."@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legFonte_pgdlc
+:vc_legFonte_pgdlc rdf:type owl:NamedIndividual ,
+                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "C10"^^:ConceptNotation ;
+                   <http://www.w3.org/2004/02/skos/core#prefLabel> "PGD/LC" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legFonte_rada
+:vc_legFonte_rada rdf:type owl:NamedIndividual ,
+                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                  <http://www.w3.org/2004/02/skos/core#notation> "C11"^^:ConceptNotation ;
+                  <http://www.w3.org/2004/02/skos/core#prefLabel> "RADA" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legStatus
+:vc_legStatus rdf:type owl:NamedIndividual ,
+                       <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+              <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_legStatus_ativo ,
+                                                                  :vc_legStatus_revogado ;
+              <http://www.w3.org/2004/02/skos/core#notation> "C12"^^:ConceptNotation ;
+              <http://www.w3.org/2004/02/skos/core#prefLabel> "Estados em que um diploma legislativo se pode encontrar."@pt ,
+                                                              "States in which a piece of legislation can be found."@en ;
+              <http://www.w3.org/2004/02/skos/core#scopeNote> "List of possible states for legislative acts."@en ,
+                                                              "Lista dos estado possíveis para os diplomas legislativos."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legStatus_ativo
+:vc_legStatus_ativo rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C13"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Active"@en ,
+                                                                    "Ativo"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legStatus_revogado
+:vc_legStatus_revogado rdf:type owl:NamedIndividual ,
+                                <http://www.w3.org/2004/02/skos/core#Concept> ;
+                       <http://www.w3.org/2004/02/skos/core#notation> "C14"^^:ConceptNotation ;
+                       <http://www.w3.org/2004/02/skos/core#prefLabel> "Revogado"@pt ,
+                                                                       "Revoked"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_legfonte_pgd
+:vc_legfonte_pgd rdf:type owl:NamedIndividual ,
+                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "C9"^^:ConceptNotation ;
+                 <http://www.w3.org/2004/02/skos/core#prefLabel> "PGD" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_naturezaIntervencao_dono
+:vc_naturezaIntervencao_dono rdf:type owl:NamedIndividual ,
+                                      <http://www.w3.org/2004/02/skos/core#Concept> ;
+                             :vc_valor "Dono" ;
+                             <http://www.w3.org/2004/02/skos/core#notation> "C15"^^:ConceptNotation ;
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Dono"@pt ,
+                                                                             "Owner"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_naturezaIntervencao_participante
+:vc_naturezaIntervencao_participante rdf:type owl:NamedIndividual ,
+                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                     :vc_valor "Participante" ;
+                                     <http://www.w3.org/2004/02/skos/core#notation> "C16"^^:ConceptNotation ;
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Participant"@en ,
+                                                                                     "Participante"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaCriterios
+:vc_pcaCriterios rdf:type owl:NamedIndividual ,
+                          <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                 <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_pcaCriterios_gest ,
+                                                                     :vc_pcaCriterios_leg ,
+                                                                     :vc_pcaCriterios_uadm ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "C17"^^:ConceptNotation ;
+                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipos de critérios de justificação para o PCA."@pt ,
+                                                                 "Types of justification criteria for the PCA."@en ;
+                 <http://www.w3.org/2004/02/skos/core#scopeNote> "List of criteria types that may appear in the PCA justification."@en ,
+                                                                 "Lista dos tipos de critério que podem aparecer na justificação do PCA."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaCriterios_gest
+:vc_pcaCriterios_gest rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C18"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Gestionário"@pt ,
+                                                                      "Manager"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaCriterios_leg
+:vc_pcaCriterios_leg rdf:type owl:NamedIndividual ,
+                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "C19"^^:ConceptNotation ;
+                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Legal"@en ,
+                                                                     "Legal"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaCriterios_uadm
+:vc_pcaCriterios_uadm rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C20"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Administrative utility"@en ,
+                                                                      "Utilidade administrativa"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem
+:vc_pcaFormaContagem rdf:type owl:NamedIndividual ,
+                              <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                     <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_pcaFormaContagem_cessacaoVigencia ,
+                                                                         :vc_pcaFormaContagem_conclusaoProcedimento ,
+                                                                         :vc_pcaFormaContagem_disposicaoLegal ,
+                                                                         :vc_pcaFormaContagem_emissaoTitulo ,
+                                                                         :vc_pcaFormaContagem_extincaoDireito ,
+                                                                         :vc_pcaFormaContagem_extincaoEntidade ,
+                                                                         :vc_pcaFormaContagem_inicioProcedimento ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "C21"^^:ConceptNotation ;
+                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Formas de contagem do PCA"@pt ,
+                                                                     "PCA Counting Ways"@en ;
+                     <http://www.w3.org/2004/02/skos/core#scopeNote> "Formas de contagem do PCA."@pt ,
+                                                                     "PCA Counting Ways"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_cessacaoVigencia
+:vc_pcaFormaContagem_cessacaoVigencia rdf:type owl:NamedIndividual ,
+                                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                      <http://www.w3.org/2004/02/skos/core#notation> "C22"^^:ConceptNotation ;
+                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de cessação da vigência"@pt ,
+                                                                                      "Expiration date"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_conclusaoProcedimento
+:vc_pcaFormaContagem_conclusaoProcedimento rdf:type owl:NamedIndividual ,
+                                                    <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                           <http://www.w3.org/2004/02/skos/core#notation> "C23"^^:ConceptNotation ;
+                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de conclusão do procedimento"@pt ,
+                                                                                           "Procedure completion date"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_disposicaoLegal
+:vc_pcaFormaContagem_disposicaoLegal rdf:type owl:NamedIndividual ,
+                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                     <http://www.w3.org/2004/02/skos/core#narrower> :vc_pcaSubformaContagem_F01.01 ,
+                                                                                    :vc_pcaSubformaContagem_F01.02 ,
+                                                                                    :vc_pcaSubformaContagem_F01.03 ,
+                                                                                    :vc_pcaSubformaContagem_F01.04 ,
+                                                                                    :vc_pcaSubformaContagem_F01.05 ,
+                                                                                    :vc_pcaSubformaContagem_F01.06 ,
+                                                                                    :vc_pcaSubformaContagem_F01.07 ,
+                                                                                    :vc_pcaSubformaContagem_F01.08 ,
+                                                                                    :vc_pcaSubformaContagem_F01.09 ,
+                                                                                    :vc_pcaSubformaContagem_F01.10 ,
+                                                                                    :vc_pcaSubformaContagem_F01.11 ,
+                                                                                    :vc_pcaSubformaContagem_F01.12 ;
+                                     <http://www.w3.org/2004/02/skos/core#notation> "C24"^^:ConceptNotation ;
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "According to legal provision"@en ,
+                                                                                     "Conforme disposição legal"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_emissaoTitulo
+:vc_pcaFormaContagem_emissaoTitulo rdf:type owl:NamedIndividual ,
+                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                   <http://www.w3.org/2004/02/skos/core#notation> "C25"^^:ConceptNotation ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de emissão do título"@pt ,
+                                                                                   "Title issue date"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_extincaoDireito
+:vc_pcaFormaContagem_extincaoDireito rdf:type owl:NamedIndividual ,
+                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                     <http://www.w3.org/2004/02/skos/core#notation> "C26"^^:ConceptNotation ;
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de extinção do direito"@pt ,
+                                                                                     "Extinction date of the right"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_extincaoEntidade
+:vc_pcaFormaContagem_extincaoEntidade rdf:type owl:NamedIndividual ,
+                                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                      <http://www.w3.org/2004/02/skos/core#notation> "C27"^^:ConceptNotation ;
+                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de extinção da entidade sobre a qual recai o procedimento"@pt ,
+                                                                                      "Extinction date of the entity on which the procedure falls"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaFormaContagem_inicioProcedimento
+:vc_pcaFormaContagem_inicioProcedimento rdf:type owl:NamedIndividual ,
+                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                        <http://www.w3.org/2004/02/skos/core#notation> "C28"^^:ConceptNotation ;
+                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Data de início do procedimento"@pt ,
+                                                                                        "Procedure start date"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem
+:vc_pcaSubformaContagem rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                        <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_pcaSubformaContagem_F01.01 ,
+                                                                            :vc_pcaSubformaContagem_F01.02 ,
+                                                                            :vc_pcaSubformaContagem_F01.03 ,
+                                                                            :vc_pcaSubformaContagem_F01.04 ,
+                                                                            :vc_pcaSubformaContagem_F01.05 ,
+                                                                            :vc_pcaSubformaContagem_F01.06 ,
+                                                                            :vc_pcaSubformaContagem_F01.07 ,
+                                                                            :vc_pcaSubformaContagem_F01.08 ,
+                                                                            :vc_pcaSubformaContagem_F01.09 ,
+                                                                            :vc_pcaSubformaContagem_F01.10 ,
+                                                                            :vc_pcaSubformaContagem_F01.11 ,
+                                                                            :vc_pcaSubformaContagem_F01.12 ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C29"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subforms"@en ,
+                                                                        "Subformas de contagem do PCA"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#scopeNote> "PCA counting subforms associated with the form \"As per legal provision\"."@en ,
+                                                                        "Subformas de contagem do PCA associadas à forma \"Conforme disposição legal\"."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.01
+:vc_pcaSubformaContagem_F01.01 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C30"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.01"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do último assento, respeitando 30 anos para o óbito, 50 anos para o casamento e 100 anos para o nascimento, nos termos do artigo 15.º da Lei n.º 324/2007"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.02
+:vc_pcaSubformaContagem_F01.02 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C31"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.02"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cumprimento nos termos do artigo 26.º da Lei n.º 5/2008"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.03
+:vc_pcaSubformaContagem_F01.03 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C32"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.03"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da defesa da tese de doutoramento, nos termos do artigo 3.º do Decreto-Lei n.º 52/2002 ou da data do cancelamento prevista no n.º 5 do artigo 5.º da Portaria n.º 285/2015"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.04
+:vc_pcaSubformaContagem_F01.04 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C33"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.04"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do facto que ocorrer em primeiro lugar; a) com o registo da extinção da procuração a que digam respeito; b) decorridos 15 anos a contar da data da outorga da procuração; c) logo que deixem de ser estritamente necessários para os fins para que foram recolhidos, nos termos do n.º 1 do artigo 13.º do Decreto Regulamentar n.º 3/2009"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.05
+:vc_pcaSubformaContagem_F01.05 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C34"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.05"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que a autorização de introdução no mercado deixe de existir, nos termos do n.º 2 do artigo 12.º do Regulamento de execução (UE) n.º 520/2012"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.06
+:vc_pcaSubformaContagem_F01.06 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C35"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.06"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal para os inquéritos arquivados nos termos do n.º 2 do artigo 277.º, do n.º 3 do artigo 282.º e do n.º 1 do artigo 277.º do Decreto-Lei n.º 78/87 atualizado e para os inquéritos arquivados com fundamento na recolha de \"prova bastante de se não ter verificado o crime\", ou \"de o arguido não o ter praticado a qualquer título\"; data do arquivamento para os inquéritos arquivados com fundamento na inadmissibilidade do procedimento ou outro, nos termos do n.º 1 do artigo 277.º e do n.º 1 do artigo 280.º do Decreto-Lei n.º 78/87 atualizado.\""@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.07
+:vc_pcaSubformaContagem_F01.07 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C36"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.07"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que os jovens a quem respeitam completarem 21 anos, nos termos do artigo 132.º da Lei n.º 166/99"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.08
+:vc_pcaSubformaContagem_F01.08 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C37"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.08"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal, nos termos do artigo 118.º do Decreto-Lei n.º 48/95"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.09
+:vc_pcaSubformaContagem_F01.09 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C38"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.09"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que forem considerados findos para efeitos de arquivo, nos termos do artigo 142.º da Lei n.º 63/2013"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.10
+:vc_pcaSubformaContagem_F01.10 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C39"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.10"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.11
+:vc_pcaSubformaContagem_F01.11 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C40"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.11"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que o jovem atinja a maioridade ou, nos casos em que tenha solicitado a continuação da medida para além da maioridade, complete 21 anos ou até aos 25 anos de idade, nos termos da Lei n.º 147/99, alterada pela Lei n.º 23/2017"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.12
+:vc_pcaSubformaContagem_F01.12 rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C41"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.12"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Maior de idade: data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015; Menor de idade: data em que o respectivo titular completar 21 anos, nos termos do artigo 220.º da Lei n.º 4/2015\" - Sempre que as formas de contagem de prazos estipuladas nas alíneas c) e e) do n.º 6 não forem aplicáveis, por o título não ser emitido ou por não se iniciar o período de vigência, compete às entidades previstas no artigo 2.º proceder ao encerramento das agregações, em conformidade com o código do procedimento administrativo, dando início à contagem do prazo de conservação administrativa"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_apreciador
+:vc_processoParticipante_apreciador rdf:type owl:NamedIndividual ,
+                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                    :vc_valor "Apreciar" ;
+                                    <http://www.w3.org/2004/02/skos/core#notation> "C42"^^:ConceptNotation ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Apreciar"@pt ;
+                                    <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função apreciar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_assessor
+:vc_processoParticipante_assessor rdf:type owl:NamedIndividual ,
+                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                  :vc_valor "Assessorar" ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "C43"^^:ConceptNotation ;
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Assessorar"@pt ;
+                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função assessorar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_comunicador
+:vc_processoParticipante_comunicador rdf:type owl:NamedIndividual ,
+                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                     :vc_valor "Comunicar" ;
+                                     <http://www.w3.org/2004/02/skos/core#notation> "C44"^^:ConceptNotation ;
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Comunicar"@pt ;
+                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função comunicar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_decisor
+:vc_processoParticipante_decisor rdf:type owl:NamedIndividual ,
+                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                 :vc_valor "Decidir" ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "C45"^^:ConceptNotation ;
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Decidir"@pt ;
+                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função decidir."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_executor
+:vc_processoParticipante_executor rdf:type owl:NamedIndividual ,
+                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                  :vc_valor "Executar" ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "C46"^^:ConceptNotation ;
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Executar"@pt ;
+                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função executar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_iniciador
+:vc_processoParticipante_iniciador rdf:type owl:NamedIndividual ,
+                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                   :vc_valor "Iniciar" ;
+                                   <http://www.w3.org/2004/02/skos/core#notation> "C47"^^:ConceptNotation ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Iniciar"@pt ;
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função iniciar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipo
+:vc_processoTipo rdf:type owl:NamedIndividual ,
+                          <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                 <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoTipo_pc ,
+                                                                     :vc_processoTipo_pe ;
+                 <http://www.w3.org/2004/02/skos/core#notation> "C48"^^:ConceptNotation ;
+                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de Processo"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado tipifica o processo. Por exemplo: processo específico ou processo comum."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoParticipacao
+:vc_processoTipoParticipacao rdf:type owl:NamedIndividual ,
+                                      <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                             <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoParticipante_apreciador ,
+                                                                                 :vc_processoParticipante_assessor ,
+                                                                                 :vc_processoParticipante_comunicador ,
+                                                                                 :vc_processoParticipante_decisor ,
+                                                                                 :vc_processoParticipante_executor ,
+                                                                                 :vc_processoParticipante_iniciador ;
+                             <http://www.w3.org/2004/02/skos/core#notation> "C51"^^:ConceptNotation ;
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de participação no processo"@pt ;
+                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Vocabulário controlado que carateriza a participação de uma entidade num processo."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao
+:vc_processoTipoRelacao rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                        <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoTipoRelacao_antecessor ,
+                                                                            :vc_processoTipoRelacao_complementar ,
+                                                                            :vc_processoTipoRelacao_cruzado ,
+                                                                            :vc_processoTipoRelacao_eSinteseDe ,
+                                                                            :vc_processoTipoRelacao_eSintetizadoPor ,
+                                                                            :vc_processoTipoRelacao_sucessor ,
+                                                                            :vc_processoTipoRelacao_suplementar ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C52"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de Relação entre Processos"@pt ;
+                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado contem a informação relativa aos vários tipos de relação que podem existir entre processos."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_antecessor
+:vc_processoTipoRelacao_antecessor rdf:type owl:NamedIndividual ,
+                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                   <http://www.w3.org/2004/02/skos/core#notation> "C53"^^:ConceptNotation ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "É Antecessor de"@pt ;
+                                   <http://www.w3.org/2004/02/skos/core#related> :vc_processoTipoRelacao_sucessor ;
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando o produto de um processo dá origem a outro processo (o procedente não existe sem o  anterior)."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_complementar
+:vc_processoTipoRelacao_complementar rdf:type owl:NamedIndividual ,
+                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                     <http://www.w3.org/2004/02/skos/core#notation> "C54"^^:ConceptNotation ;
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "É Complementar de"@pt ;
+                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando dois processos, decorrendo de forma paralela, adicionam um ao outro informação complementar."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_cruzado
+:vc_processoTipoRelacao_cruzado rdf:type owl:NamedIndividual ,
+                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                <http://www.w3.org/2004/02/skos/core#notation> "C55"^^:ConceptNotation ;
+                                <http://www.w3.org/2004/02/skos/core#prefLabel> "É Cruzado com"@pt ;
+                                <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando existe interseção de dois processos em determinado momento, seguindo depois percursos distintos."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_eSinteseDe
+:vc_processoTipoRelacao_eSinteseDe rdf:type owl:NamedIndividual ,
+                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                   <http://www.w3.org/2004/02/skos/core#notation> "C56"^^:ConceptNotation ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "É Síntese de"@pt ;
+                                   <http://www.w3.org/2004/02/skos/core#related> :vc_processoTipoRelacao_eSintetizadoPor ;
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo condensa a informação de outro processo (ou que uma etapa de um processo condensa outra(s) etapa(s) desse processo)."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_eSintetizadoPor
+:vc_processoTipoRelacao_eSintetizadoPor rdf:type owl:NamedIndividual ,
+                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                        <http://www.w3.org/2004/02/skos/core#notation> "C57"^^:ConceptNotation ;
+                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "É Sintetizado por"@pt ;
+                                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo vai ter a sua informação condensada por outro processo."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_sucessor
+:vc_processoTipoRelacao_sucessor rdf:type owl:NamedIndividual ,
+                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "C58"^^:ConceptNotation ;
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "É Sucessor de"@pt ;
+                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo é originado pelo produto de outro processo (o procedente não existe sem o  anterior)."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_suplementar
+:vc_processoTipoRelacao_suplementar rdf:type owl:NamedIndividual ,
+                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                    <http://www.w3.org/2004/02/skos/core#notation> "C59"^^:ConceptNotation ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "É Suplemento de"@pt ;
+                                    <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um PN recolhe e analisa a informação contida noutros PN, cotejando-os entre si, não lhes adicionando conteúdo informativo."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipo_pc
+:vc_processoTipo_pc rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    :vc_valor "PC" ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C49"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Comum"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTipo_pe
+:vc_processoTipo_pe rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    :vc_valor "PE" ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C50"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Específico"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTransversal_nao
+:vc_processoTransversal_nao rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            :vc_valor "N" ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C60"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Não"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTransversal_sim
+:vc_processoTransversal_sim rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            :vc_valor "S" ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C61"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Sim"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_processoTransversalidade
+:vc_processoTransversalidade rdf:type owl:NamedIndividual ,
+                                      <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                             <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoTransversal_nao ,
+                                                                                 :vc_processoTransversal_sim ;
+                             <http://www.w3.org/2004/02/skos/core#notation> "C62"^^:ConceptNotation ;
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Transversal"@pt ;
+                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário é constituído apenas pelos valores \"Sim\" e \"Não\" e serve para indicar se um processo é ou não Transversal."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_removidos
+:vc_removidos rdf:type owl:NamedIndividual ,
+                       <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+              <http://www.w3.org/2004/02/skos/core#notation> "C63"^^:ConceptNotation ;
+              <http://www.w3.org/2004/02/skos/core#prefLabel> "Ternos de Vocabulários Removidos"@pt ;
+              <http://www.w3.org/2004/02/skos/core#scopeNote> "Este Vocabulário simboliza os termos removidos de outros vocabulários"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_status
+:vc_status rdf:type owl:NamedIndividual ,
+                    <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+           <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_status_A ,
+                                                               :vc_status_H ,
+                                                               :vc_status_I ;
+           <http://www.w3.org/2004/02/skos/core#notation> "C64"^^:ConceptNotation ;
+           <http://www.w3.org/2004/02/skos/core#prefLabel> "Status"@pt ;
+           <http://www.w3.org/2004/02/skos/core#scopeNote> "Vocabulário Controlado para os vários estados em que um processo ou tabela de seleção poderá encontrar-se."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_status_A
+:vc_status_A rdf:type owl:NamedIndividual ,
+                      <http://www.w3.org/2004/02/skos/core#Concept> ;
+             :vc_valor "A" ;
+             <http://www.w3.org/2004/02/skos/core#notation> "C65"^^:ConceptNotation ;
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Ativa"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está ativa."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_status_H
+:vc_status_H rdf:type owl:NamedIndividual ,
+                      <http://www.w3.org/2004/02/skos/core#Concept> ;
+             :vc_valor "H" ;
+             <http://www.w3.org/2004/02/skos/core#notation> "C66"^^:ConceptNotation ;
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Harmonização"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está a ser trabalhada e , em princípio, depois de validada passará ao estado ativo."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_status_I
+:vc_status_I rdf:type owl:NamedIndividual ,
+                      <http://www.w3.org/2004/02/skos/core#Concept> ;
+             :vc_valor "I" ;
+             <http://www.w3.org/2004/02/skos/core#notation> "C67"^^:ConceptNotation ;
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Inativa"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está inativa depois de ter estado ativa. Foi substituída por outra ou simplesmente retirada. Será mantida no sistema para fins históricos."@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiplomaLegislativo
+:vc_tipoDiplomaLegislativo rdf:type owl:NamedIndividual ,
+                                    <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
+                           <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_tipoDiploma_Aviso ,
+                                                                               :vc_tipoDiploma_CSNEN ,
+                                                                               :vc_tipoDiploma_Circular ,
+                                                                               :vc_tipoDiploma_CircularInformativa ,
+                                                                               :vc_tipoDiploma_CircularNormativa ,
+                                                                               :vc_tipoDiploma_Comunicacao ,
+                                                                               :vc_tipoDiploma_DL ,
+                                                                               :vc_tipoDiploma_Decisao ,
+                                                                               :vc_tipoDiploma_Decisao_Quadro ,
+                                                                               :vc_tipoDiploma_DeclaracaodeRetificacao ,
+                                                                               :vc_tipoDiploma_Decreto ,
+                                                                               :vc_tipoDiploma_DecretoLegislativoRegional ,
+                                                                               :vc_tipoDiploma_DecretoRegulamentar ,
+                                                                               :vc_tipoDiploma_DecretodoGoverno ,
+                                                                               :vc_tipoDiploma_DecretodoPresidentedaRepublica ,
+                                                                               :vc_tipoDiploma_Deliberacao ,
+                                                                               :vc_tipoDiploma_Despacho ,
+                                                                               :vc_tipoDiploma_DespachoConjunto ,
+                                                                               :vc_tipoDiploma_DespachoNormativo ,
+                                                                               :vc_tipoDiploma_Diretiva ,
+                                                                               :vc_tipoDiploma_DiretivaTecnica ,
+                                                                               :vc_tipoDiploma_Estatuto ,
+                                                                               :vc_tipoDiploma_ILAC ,
+                                                                               :vc_tipoDiploma_ISO ,
+                                                                               :vc_tipoDiploma_ISO_IEC ,
+                                                                               :vc_tipoDiploma_Instrucao ,
+                                                                               :vc_tipoDiploma_Lei ,
+                                                                               :vc_tipoDiploma_LeiConstitucional ,
+                                                                               :vc_tipoDiploma_LeiOrganica ,
+                                                                               :vc_tipoDiploma_NOP ,
+                                                                               :vc_tipoDiploma_NP ,
+                                                                               :vc_tipoDiploma_NPENISO ,
+                                                                               :vc_tipoDiploma_NPENISO_IEC ,
+                                                                               :vc_tipoDiploma_OrdemdeServico ,
+                                                                               :vc_tipoDiploma_Portaria ,
+                                                                               :vc_tipoDiploma_Recomendacao ,
+                                                                               :vc_tipoDiploma_Regulamento ,
+                                                                               :vc_tipoDiploma_RegulamentoDelegado ,
+                                                                               :vc_tipoDiploma_RegulamentodeExecucao ,
+                                                                               :vc_tipoDiploma_Resolucao ,
+                                                                               :vc_tipoDiploma_ResolucaodaAssembleiadaRepublica ,
+                                                                               :vc_tipoDiploma_ResolucaodoConselhodeMinistros ,
+                                                                               :vc_tipoDiploma_Tratado ;
+                           <http://www.w3.org/2004/02/skos/core#notation> "C111"^^:ConceptNotation ;
+                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de diploma" ;
+                           <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário encerra os vários tipos de diplomas legislativos registados na base de dados." .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Aviso
+:vc_tipoDiploma_Aviso rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C68"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Aviso" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_CSNEN
+:vc_tipoDiploma_CSNEN rdf:type owl:NamedIndividual ,
+                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "C73"^^:ConceptNotation ;
+                      <http://www.w3.org/2004/02/skos/core#prefLabel> "CSN EN" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Circular
+:vc_tipoDiploma_Circular rdf:type owl:NamedIndividual ,
+                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "C69"^^:ConceptNotation ;
+                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Circular" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_CircularInformativa
+:vc_tipoDiploma_CircularInformativa rdf:type owl:NamedIndividual ,
+                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                    <http://www.w3.org/2004/02/skos/core#notation> "C70"^^:ConceptNotation ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Circular Informativa" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_CircularNormativa
+:vc_tipoDiploma_CircularNormativa rdf:type owl:NamedIndividual ,
+                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "C71"^^:ConceptNotation ;
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Circular Normativa" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Comunicacao
+:vc_tipoDiploma_Comunicacao rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C72"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Comunicação" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DL
+:vc_tipoDiploma_DL rdf:type owl:NamedIndividual ,
+                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "C88"^^:ConceptNotation ;
+                   <http://www.w3.org/2004/02/skos/core#prefLabel> "DL" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Decisao
+:vc_tipoDiploma_Decisao rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C74"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Decisão" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Decisao_Quadro
+:vc_tipoDiploma_Decisao_Quadro rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C75"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Decisão-Quadro" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DeclaracaodeRetificacao
+:vc_tipoDiploma_DeclaracaodeRetificacao rdf:type owl:NamedIndividual ,
+                                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                        <http://www.w3.org/2004/02/skos/core#notation> "C76"^^:ConceptNotation ;
+                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Declaração de Retificação" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Decreto
+:vc_tipoDiploma_Decreto rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C77"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Decreto" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DecretoLegislativoRegional
+:vc_tipoDiploma_DecretoLegislativoRegional rdf:type owl:NamedIndividual ,
+                                                    <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                           <http://www.w3.org/2004/02/skos/core#notation> "C80"^^:ConceptNotation ;
+                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Decreto Legislativo Regional" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DecretoRegulamentar
+:vc_tipoDiploma_DecretoRegulamentar rdf:type owl:NamedIndividual ,
+                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                    <http://www.w3.org/2004/02/skos/core#notation> "C81"^^:ConceptNotation ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Decreto Regulamentar" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DecretodoGoverno
+:vc_tipoDiploma_DecretodoGoverno rdf:type owl:NamedIndividual ,
+                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "C78"^^:ConceptNotation ;
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Decreto do Governo" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DecretodoPresidentedaRepublica
+:vc_tipoDiploma_DecretodoPresidentedaRepublica rdf:type owl:NamedIndividual ,
+                                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                               <http://www.w3.org/2004/02/skos/core#notation> "C79"^^:ConceptNotation ;
+                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Decreto do Presidente da República" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Deliberacao
+:vc_tipoDiploma_Deliberacao rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C82"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Deliberação" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Despacho
+:vc_tipoDiploma_Despacho rdf:type owl:NamedIndividual ,
+                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "C83"^^:ConceptNotation ;
+                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Despacho" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DespachoConjunto
+:vc_tipoDiploma_DespachoConjunto rdf:type owl:NamedIndividual ,
+                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                 <http://www.w3.org/2004/02/skos/core#notation> "C84"^^:ConceptNotation ;
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Despacho Conjunto" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DespachoNormativo
+:vc_tipoDiploma_DespachoNormativo rdf:type owl:NamedIndividual ,
+                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "C85"^^:ConceptNotation ;
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Despacho Normativo" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Diretiva
+:vc_tipoDiploma_Diretiva rdf:type owl:NamedIndividual ,
+                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "C86"^^:ConceptNotation ;
+                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Diretiva" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_DiretivaTecnica
+:vc_tipoDiploma_DiretivaTecnica rdf:type owl:NamedIndividual ,
+                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                <http://www.w3.org/2004/02/skos/core#notation> "C87"^^:ConceptNotation ;
+                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Diretiva Técnica" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Estatuto
+:vc_tipoDiploma_Estatuto rdf:type owl:NamedIndividual ,
+                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "C89"^^:ConceptNotation ;
+                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Estatuto" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_ILAC
+:vc_tipoDiploma_ILAC rdf:type owl:NamedIndividual ,
+                              <http://www.w3.org/2004/02/skos/core#Concept> ;
+                     <http://www.w3.org/2004/02/skos/core#notation> "C90"^^:ConceptNotation ;
+                     <http://www.w3.org/2004/02/skos/core#prefLabel> "ILAC" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_ISO
+:vc_tipoDiploma_ISO rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C92"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "ISO" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_ISO_IEC
+:vc_tipoDiploma_ISO_IEC rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C93"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "ISO/IEC" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Instrucao
+:vc_tipoDiploma_Instrucao rdf:type owl:NamedIndividual ,
+                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
+                          <http://www.w3.org/2004/02/skos/core#notation> "C91"^^:ConceptNotation ;
+                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Instrução" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Lei
+:vc_tipoDiploma_Lei rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C94"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Lei" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_LeiConstitucional
+:vc_tipoDiploma_LeiConstitucional rdf:type owl:NamedIndividual ,
+                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                  <http://www.w3.org/2004/02/skos/core#notation> "C95"^^:ConceptNotation ;
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Lei Constitucional" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_LeiOrganica
+:vc_tipoDiploma_LeiOrganica rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C96"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Lei Orgânica" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_NOP
+:vc_tipoDiploma_NOP rdf:type owl:NamedIndividual ,
+                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                    <http://www.w3.org/2004/02/skos/core#notation> "C97"^^:ConceptNotation ;
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "NOP" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_NP
+:vc_tipoDiploma_NP rdf:type owl:NamedIndividual ,
+                            <http://www.w3.org/2004/02/skos/core#Concept> ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "C98"^^:ConceptNotation ;
+                   <http://www.w3.org/2004/02/skos/core#prefLabel> "NP" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_NPENISO
+:vc_tipoDiploma_NPENISO rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C99"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "NP EN ISO" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_NPENISO_IEC
+:vc_tipoDiploma_NPENISO_IEC rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C100"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "NP EN ISO/IEC" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_OrdemdeServico
+:vc_tipoDiploma_OrdemdeServico rdf:type owl:NamedIndividual ,
+                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                               <http://www.w3.org/2004/02/skos/core#notation> "C101"^^:ConceptNotation ;
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Ordem de Serviço" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Portaria
+:vc_tipoDiploma_Portaria rdf:type owl:NamedIndividual ,
+                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
+                         <http://www.w3.org/2004/02/skos/core#notation> "C102"^^:ConceptNotation ;
+                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Portaria" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Recomendacao
+:vc_tipoDiploma_Recomendacao rdf:type owl:NamedIndividual ,
+                                      <http://www.w3.org/2004/02/skos/core#Concept> ;
+                             <http://www.w3.org/2004/02/skos/core#notation> "C103"^^:ConceptNotation ;
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Recomendação" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Regulamento
+:vc_tipoDiploma_Regulamento rdf:type owl:NamedIndividual ,
+                                     <http://www.w3.org/2004/02/skos/core#Concept> ;
+                            <http://www.w3.org/2004/02/skos/core#notation> "C104"^^:ConceptNotation ;
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Regulamento" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_RegulamentoDelegado
+:vc_tipoDiploma_RegulamentoDelegado rdf:type owl:NamedIndividual ,
+                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                    <http://www.w3.org/2004/02/skos/core#notation> "C106"^^:ConceptNotation ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Regulamento Delegado" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_RegulamentodeExecucao
+:vc_tipoDiploma_RegulamentodeExecucao rdf:type owl:NamedIndividual ,
+                                               <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                      <http://www.w3.org/2004/02/skos/core#notation> "C105"^^:ConceptNotation ;
+                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Regulamento de Execução" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Resolucao
+:vc_tipoDiploma_Resolucao rdf:type owl:NamedIndividual ,
+                                   <http://www.w3.org/2004/02/skos/core#Concept> ;
+                          <http://www.w3.org/2004/02/skos/core#notation> "C107"^^:ConceptNotation ;
+                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Resolução" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_ResolucaodaAssembleiadaRepublica
+:vc_tipoDiploma_ResolucaodaAssembleiadaRepublica rdf:type owl:NamedIndividual ,
+                                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                                 <http://www.w3.org/2004/02/skos/core#notation> "C108"^^:ConceptNotation ;
+                                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Resolução da Assembleia da República" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_ResolucaodoConselhodeMinistros
+:vc_tipoDiploma_ResolucaodoConselhodeMinistros rdf:type owl:NamedIndividual ,
+                                                        <http://www.w3.org/2004/02/skos/core#Concept> ;
+                                               <http://www.w3.org/2004/02/skos/core#notation> "C109"^^:ConceptNotation ;
+                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Resolução do Conselho de Ministros" .
+
+
+###  http://jcr.di.uminho.pt/clav#vc_tipoDiploma_Tratado
+:vc_tipoDiploma_Tratado rdf:type owl:NamedIndividual ,
+                                 <http://www.w3.org/2004/02/skos/core#Concept> ;
+                        <http://www.w3.org/2004/02/skos/core#notation> "C110"^^:ConceptNotation ;
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Tratado" .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+:diplomaTipo rdfs:label "Tipo de diploma legislativo"@pt ,
+                        "Type of Legislative diploma"@en ;
+             <http://www.w3.org/2004/02/skos/core#notation> "P7"^^:PropertyNotation .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

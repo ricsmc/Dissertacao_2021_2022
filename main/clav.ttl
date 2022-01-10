@@ -1,0 +1,277 @@
+@prefix : <http://jcr.di.uminho.pt/clav#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://jcr.di.uminho.pt/clav> .
+
+<http://jcr.di.uminho.pt/clav> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#notation
+<http://www.w3.org/2004/02/skos/core#notation> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://jcr.di.uminho.pt/clav#Agregacao
+:Agregacao rdf:type owl:Class ;
+           rdfs:comment "Agregação Simples para Auto de Eliminação"@pt ,
+                        "Simple Aggregation for the Action of Elimination"@en ;
+           rdfs:label "Aggregation"@en ,
+                      "Agregacao"@pt ;
+           <http://www.w3.org/2004/02/skos/core#notation> "E1" .
+
+
+###  http://jcr.di.uminho.pt/clav#AtributoComposto
+:AtributoComposto rdf:type owl:Class ;
+                   rdfs:label "Atributo Composto"@pt ,
+                              "Composite Attribute"@en ;
+                   <http://www.w3.org/2004/02/skos/core#notation> "E2" .
+
+
+###  http://jcr.di.uminho.pt/clav#CriterioJustificacao
+:CriterioJustificacao rdf:type owl:Class ;
+                      rdfs:subClassOf :AtributoComposto ;
+                      rdfs:label "CriterioJustificacao"@pt ,
+                                 "JustificationCriteria"@en ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "E21"@en .
+
+
+###  http://jcr.di.uminho.pt/clav#DestinoFinal
+:DestinoFinal rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "DestinoFinal"@pt ,
+                         "FinalDestination"@en ;
+              <http://www.w3.org/2004/02/skos/core#notation> "E22"@pt .
+
+
+###  http://jcr.di.uminho.pt/clav#ExemploNotaAplicacao
+:ExemploNotaAplicacao rdf:type owl:Class ;
+                      rdfs:subClassOf :AtributoComposto ;
+                      rdfs:comment "Exemplo de Nota de Aplicação"@pt ;
+                      rdfs:label "ExampleNoteApplication"@en ,
+                                 "ExemploNotaAplicacao"@pt ;
+                      <http://www.w3.org/2004/02/skos/core#notation> "E23"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Area_Organico
+:Area_Organico rdf:type owl:Class ;
+               rdfs:subClassOf :Classe_RADA .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#AutoEliminacao
+:AutoEliminacao rdf:type owl:Class ;
+                rdfs:label "Auto de Eliminação"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_N1
+:Classe_N1 rdf:type owl:Class ;
+           rdfs:comment "As instâncias de classes de nível 1 correspondem a Funções"^^xsd:string ;
+           rdfs:label "Classe de nível 1: Função"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_N2
+:Classe_N2 rdf:type owl:Class ;
+           rdfs:comment "As instâncias de classes de nível 2 correspondem a Subfunções"^^xsd:string ;
+           rdfs:label "Classe de nível 2: Subfunção"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_N3
+:Classe_N3 rdf:type owl:Class ;
+           rdfs:comment "As classes de nível 3 correpondem a Processos de Negócio"^^xsd:string ;
+           rdfs:label "Classe de nível 3: Processo"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_N4
+:Classe_N4 rdf:type owl:Class ;
+           rdfs:comment "As classes de nível 4 correspondem a subdivisões dos processos de negócio"^^xsd:string ;
+           rdfs:label "Classe de nível 4: subdivisão do processo"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_PGD
+:Classe_PGD rdf:type owl:Class ;
+            rdfs:comment "Representação da Classe PGD"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Classe_RADA
+:Classe_RADA rdf:type owl:Class ;
+             rdfs:label "Representação da Class RADA"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoComplementaridadeInfo
+:CriterioJustificacaoComplementaridadeInfo rdf:type owl:Class ;
+                                           rdfs:subClassOf :CriterioJustificacao ;
+                                           rdfs:label "Critério Complementaridade Informacional"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoDensidadeInfo
+:CriterioJustificacaoDensidadeInfo rdf:type owl:Class ;
+                                   rdfs:subClassOf :CriterioJustificacao ;
+                                   rdfs:label "Critério Densidade Informacional"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoDensidadeInfoSinDe
+:CriterioJustificacaoDensidadeInfoSinDe rdf:type owl:Class ;
+                                        rdfs:subClassOf :CriterioJustificacaoDensidadeInfo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoDensidadeInfoSinPor
+:CriterioJustificacaoDensidadeInfoSinPor rdf:type owl:Class ;
+                                         rdfs:subClassOf :CriterioJustificacaoDensidadeInfo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoGestionario
+:CriterioJustificacaoGestionario rdf:type owl:Class ;
+                                 rdfs:subClassOf :CriterioJustificacao ;
+                                 rdfs:label "Critério Gestionário"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoLegal
+:CriterioJustificacaoLegal rdf:type owl:Class ;
+                           rdfs:subClassOf :CriterioJustificacao ;
+                           rdfs:label "Critério Legal"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#CriterioJustificacaoUtilidadeAdministrativa
+:CriterioJustificacaoUtilidadeAdministrativa rdf:type owl:Class ;
+                                             rdfs:subClassOf :CriterioJustificacao ;
+                                             rdfs:label "Critério Utilidade Administrativa"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Entidade
+:Entidade rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Justificacao
+:Justificacao rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "Justificação"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#JustificacaoDF
+:JustificacaoDF rdf:type owl:Class ;
+                rdfs:subClassOf :Justificacao ;
+                rdfs:label "Justificação do Destino Final"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#JustificacaoPCA
+:JustificacaoPCA rdf:type owl:Class ;
+                 rdfs:subClassOf :Justificacao ;
+                 rdfs:label "Justificação do Prazo de Conservação Administrativa"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Legislacao
+:Legislacao rdf:type owl:Class ;
+            rdfs:label "Legislação"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#ListaConsolidada
+:ListaConsolidada rdf:type owl:Class ;
+                  rdfs:subClassOf :ReferencialClassificativo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#NotaAplicacao
+:NotaAplicacao rdf:type owl:Class ;
+               rdfs:subClassOf :AtributoComposto ;
+               rdfs:label "Nota de Aplicação"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#NotaExclusao
+:NotaExclusao rdf:type owl:Class ;
+              rdfs:subClassOf :AtributoComposto ;
+              rdfs:label "Nota de Exclusão"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#PCA
+:PCA rdf:type owl:Class ;
+     rdfs:subClassOf :AtributoComposto ;
+     rdfs:label "Prazo de Conservação Administrativa"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#PGD
+:PGD rdf:type owl:Class ;
+     rdfs:subClassOf :ReferencialClassificativo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#RADA
+:RADA rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#RADA_Antigo
+:RADA_Antigo rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#ReferencialClassificativo
+:ReferencialClassificativo rdf:type owl:Class ;
+                           rdfs:comment "Lista Consolidada ou uma Tabela de Seleção"@pt ;
+                           rdfs:label "Referencial Classificativo"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#RelacaoPesada
+:RelacaoPesada rdf:type owl:Class ;
+               rdfs:label "Relação Pesada"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#RelatorioExpositivo
+:RelatorioExpositivo rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Serie
+:Serie rdf:type owl:Class ;
+       rdfs:subClassOf :Classe_RADA .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#Subserie
+:Subserie rdf:type owl:Class ;
+          rdfs:subClassOf :Classe_RADA .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#SuporteMedicao
+:SuporteMedicao rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#TabelaSelecao
+:TabelaSelecao rdf:type owl:Class ;
+               rdfs:subClassOf :ReferencialClassificativo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#TabelaSelecaoRada
+:TabelaSelecaoRada rdf:type owl:Class ;
+                   rdfs:subClassOf :ReferencialClassificativo .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#TermoIndice
+:TermoIndice rdf:type owl:Class ;
+             rdfs:label "Termo de Índice"@pt .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#TipologiaEntidade
+:TipologiaEntidade rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#UnidadeInstalacao
+:UnidadeInstalacao rdf:type owl:Class .
+
+
+###  http://jcr.di.uminho.pt/m51-clav#ZonaControlo
+:ZonaControlo rdf:type owl:Class ;
+              rdfs:label "Zona de Identificação e Controlo das Classes relativas a um Auto de Eliminação"@pt .
+
+
+###  http://www.w3.org/2004/02/skos/core#Concept
+skos:Concept rdf:type owl:Class .
+
+
+###  http://www.w3.org/2004/02/skos/core#ConceptScheme
+skos:ConceptScheme rdf:type owl:Class .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
+ 
