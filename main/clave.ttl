@@ -2232,96 +2232,120 @@ The LC integrates evaluation decisions (determination of administrative retentio
 :vc_pcaSubformaContagem_F01.01 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C30"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.01"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do último assento, respeitando 30 anos para o óbito, 50 anos para o casamento e 100 anos para o nascimento, nos termos do artigo 15.º da Lei n.º 324/2007"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.01"@en ,
+                                                                               "Subforma de contagem do PCA: F01.01"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do último assento, respeitando 30 anos para o óbito, 50 anos para o casamento e 100 anos para o nascimento, nos termos do artigo 15.º da Lei n.º 324/2007"@pt ,
+                                                                               "Date of last entry, respecting 30 years for death, 50 years for marriage and 100 years for birth, in accordance with article 15 of Law no. 324/2007"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.02
 :vc_pcaSubformaContagem_F01.02 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C31"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.02"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cumprimento nos termos do artigo 26.º da Lei n.º 5/2008"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA counting subform: F01.02"@en ,
+                                                                               "Subforma de contagem do PCA: F01.02"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cumprimento nos termos do artigo 26.º da Lei n.º 5/2008"@pt ,
+                                                                               "Date of compliance in accordance with article 26 of Law no. 5/2008"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.03
 :vc_pcaSubformaContagem_F01.03 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C32"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.03"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da defesa da tese de doutoramento, nos termos do artigo 3.º do Decreto-Lei n.º 52/2002 ou da data do cancelamento prevista no n.º 5 do artigo 5.º da Portaria n.º 285/2015"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.03"@en ,
+                                                                               "Subforma de contagem do PCA: F01.03"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da defesa da tese de doutoramento, nos termos do artigo 3.º do Decreto-Lei n.º 52/2002 ou da data do cancelamento prevista no n.º 5 do artigo 5.º da Portaria n.º 285/2015"@pt ,
+                                                                               "Date of defense of the doctoral thesis, in accordance with article 3 of Decree-Law no. 52/2002 or the date of cancellation provided for in no. 5 of article 5 of Decree-Law no. 285/2015"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.04
 :vc_pcaSubformaContagem_F01.04 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C33"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.04"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do facto que ocorrer em primeiro lugar; a) com o registo da extinção da procuração a que digam respeito; b) decorridos 15 anos a contar da data da outorga da procuração; c) logo que deixem de ser estritamente necessários para os fins para que foram recolhidos, nos termos do n.º 1 do artigo 13.º do Decreto Regulamentar n.º 3/2009"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.04"@en ,
+                                                                               "Subforma de contagem do PCA: F01.04"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do facto que ocorrer em primeiro lugar; a) com o registo da extinção da procuração a que digam respeito; b) decorridos 15 anos a contar da data da outorga da procuração; c) logo que deixem de ser estritamente necessários para os fins para que foram recolhidos, nos termos do n.º 1 do artigo 13.º do Decreto Regulamentar n.º 3/2009"@pt ,
+                                                                               "Date of the first event; a) with the registration of the termination of the power of attorney to which they relate; b) 15 years after the date of granting the power of attorney; c) as soon as they are no longer strictly necessary for the purposes for which they were collected, in accordance with paragraph 1 of article 13 of Regulatory Decree no. 3/2009"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.05
 :vc_pcaSubformaContagem_F01.05 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C34"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.05"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que a autorização de introdução no mercado deixe de existir, nos termos do n.º 2 do artigo 12.º do Regulamento de execução (UE) n.º 520/2012"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.05"@en ,
+                                                                               "Subforma de contagem do PCA: F01.05"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que a autorização de introdução no mercado deixe de existir, nos termos do n.º 2 do artigo 12.º do Regulamento de execução (UE) n.º 520/2012"@pt ,
+                                                                               "Date on which the marketing authorization ceases to exist in accordance with Article 12(2) of Implementing Regulation (EU) No 520/2012"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.06
 :vc_pcaSubformaContagem_F01.06 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C35"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.06"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal para os inquéritos arquivados nos termos do n.º 2 do artigo 277.º, do n.º 3 do artigo 282.º e do n.º 1 do artigo 277.º do Decreto-Lei n.º 78/87 atualizado e para os inquéritos arquivados com fundamento na recolha de \"prova bastante de se não ter verificado o crime\", ou \"de o arguido não o ter praticado a qualquer título\"; data do arquivamento para os inquéritos arquivados com fundamento na inadmissibilidade do procedimento ou outro, nos termos do n.º 1 do artigo 277.º e do n.º 1 do artigo 280.º do Decreto-Lei n.º 78/87 atualizado.\""@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.06"@en ,
+                                                                               "Subforma de contagem do PCA: F01.06"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal para os inquéritos arquivados nos termos do n.º 2 do artigo 277.º, do n.º 3 do artigo 282.º e do n.º 1 do artigo 277.º do Decreto-Lei n.º 78/87 atualizado e para os inquéritos arquivados com fundamento na recolha de \"prova bastante de se não ter verificado o crime\", ou \"de o arguido não o ter praticado a qualquer título\"; data do arquivamento para os inquéritos arquivados com fundamento na inadmissibilidade do procedimento ou outro, nos termos do n.º 1 do artigo 277.º e do n.º 1 do artigo 280.º do Decreto-Lei n.º 78/87 atualizado.\""@pt ,
+                                                                               "Date of prescription of criminal proceedings for inquiries filed under the terms of paragraph 2 of article 277, paragraph 3 of article 282 and paragraph 1 of article 277 of Decree-Law no. 78/87 updated and for inquiries filed based on the gathering of \"enough evidence that the crime was not verified\", or \"that the accused did not commit it in any capacity\"; date of filing for inquiries filed based on the inadmissibility of the procedure or otherwise, pursuant to paragraph 1 of article 277 and paragraph 1 of article 280 of Decree-Law no. 78/87 updated .\""@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.07
 :vc_pcaSubformaContagem_F01.07 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C36"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.07"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que os jovens a quem respeitam completarem 21 anos, nos termos do artigo 132.º da Lei n.º 166/99"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.07"@en ,
+                                                                               "Subforma de contagem do PCA: F01.07"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que os jovens a quem respeitam completarem 21 anos, nos termos do artigo 132.º da Lei n.º 166/99"@pt ,
+                                                                               "Date on which the young people to whom they concern turn 21 years old, in accordance with article 132 of Law No. 166/99"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.08
 :vc_pcaSubformaContagem_F01.08 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C37"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.08"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal, nos termos do artigo 118.º do Decreto-Lei n.º 48/95"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.08"@en ,
+                                                                               "Subforma de contagem do PCA: F01.08"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data da prescrição do procedimento criminal, nos termos do artigo 118.º do Decreto-Lei n.º 48/95"@pt ,
+                                                                               "Date of prescription of criminal proceedings, in accordance with article 118 of Decree-Law No. 48/95"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.09
 :vc_pcaSubformaContagem_F01.09 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C38"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.09"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que forem considerados findos para efeitos de arquivo, nos termos do artigo 142.º da Lei n.º 63/2013"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.09"@en ,
+                                                                               "Subforma de contagem do PCA: F01.09"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que forem considerados findos para efeitos de arquivo, nos termos do artigo 142.º da Lei n.º 63/2013"@pt ,
+                                                                               "Date on which they are considered terminated for archival purposes, in accordance with article 142 of Law no. 63/2013"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.10
 :vc_pcaSubformaContagem_F01.10 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C39"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.10"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.10"@en ,
+                                                                               "Subforma de contagem do PCA: F01.10"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015"@pt ,
+                                                                               "Date of definitive cancellation of the criminal record, in accordance with article 11 of Law No. 37/2015"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.11
 :vc_pcaSubformaContagem_F01.11 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C40"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.11"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que o jovem atinja a maioridade ou, nos casos em que tenha solicitado a continuação da medida para além da maioridade, complete 21 anos ou até aos 25 anos de idade, nos termos da Lei n.º 147/99, alterada pela Lei n.º 23/2017"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.11"@en ,
+                                                                               "Subforma de contagem do PCA: F01.11"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Data em que o jovem atinja a maioridade ou, nos casos em que tenha solicitado a continuação da medida para além da maioridade, complete 21 anos ou até aos 25 anos de idade, nos termos da Lei n.º 147/99, alterada pela Lei n.º 23/2017"@pt ,
+                                                                               "Date on which the young person reaches adulthood or, in cases where he has requested the continuation of the measure beyond adulthood, completes 21 years or up to 25 years of age, under the terms of Law n.º 147/99, amended by Law No. 23/2017"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_pcaSubformaContagem_F01.12
 :vc_pcaSubformaContagem_F01.12 rdf:type owl:NamedIndividual ,
                                         <http://www.w3.org/2004/02/skos/core#Concept> ;
                                <http://www.w3.org/2004/02/skos/core#notation> "C41"^^:ConceptNotation ;
-                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Subforma de contagem do PCA: F01.12"@pt ;
-                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Maior de idade: data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015; Menor de idade: data em que o respectivo titular completar 21 anos, nos termos do artigo 220.º da Lei n.º 4/2015\" - Sempre que as formas de contagem de prazos estipuladas nas alíneas c) e e) do n.º 6 não forem aplicáveis, por o título não ser emitido ou por não se iniciar o período de vigência, compete às entidades previstas no artigo 2.º proceder ao encerramento das agregações, em conformidade com o código do procedimento administrativo, dando início à contagem do prazo de conservação administrativa"@pt .
+                               <http://www.w3.org/2004/02/skos/core#prefLabel> "PCA Counting Subform: F01.12"@en ,
+                                                                               "Subforma de contagem do PCA: F01.12"@pt ;
+                               <http://www.w3.org/2004/02/skos/core#scopeNote> "Maior de idade: data do cancelamento definitivo do registo criminal, nos termos do artigo 11.º da Lei n.º 37/2015; Menor de idade: data em que o respectivo titular completar 21 anos, nos termos do artigo 220.º da Lei n.º 4/2015\" - Sempre que as formas de contagem de prazos estipuladas nas alíneas c) e e) do n.º 6 não forem aplicáveis, por o título não ser emitido ou por não se iniciar o período de vigência, compete às entidades previstas no artigo 2.º proceder ao encerramento das agregações, em conformidade com o código do procedimento administrativo, dando início à contagem do prazo de conservação administrativa"@pt ,
+                                                                               "Of legal age: date of definitive cancellation of the criminal record, in accordance with  article 11 of Law no. 37/2015; Minor: date on which the respective holder turns 21, in accordance with  article 220 of Law no. 6 are not applicable, because the title is not issued or because the period of validity has not started, it is up to the entities provided for in article 2 to close the aggregations, in accordance with the code of the administrative procedure, starting the counting of the administrative retention period"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_apreciador
@@ -2329,8 +2353,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
                                     :vc_valor "Apreciar" ;
                                     <http://www.w3.org/2004/02/skos/core#notation> "C42"^^:ConceptNotation ;
-                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Apreciar"@pt ;
-                                    <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função apreciar."@pt .
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Appraise"@en ,
+                                                                                    "Apreciar"@pt ;
+                                    <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função apreciar."@pt ,
+                                                                                    "The participating organization has the role of appraising."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_assessor
@@ -2338,8 +2364,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
                                   :vc_valor "Assessorar" ;
                                   <http://www.w3.org/2004/02/skos/core#notation> "C43"^^:ConceptNotation ;
-                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Assessorar"@pt ;
-                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função assessorar."@pt .
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Advise"@en ,
+                                                                                  "Assessorar"@pt ;
+                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função assessorar."@pt ,
+                                                                                  "The participating organization has the role of advising."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_comunicador
@@ -2347,8 +2375,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                               <http://www.w3.org/2004/02/skos/core#Concept> ;
                                      :vc_valor "Comunicar" ;
                                      <http://www.w3.org/2004/02/skos/core#notation> "C44"^^:ConceptNotation ;
-                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Comunicar"@pt ;
-                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função comunicar."@pt .
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Communicating"@en ,
+                                                                                     "Comunicar"@pt ;
+                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função comunicar."@pt ,
+                                                                                     "The participating organization has the role of communicating."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_decisor
@@ -2356,8 +2386,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
                                  :vc_valor "Decidir" ;
                                  <http://www.w3.org/2004/02/skos/core#notation> "C45"^^:ConceptNotation ;
-                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Decidir"@pt ;
-                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função decidir."@pt .
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Deciding"@en ,
+                                                                                 "Decidir"@pt ;
+                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função decidir."@pt ,
+                                                                                 "The participating organization has the role of deciding."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_executor
@@ -2365,8 +2397,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                            <http://www.w3.org/2004/02/skos/core#Concept> ;
                                   :vc_valor "Executar" ;
                                   <http://www.w3.org/2004/02/skos/core#notation> "C46"^^:ConceptNotation ;
-                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Executar"@pt ;
-                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função executar."@pt .
+                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Executar"@pt ,
+                                                                                  "Executing"@en ;
+                                  <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função executar."@pt ,
+                                                                                  "The participating organization has the role of executing."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoParticipante_iniciador
@@ -2374,8 +2408,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
                                    :vc_valor "Iniciar" ;
                                    <http://www.w3.org/2004/02/skos/core#notation> "C47"^^:ConceptNotation ;
-                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Iniciar"@pt ;
-                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função iniciar."@pt .
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Iniciar"@pt ,
+                                                                                   "Iniciating"@en ;
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "A organização participante tem como função iniciar."@pt ,
+                                                                                   "The participating organization has the role of iniciating."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipo
@@ -2384,8 +2420,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                  <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoTipo_pc ,
                                                                      :vc_processoTipo_pe ;
                  <http://www.w3.org/2004/02/skos/core#notation> "C48"^^:ConceptNotation ;
-                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de Processo"@pt ;
-                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado tipifica o processo. Por exemplo: processo específico ou processo comum."@pt .
+                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Process Type"@en ,
+                                                                 "Tipo de Processo"@pt ;
+                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado tipifica o processo. Por exemplo: processo específico ou processo comum."@pt ,
+                                                                 "This controlled vocabulary typifies the process. For example: specific process or common process."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoParticipacao
@@ -2398,8 +2436,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                                                                  :vc_processoParticipante_executor ,
                                                                                  :vc_processoParticipante_iniciador ;
                              <http://www.w3.org/2004/02/skos/core#notation> "C51"^^:ConceptNotation ;
-                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de participação no processo"@pt ;
-                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Vocabulário controlado que carateriza a participação de uma entidade num processo."@pt .
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de participação no processo"@pt ,
+                                                                             "Type of participation in the process"@en ;
+                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Controlled vocabulary that characterizes the participation of an entity in a process."@en ,
+                                                                             "Vocabulário controlado que carateriza a participação de uma entidade num processo."@pt .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao
@@ -2413,65 +2453,80 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                                                             :vc_processoTipoRelacao_sucessor ,
                                                                             :vc_processoTipoRelacao_suplementar ;
                         <http://www.w3.org/2004/02/skos/core#notation> "C52"^^:ConceptNotation ;
-                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de Relação entre Processos"@pt ;
-                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado contem a informação relativa aos vários tipos de relação que podem existir entre processos."@pt .
+                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Tipo de Relação entre Processos"@pt ,
+                                                                        "Type of Relationship between Processes"@en ;
+                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário controlado contem a informação relativa aos vários tipos de relação que podem existir entre processos."@pt ,
+                                                                        "This controlled vocabulary contains information regarding the various types of relationships that can exist between processes."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_antecessor
 :vc_processoTipoRelacao_antecessor rdf:type owl:NamedIndividual ,
                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
                                    <http://www.w3.org/2004/02/skos/core#notation> "C53"^^:ConceptNotation ;
-                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "É Antecessor de"@pt ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "It is predecessor of"@en ,
+                                                                                   "É Antecessor de"@pt ;
                                    <http://www.w3.org/2004/02/skos/core#related> :vc_processoTipoRelacao_sucessor ;
-                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando o produto de um processo dá origem a outro processo (o procedente não existe sem o  anterior)."@pt .
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando o produto de um processo dá origem a outro processo (o procedente não existe sem o  anterior)."@pt ,
+                                                                                   "When the product of a process gives rise to another process (the proceeding does not exist without the previous one)."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_complementar
 :vc_processoTipoRelacao_complementar rdf:type owl:NamedIndividual ,
                                               <http://www.w3.org/2004/02/skos/core#Concept> ;
                                      <http://www.w3.org/2004/02/skos/core#notation> "C54"^^:ConceptNotation ;
-                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "É Complementar de"@pt ;
-                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando dois processos, decorrendo de forma paralela, adicionam um ao outro informação complementar."@pt .
+                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "It is complementary to"@en ,
+                                                                                     "É Complementar de"@pt ;
+                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando dois processos, decorrendo de forma paralela, adicionam um ao outro informação complementar."@pt ,
+                                                                                     "When two processes, running in parallel, add complementary information to each other."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_cruzado
 :vc_processoTipoRelacao_cruzado rdf:type owl:NamedIndividual ,
                                          <http://www.w3.org/2004/02/skos/core#Concept> ;
                                 <http://www.w3.org/2004/02/skos/core#notation> "C55"^^:ConceptNotation ;
-                                <http://www.w3.org/2004/02/skos/core#prefLabel> "É Cruzado com"@pt ;
-                                <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando existe interseção de dois processos em determinado momento, seguindo depois percursos distintos."@pt .
+                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Is crossed with"@en ,
+                                                                                "É Cruzado com"@pt ;
+                                <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando existe interseção de dois processos em determinado momento, seguindo depois percursos distintos."@pt ,
+                                                                                "When there is an intersection of two processes at a given time, then following different paths."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_eSinteseDe
 :vc_processoTipoRelacao_eSinteseDe rdf:type owl:NamedIndividual ,
                                             <http://www.w3.org/2004/02/skos/core#Concept> ;
                                    <http://www.w3.org/2004/02/skos/core#notation> "C56"^^:ConceptNotation ;
-                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "É Síntese de"@pt ;
+                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "It is synthesis of"@en ,
+                                                                                   "É Síntese de"@pt ;
                                    <http://www.w3.org/2004/02/skos/core#related> :vc_processoTipoRelacao_eSintetizadoPor ;
-                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo condensa a informação de outro processo (ou que uma etapa de um processo condensa outra(s) etapa(s) desse processo)."@pt .
+                                   <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo condensa a informação de outro processo (ou que uma etapa de um processo condensa outra(s) etapa(s) desse processo)."@pt ,
+                                                                                   "When a process condenses information from another process (or that one step of a process condenses another step(s) of that process)."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_eSintetizadoPor
 :vc_processoTipoRelacao_eSintetizadoPor rdf:type owl:NamedIndividual ,
                                                  <http://www.w3.org/2004/02/skos/core#Concept> ;
                                         <http://www.w3.org/2004/02/skos/core#notation> "C57"^^:ConceptNotation ;
-                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "É Sintetizado por"@pt ;
-                                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo vai ter a sua informação condensada por outro processo."@pt .
+                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Is synthesized by"@en ,
+                                                                                        "É Sintetizado por"@pt ;
+                                        <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo vai ter a sua informação condensada por outro processo."@pt ,
+                                                                                        "When a process will have its information condensed by another process."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_sucessor
 :vc_processoTipoRelacao_sucessor rdf:type owl:NamedIndividual ,
                                           <http://www.w3.org/2004/02/skos/core#Concept> ;
                                  <http://www.w3.org/2004/02/skos/core#notation> "C58"^^:ConceptNotation ;
-                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "É Sucessor de"@pt ;
-                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo é originado pelo produto de outro processo (o procedente não existe sem o  anterior)."@pt .
+                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "It is Successor of"@en ,
+                                                                                 "É Sucessor de"@pt ;
+                                 <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um processo é originado pelo produto de outro processo (o procedente não existe sem o  anterior)."@pt ,
+                                                                                 "When a process is originated by the product of another process (the proceeding does not exist without the previous one)."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipoRelacao_suplementar
 :vc_processoTipoRelacao_suplementar rdf:type owl:NamedIndividual ,
                                              <http://www.w3.org/2004/02/skos/core#Concept> ;
                                     <http://www.w3.org/2004/02/skos/core#notation> "C59"^^:ConceptNotation ;
-                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "É Suplemento de"@pt ;
+                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "It is a supplement to"@en ,
+                                                                                    "É Suplemento de"@pt ;
                                     <http://www.w3.org/2004/02/skos/core#scopeNote> "Quando um PN recolhe e analisa a informação contida noutros PN, cotejando-os entre si, não lhes adicionando conteúdo informativo."@pt .
 
 
@@ -2480,7 +2535,8 @@ The LC integrates evaluation decisions (determination of administrative retentio
                              <http://www.w3.org/2004/02/skos/core#Concept> ;
                     :vc_valor "PC" ;
                     <http://www.w3.org/2004/02/skos/core#notation> "C49"^^:ConceptNotation ;
-                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Comum"@pt .
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Common Process"@en ,
+                                                                    "Processo Comum"@pt .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTipo_pe
@@ -2488,7 +2544,8 @@ The LC integrates evaluation decisions (determination of administrative retentio
                              <http://www.w3.org/2004/02/skos/core#Concept> ;
                     :vc_valor "PE" ;
                     <http://www.w3.org/2004/02/skos/core#notation> "C50"^^:ConceptNotation ;
-                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Específico"@pt .
+                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Específico"@pt ,
+                                                                    "Specific Process"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTransversal_nao
@@ -2496,7 +2553,8 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                      <http://www.w3.org/2004/02/skos/core#Concept> ;
                             :vc_valor "N" ;
                             <http://www.w3.org/2004/02/skos/core#notation> "C60"^^:ConceptNotation ;
-                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Não"@pt .
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "No"@en ,
+                                                                            "Não"@pt .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTransversal_sim
@@ -2504,7 +2562,8 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                      <http://www.w3.org/2004/02/skos/core#Concept> ;
                             :vc_valor "S" ;
                             <http://www.w3.org/2004/02/skos/core#notation> "C61"^^:ConceptNotation ;
-                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Sim"@pt .
+                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Sim"@pt ,
+                                                                            "Yes"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_processoTransversalidade
@@ -2513,16 +2572,20 @@ The LC integrates evaluation decisions (determination of administrative retentio
                              <http://www.w3.org/2004/02/skos/core#hasTopConcept> :vc_processoTransversal_nao ,
                                                                                  :vc_processoTransversal_sim ;
                              <http://www.w3.org/2004/02/skos/core#notation> "C62"^^:ConceptNotation ;
-                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Transversal"@pt ;
-                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário é constituído apenas pelos valores \"Sim\" e \"Não\" e serve para indicar se um processo é ou não Transversal."@pt .
+                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Processo Transversal"@pt ,
+                                                                             "Transversal Process"@en ;
+                             <http://www.w3.org/2004/02/skos/core#scopeNote> "Este vocabulário é constituído apenas pelos valores \"Sim\" e \"Não\" e serve para indicar se um processo é ou não Transversal."@pt ,
+                                                                             "This vocabulary consists only of the values ​​\"Yes\" and \"No\" and serves to indicate whether or not a process is Transversal."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_removidos
 :vc_removidos rdf:type owl:NamedIndividual ,
                        <http://www.w3.org/2004/02/skos/core#ConceptScheme> ;
               <http://www.w3.org/2004/02/skos/core#notation> "C63"^^:ConceptNotation ;
-              <http://www.w3.org/2004/02/skos/core#prefLabel> "Ternos de Vocabulários Removidos"@pt ;
-              <http://www.w3.org/2004/02/skos/core#scopeNote> "Este Vocabulário simboliza os termos removidos de outros vocabulários"@pt .
+              <http://www.w3.org/2004/02/skos/core#prefLabel> "Removed Vocabulary Suits"@en ,
+                                                              "Ternos de Vocabulários Removidos"@pt ;
+              <http://www.w3.org/2004/02/skos/core#scopeNote> "Este Vocabulário simboliza os termos removidos de outros vocabulários"@pt ,
+                                                              "This Vocabulary symbolizes terms removed from other vocabularies"@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_status
@@ -2532,8 +2595,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                                                                :vc_status_H ,
                                                                :vc_status_I ;
            <http://www.w3.org/2004/02/skos/core#notation> "C64"^^:ConceptNotation ;
-           <http://www.w3.org/2004/02/skos/core#prefLabel> "Status"@pt ;
-           <http://www.w3.org/2004/02/skos/core#scopeNote> "Vocabulário Controlado para os vários estados em que um processo ou tabela de seleção poderá encontrar-se."@pt .
+           <http://www.w3.org/2004/02/skos/core#prefLabel> "Status"@en ,
+                                                           "Status"@pt ;
+           <http://www.w3.org/2004/02/skos/core#scopeNote> "Controlled vocabulary for the various states a process or selection table may find itself in."@en ,
+                                                           "Vocabulário Controlado para os vários estados em que um processo ou tabela de seleção poderá encontrar-se."@pt .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_status_A
@@ -2541,8 +2606,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                       <http://www.w3.org/2004/02/skos/core#Concept> ;
              :vc_valor "A" ;
              <http://www.w3.org/2004/02/skos/core#notation> "C65"^^:ConceptNotation ;
-             <http://www.w3.org/2004/02/skos/core#prefLabel> "Ativa"@pt ;
-             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está ativa."@pt .
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Active"@en ,
+                                                             "Ativa"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está ativa."@pt ,
+                                                             "The entity is active."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_status_H
@@ -2550,8 +2617,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                       <http://www.w3.org/2004/02/skos/core#Concept> ;
              :vc_valor "H" ;
              <http://www.w3.org/2004/02/skos/core#notation> "C66"^^:ConceptNotation ;
-             <http://www.w3.org/2004/02/skos/core#prefLabel> "Harmonização"@pt ;
-             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está a ser trabalhada e , em princípio, depois de validada passará ao estado ativo."@pt .
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Harmonization"@en ,
+                                                             "Harmonização"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está a ser trabalhada e , em princípio, depois de validada passará ao estado ativo."@pt ,
+                                                             "The entity is being worked on and, in principle, after being validated, it will go to the active state."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_status_I
@@ -2559,8 +2628,10 @@ The LC integrates evaluation decisions (determination of administrative retentio
                       <http://www.w3.org/2004/02/skos/core#Concept> ;
              :vc_valor "I" ;
              <http://www.w3.org/2004/02/skos/core#notation> "C67"^^:ConceptNotation ;
-             <http://www.w3.org/2004/02/skos/core#prefLabel> "Inativa"@pt ;
-             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está inativa depois de ter estado ativa. Foi substituída por outra ou simplesmente retirada. Será mantida no sistema para fins históricos."@pt .
+             <http://www.w3.org/2004/02/skos/core#prefLabel> "Inactive"@en ,
+                                                             "Inativa"@pt ;
+             <http://www.w3.org/2004/02/skos/core#scopeNote> "A entidade está inativa depois de ter estado ativa. Foi substituída por outra ou simplesmente retirada. Será mantida no sistema para fins históricos."@pt ,
+                                                             "The entity is inactive after having been active. Has been replaced by another or simply withdrawn. It will be kept in the system for historical purposes."@en .
 
 
 ###  http://jcr.di.uminho.pt/clav#vc_tipoDiplomaLegislativo
