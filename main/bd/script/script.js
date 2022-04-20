@@ -6,22 +6,30 @@ const N3 = require('n3');
 const store = new N3.Store();
 const fact = require('rdf-data-factory')
 const factory = new fact.DataFactory();
-
-
-
 var fs = require('fs');
-
-var file = fs.readFileSync('../clave.ttl');
 const rdfParser = require("rdf-parse").default;
-const quadStream = rdfParser.parse(fs.createReadStream('../clave.ttl'),
-  { contentType: 'text/turtle' });
-
-store.import(quadStream)
-  .on('end', () => console.log('Stream has been imported'));
-var final = []
-
 var config = require('../clav-triples.json');
 
+/**
+ * (@en) File parse to triple stream imported by graph              
+ * (@pt) Parse do ficheiro para stream de triplos importada para o grafo
+ * @param {RDFJS stream} quadStream - Stream de triplos
+ */
+
+ const quadStream = rdfParser.parse(fs.createReadStream('../clave.ttl'),
+ { contentType: 'text/turtle' });
+
+store.import(quadStream)
+ .on('end', () => console.log('Stream has been imported'));
+ 
+console.log(quadStream)
+
+var final = []
+
+/**
+ * (@en) All named individuals identification
+ * (@pt) Identificação dos named individuals
+ */
 config.triples.forEach(element => {
     if(element.object.value.split('#')[1] == "NamedIndividual"){
         if(element.subject.value.split('#')[1].split('_')[0] != "vc"){
@@ -35,6 +43,11 @@ var subject = ''
 var predicate = ''
 var object = ''
 
+
+/**
+ * (@en) Triple translation and migration to graph
+ * (@pt) Tradução e migração dos triplos
+ */
 config.triples.forEach(element => {
     if(final.includes(element.subject.value)){
         subject =  element.subject.value.replace('m51-clav','clav')
@@ -59,6 +72,11 @@ config.triples.forEach(element => {
         
     }
 });
+
+/**
+ * (@en) Write in file
+ * (@pt) Escrita no ficheiro
+ */
 const quad = store.match()
 quad
   .pipe(new N3.StreamWriter())
