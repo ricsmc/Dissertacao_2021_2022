@@ -6,6 +6,8 @@ var logger = require('morgan');
 var jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
+var classRouter = require('./routes/classes');
+
 
 var app = express();
 
@@ -29,6 +31,8 @@ app.use(function(req,res,next){
   })
 })
 app.use('/', indexRouter);
+app.use('/classes', classRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -42,8 +46,7 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  res.status(err.status || 500).jsonp(err);
 });
 
 module.exports = app;
