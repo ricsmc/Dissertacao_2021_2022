@@ -7,6 +7,7 @@ var jwt = require('jsonwebtoken');
 
 var indexRouter = require('./routes/index');
 var classRouter = require('./routes/classes');
+var entidadeRouter = require('./routes/entidades');
 
 
 var app = express();
@@ -30,8 +31,10 @@ app.use(function(req,res,next){
     }
   })
 })
+
 app.use('/', indexRouter);
 app.use('/classes', classRouter);
+app.use('/entidades', entidadeRouter);
 
 
 // catch 404 and forward to error handler
