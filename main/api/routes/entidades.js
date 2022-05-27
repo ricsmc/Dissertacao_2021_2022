@@ -51,6 +51,19 @@ router.post('/', function(req, res, next) {
 	    .catch(err => res.status(500).jsonp(err))
 });
 
+router.put('/:id', function(req, res, next) {
+    EntidadeControl.edit(req.params.id, req.body)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
+router.put('/:id/extinguir', function(req, res, next) {
+    EntidadeControl.delete(req.params.id)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
+
 
 
 module.exports = router;

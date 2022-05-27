@@ -152,17 +152,7 @@ module.exports.sigla = async function(sigla){
 }
 
 module.exports.insert = async function(body){
-    var tip = ';:pertenceTipologiaEnt '
-    if(body.tipologiasSel.length === 1){
-        tip = tip + `:${body.tipologiasSel[0].id}.`
-    }
-    else if(body.tipologiasSel.length > 1){
-        body.tipologiasSel.forEach((element,index) => {
-            if(index === body.tipologiasSel.length-1) tip = tip + `:${element.id}.`;
-            else tip = tip + `:${element.id}, `;
-        });
-    }
-    else tip = '.';
+    var tip = listaTriplos(body.tipologiasSel,'pertenceTipologiaEnt ')
     
     var myquery = `
     insert data {
@@ -178,4 +168,82 @@ module.exports.insert = async function(body){
     `
     var results = await gdb.execTransaction(myquery);
     return
+}
+
+module.exports.edit = async function(id,body){
+    var tip = listaTriplos(body.tipologiasSel,'pertenceTipologiaEnt ')
+    
+    var myquery = `
+    delete {
+        :${id} rdf:type :Entidade,
+                          owl:NamedIndividual;
+                 :entDesignacao ?d ;
+                :entEstado ?e ;
+                :entInternacional ?i ;
+                :entSIOE ?s ;
+                :entSigla ?a ;
+                :pertenceTipologiaEnt ?t.
+    }
+    insert {
+        :${id} rdf:type :Entidade,
+                                    owl:NamedIndividual;
+                          :entDesignacao "${body.designacao}" ;
+                          :entEstado "${body.estado}" ;
+                          :entInternacional "${body.internacional}" ;
+                          :entSIOE "${body.sioe}" ;
+                          :entSigla "${body.sigla}"${tip}
+                          
+    }
+    where {
+        :${id} :entDesignacao ?d ;
+                :entEstado ?e ;
+                :entInternacional ?i ;
+                :entSIOE ?s ;
+                :entSigla ?a ;
+                :pertenceTipologiaEnt ?t.
+    } 
+    `
+    var results = await gdb.execTransaction(myquery);
+    return
+}
+
+module.exports.delete = async function(id){
+    var myquery = `
+    delete {
+        :${id} rdf:type :Entidade,
+                          owl:NamedIndividual;
+                 :entDesignacao ?d ;
+                :entEstado ?e ;
+                :entInternacional ?i ;
+                :entSIOE ?s ;
+                :entSigla ?a ;
+                :pertenceTipologiaEnt ?t.
+    } where {
+        :${id} :entDesignacao ?d ;
+                :entEstado ?e ;
+                :entInternacional ?i ;
+                :entSIOE ?s ;
+                :entSigla ?a ;
+                :pertenceTipologiaEnt ?t.
+    } 
+    `
+    var results = await gdb.execTransaction(myquery);
+    return { message : 'Removed'}
+}
+
+
+function listaTriplos(x,pred){
+    var tip = ';:' + pred
+    if(x.length === 1){
+        tip = tip + `:${x[0].id}.`
+    }
+    else if(x.length > 1){
+        x.forEach((element,index) => {
+            if(index === x.length-1) tip = tip + `:${element.id}.`;
+            else tip = tip + `:${element.id}, `;
+        });
+    }
+    else tip = '.';
+
+    return tip
 }
