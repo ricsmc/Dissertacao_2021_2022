@@ -27,6 +27,70 @@ module.exports.classes = async function(){
     return dados
 }
 
+async function getClass(elem,x) { 
+    var e = elem.split('#')[1]
+    var myquery = `
+    select ?codigo ?titulo ?status (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
+        :${e} :codigo ?codigo;
+             :titulo ?titulo;
+              :classeStatus ?status;
+             :temFilho ?c2.
+    } group by ?id ?codigo ?titulo ?status
+    `
+    var myquery2 =  `
+    select ?codigo ?titulo ?status where { 
+        :${e} :codigo ?codigo;
+            :titulo ?titulo;
+            :classeStatus ?status.
+    }
+    `
+    var dados = ''
+    if(x >= 4) {
+        var result = await gdb.execQuery(myquery2);
+        var C1 = result.results.bindings[0]
+        dados = {
+                codigo: C1.codigo.value,
+                titulo: C1.titulo.value,
+                id: elem,
+                status: C1.status.value
+            }
+
+    }
+    
+    else {
+        var result = await gdb.execQuery(myquery);
+        var C1 = result.results.bindings[0]
+        if(C1 == undefined){
+            result = await gdb.execQuery(myquery2);
+            C1 = result.results.bindings[0]
+            dados = {
+                    codigo: C1.codigo.value,
+                    titulo: C1.titulo.value,
+                    id: elem,
+                    status: C1.status.value,
+                    filhos: []
+                }
+        }
+        else {
+            dados = {
+                codigo: C1.codigo.value,
+                titulo: C1.titulo.value,
+                id: elem,
+                status: C1.status.value,
+                filhos: await Promise.all (C1.filhos.value.split(';').map(C2 => {
+                    let dados = getClass(C2,x+1)
+                    return dados
+                }))
+            };
+
+        }
+        
+    }
+    return dados
+    
+}
+
+
 module.exports.classChildren = async function(id){
     var myquery = `
     select (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
@@ -403,70 +467,6 @@ module.exports.titulo = async function(title){
     if(result.results.bindings.length > 0) return true;
     else return false;
 }
-
-async function getClass(elem,x) { 
-    var e = elem.split('#')[1]
-    var myquery = `
-    select ?codigo ?titulo ?status (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
-        :${e} :codigo ?codigo;
-             :titulo ?titulo;
-              :classeStatus ?status;
-             :temFilho ?c2.
-    } group by ?id ?codigo ?titulo ?status
-    `
-    var myquery2 =  `
-    select ?codigo ?titulo ?status where { 
-        :${e} :codigo ?codigo;
-            :titulo ?titulo;
-            :classeStatus ?status.
-    }
-    `
-    var dados = ''
-    if(x >= 4) {
-        var result = await gdb.execQuery(myquery2);
-        var C1 = result.results.bindings[0]
-        dados = {
-                codigo: C1.codigo.value,
-                titulo: C1.titulo.value,
-                id: elem,
-                status: C1.status.value
-            }
-
-    }
-    
-    else {
-        var result = await gdb.execQuery(myquery);
-        var C1 = result.results.bindings[0]
-        if(C1 == undefined){
-            result = await gdb.execQuery(myquery2);
-            C1 = result.results.bindings[0]
-            dados = {
-                    codigo: C1.codigo.value,
-                    titulo: C1.titulo.value,
-                    id: elem,
-                    status: C1.status.value,
-                    filhos: []
-                }
-        }
-        else {
-            dados = {
-                codigo: C1.codigo.value,
-                titulo: C1.titulo.value,
-                id: elem,
-                status: C1.status.value,
-                filhos: await Promise.all (C1.filhos.value.split(';').map(C2 => {
-                    let dados = getC(C2,x+1)
-                    return dados
-                }))
-            };
-
-        }
-        
-    }
-    return await dados
-    
-}
-
 
 async function getClass_noChildren(elem) { 
     var e = elem.split('#')[1]

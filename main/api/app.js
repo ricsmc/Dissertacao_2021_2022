@@ -8,6 +8,11 @@ var jwt = require('jsonwebtoken');
 var indexRouter = require('./routes/index');
 var classRouter = require('./routes/classes');
 var entidadeRouter = require('./routes/entidades');
+var indicadorRouter = require('./routes/indicadores');
+var legislacaoRouter = require('./routes/legislacao');
+var notasApRouter = require('./routes/notas_aplicacao');
+var termosIndiceRouter = require('./routes/termos_indice');
+var tipologiasRouter = require('./routes/tipologias');
 
 
 var app = express();
@@ -35,6 +40,12 @@ app.use(function(req,res,next){
 app.use('/', indexRouter);
 app.use('/classes', classRouter);
 app.use('/entidades', entidadeRouter);
+app.use('/indicadores', indicadorRouter);
+app.use('/legislacao', legislacaoRouter);
+app.use('/notasAp', notasApRouter);
+app.use('/termosIndice', termosIndiceRouter);
+app.use('/tipologias', tipologiasRouter);
+
 
 
 // catch 404 and forward to error handler
