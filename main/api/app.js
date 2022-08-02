@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var jwt = require('jsonwebtoken');
+var swaggerUI = require('swagger-ui-express')
+
 
 var indexRouter = require('./routes/index');
 var classRouter = require('./routes/classes');
@@ -25,6 +27,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+var yaml = require('js-yaml')
+var fs = require('fs')
+var swaggerDocument = yaml.load(fs.readFileSync('./openapi.yaml'))
+app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 app.use(function(req,res,next){
   var myToken = req.headers.authorization || req.body.token;
   jwt.verify(myToken, 'CLAV', function(e){
@@ -36,6 +43,8 @@ app.use(function(req,res,next){
     }
   })
 })
+
+
 
 app.use('/', indexRouter);
 app.use('/classes', classRouter);

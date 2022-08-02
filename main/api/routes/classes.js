@@ -10,6 +10,32 @@ router.get('/', function(req, res, next) {
 	    .catch(err => res.status(500).jsonp(err))
 });
 
+
+router.get('/codigo', function(req, res, next) {
+    ClassControl.codigo(req.query.codigo)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
+router.get('/justificacao/:id', function(req, res, next) {
+    ClassControl.justificacao(req.params.id)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
+router.get('/titulo', function(req, res, next) {
+    ClassControl.titulo(req.query.valor)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
+
+router.get('/:id', function(req, res, next) {
+    ClassControl.class(req.params.id)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => res.status(500).jsonp(err))
+});
+
 router.get('/:id/descendencia', function(req, res, next) {
     ClassControl.classChildren(req.params.id)
 	    .then(dados =>  res.status(200).jsonp(dados))
@@ -86,24 +112,6 @@ router.get('/:id/procRel/:relacao', function(req, res, next) {
 
 router.get('/:id/ti', function(req, res, next) {
     ClassControl.ti(req.params.id)
-	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
-});
-
-router.get('/codigo', function(req, res, next) {
-    ClassControl.codigo(req.query.codigo)
-	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
-});
-
-router.get('/justificacao/:id', function(req, res, next) {
-    ClassControl.justificacao(req.params.id)
-	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
-});
-
-router.get('/titulo', function(req, res, next) {
-    ClassControl.titulo(req.query.valor)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => res.status(500).jsonp(err))
 });

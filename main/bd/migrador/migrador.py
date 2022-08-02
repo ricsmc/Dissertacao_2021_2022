@@ -21,7 +21,8 @@ data = json.load(f)
 
 final = []
 
-
+g = Graph()
+g.parse("../clave.ttl")
 
 
 for element in data["triples"]:
@@ -30,14 +31,9 @@ for element in data["triples"]:
             if element["subject"]["value"].split('#')[1].split('_')[0] != "vc":
                 final.append(element["subject"]["value"])
 
-g = Graph()
-g.parse("../clave.ttl")
-# In[61]:
 
 if int(str)== 1:
     
-
-    # In[63]:
 
 
     for element in data["triples"]:

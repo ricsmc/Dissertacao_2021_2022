@@ -6,25 +6,24 @@ info:
 
 
     **Última alteração: 26/07/2022**
-  version: 2.0.0
+  version: 1.0.0
   title: CLAV API
   contact:
     name: CLAV
     email: clav@dglab.gov.pt
 servers:
-  - url: '{dominio}/{versao}'
+  - url: '{dominio}:{port}'
     variables:
       dominio:
-        default: 'http://clav-api.di.uminho.pt'
+        default: 'http://localhost'
         description: Domínio
         enum:
-          - 'http://clav-api.di.uminho.pt'
-          - 'http://clav-test.di.uminho.pt'
-      versao:
-        description: Versão da API
-        default: v2
+          - 'http://localhost'
+      port:
+        description: Porta
+        default: '8000'
         enum:
-          - v2
+          - '8000'
 tags:
   - name: Classes
     description: >-
@@ -314,7 +313,6 @@ paths:
           $ref: '#/components/responses/ValidationParameters'
         '500':
           description: Erro
-          /classes/codigo:
   /classes/codigo:
     get:
       summary: Verifica se um código já está atribuido a uma classe
