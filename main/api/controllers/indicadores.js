@@ -169,7 +169,7 @@ async function getNumCritJust (critJust, i) {
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
     dados =  {
-            indicador: "Número Total de critério de justificação " + critJust2,
+            indicador: "CriterioJustificacao" + critJust2,
             valor:C1.count.value
         }
     return dados
@@ -321,9 +321,13 @@ async function getNumLeg (estado) {
 }
 
 module.exports.relacoes = async function(r){
+    var rel = r
+    if(r=="dono") rel = "eDonoProcesso"
+    else if(r=="participante") rel= "participaEm"
+    else if (r=="temLeg") rel="temLegislacao"
     var myquery = `
     select (count(?s) as ?count) where{
-        ?s :${r} ?l.    
+        ?s :${rel} ?l.    
         }
     `
     var dados = []

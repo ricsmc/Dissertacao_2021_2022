@@ -5,7 +5,7 @@ var TipologiaControl = require('../controllers/tipologias')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    TipologiaControl.tipologias()
+    TipologiaControl.tipologias(req.query.info==='completa' ? true : false, req.query.tips,req.query.designacao,req.query.estado)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
 			res.status(500).jsonp(err)
@@ -31,9 +31,10 @@ router.get('/sigla', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    TipologiaControl.tipologia(req.params.id)
+    TipologiaControl.tipologia(req.query.info=='completa' ? true : false , req.params.id)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
+			console.log(err)
 			res.status(500).jsonp(err)
 		})
 });

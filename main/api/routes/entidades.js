@@ -4,9 +4,12 @@ var EntidadeControl = require('../controllers/entidades')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    EntidadeControl.entidades()
-	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
+	EntidadeControl.entidades(req.query.info==='completa' ? true : false, req.query.ents,req.query.sigla,req.query.designacao,req.query.internacional,req.query.sioe,req.query.estado)
+	.then(dados =>  res.status(200).jsonp(dados))
+	.catch(err => {
+		res.status(500).jsonp(err)
+	})
+
 });
 
 router.get('/designacao', function(req, res, next) {
@@ -22,9 +25,11 @@ router.get('/sigla', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    EntidadeControl.id(req.params.id)
+    EntidadeControl.id(req.query.info=='completa' ? true : false , req.params.id)
 	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
+	    .catch(err => {
+			res.status(500).jsonp(err)
+		})
 });
 
 router.get('/:id/intervencao/dono', function(req, res, next) {

@@ -1,8 +1,32 @@
 var gdb = require("../utils/graphdb");
 
-module.exports.legislacao = async function(){
+module.exports.legislacao = async function(completa,fonte,estado,pn){
+    var vars = {
+        groupBy : "",
+        vars : '?data ?id ?link ?numero ?sumario ?tipo',
+        completa : "",
+        optionals : "",
+        fonte : "?fonte",
+        estado : "?estado",
+        pn:""
+    }
+
+    if(fonte) vars.fonte = `"${fonte}"`
+    else vars.vars = `${vars.vars} ${vars.fonte}`
+
+    if(estado) vars.estado = `"${estado}"`
+    else vars.vars = `${vars.vars} ${vars.estado}`
+
+    if(completa){
+        vars.completa = '(group_concat(distinct ?r;separator=";") as ?regula)'
+        vars.optionals = `optional{?id :estaAssoc ?r.}`
+    }
+    if(pn=="com") vars.pn = `filter exists {?id :estaAssoc ?pn.}`
+    else if (pn=="sem") vars.pn = `filter not exists {?id :estaAssoc ?pn.}`
+    vars.groupBy = `group by ${vars.vars}`
+    
     var myquery = `
-    select ?data (group_concat(distinct ?c2;separator=";") as ?entidades) ?estado ?fonte ?id ?link ?numero ?sumario ?tipo where{
+    select ${vars.vars} ${vars.completa} (group_concat(distinct ?c2;separator=";") as ?entidades) where{
         ?id rdf:type :Legislacao;
      		:diplomaData ?data;
     		:diplomaEstado ?estado;
@@ -10,10 +34,12 @@ module.exports.legislacao = async function(){
     		:diplomaNumero ?numero;
     		:diplomaSumario ?sumario;
     		:diplomaTipo ?tipo.
-    optional{?id :temEntidadeResponsavel ?c2.}
-    optional{?id :diplomaFonte ?fonte.} 
-}GROUP BY ?data ?estado ?fonte ?id ?link ?numero ?sumario ?tipo
-order by asc(?id)
+        ${vars.pn}
+        optional{?id :temEntidadeResponsavel ?c2.}
+        optional{?id :diplomaFonte ?fonte.} 
+        ${vars.optionals}
+    }${vars.groupBy}
+    order by asc(?id)
     `
     var result = await gdb.execQuery(myquery);
 	let dados = await Promise.all(result.results.bindings.map(async function (C1) {
@@ -24,21 +50,60 @@ order by asc(?id)
             let d = getSiglaEntidade(C2.split('#')[1])
             return d.then()
         }));
+        else dado.entidades = []
         dado['id'] = C1.id.value.split('#')[1]
-        if(C1.estado != undefined) dado['estado'] = C1.estado.value;
-        if(C1.fonte != undefined) dado['fonte'] = C1.fonte.value;
+        if(fonte) dado.fonte = fonte
+        else if(C1.fonte != undefined) dado.fonte = C1.fonte.value
+
+        if(estado) dado.estado = estado
+        else dado.estado = C1.estado.value
+        
         if(C1.link != undefined) dado['link'] = C1.link.value;
         if(C1.numero != undefined) dado['numero'] = C1.numero.value;
         if(C1.sumario != undefined) dado['sumario'] = C1.sumario.value;
         if(C1.tipo != undefined) dado['tipo'] = C1.tipo.value;
+
+        if(completa) {
+            dado.regula = C1.regula.value.length > 0 ? await Promise.all(C1.regula.value.split(';').map(Element => getDono(Element))) : []
+        }
 		return dado;
 	}));
     return dados
 }
 
-module.exports.legislacaoId = async function(id){
+async function getDono(elem) { 
+    var e = elem.split('#')[1]
+    var myquery =  `
+    select ?codigo ?titulo where { 
+        :${e} :codigo ?codigo;
+            :titulo ?titulo.
+    }
+    `
+    var dados = ''
+    var result = await gdb.execQuery(myquery);
+    var C1 = result.results.bindings[0]
+    dados = {
+            codigo: C1.codigo.value,
+            id:e,
+            titulo: C1.titulo.value,
+        }    
+    
+    return dados
+    
+}
+
+module.exports.legislacaoId = async function(completa,id){
+    var vars = {
+        completa : "",
+        optionals : "",
+    }
+
+    if(completa){
+        vars.completa = '(group_concat(distinct ?r;separator=";") as ?regula)'
+        vars.optionals = `optional{:${id} :estaAssoc ?r.}`
+    }
     var myquery = `
-    select ?data (group_concat(distinct ?c2;separator=";") as ?entidades) ?estado ?fonte ?link ?numero ?sumario ?tipo where{
+    select ?data (group_concat(distinct ?c2;separator=";") as ?entidades) ?estado ?fonte ?link ?numero ?sumario ?tipo ${vars.completa} where{
         :${id} rdf:type :Legislacao;
             :diplomaData ?data;
     		:diplomaEstado ?estado;
@@ -46,9 +111,10 @@ module.exports.legislacaoId = async function(id){
     		:diplomaNumero ?numero;
     		:diplomaSumario ?sumario;
     		:diplomaTipo ?tipo.
-    optional{:${id} :temEntidadeResponsavel ?c2.}
-    optional{:${id} :diplomaFonte ?fonte.}   
-}GROUP BY ?data ?estado ?fonte ?link ?numero ?sumario ?tipo
+        optional{:${id} :temEntidadeResponsavel ?c2.}
+        optional{:${id} :diplomaFonte ?fonte.}
+        ${vars.optionals}   
+    }group by ?data ?estado ?fonte ?link ?numero ?sumario ?tipo
     `
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
@@ -66,6 +132,9 @@ module.exports.legislacaoId = async function(id){
     if(C1.numero != undefined) dado['numero'] = C1.numero.value;
     if(C1.sumario != undefined) dado['sumario'] = C1.sumario.value;
     if(C1.tipo != undefined) dado['tipo'] = C1.tipo.value;
+    if(completa) {
+        dado.regula = C1.regula.value.length > 0 ? await Promise.all(C1.regula.value.split(';').map(Element => getDono(Element))) : []
+    }
     return dado;
 }
 
@@ -158,7 +227,7 @@ module.exports.insert = async function(body){
     
     var myquery = `
     insert data {
-        :leg_${body.sigla} rdf:type :Legislacao,
+        :leg_${body.numero.replace('/','_')} rdf:type :Legislacao,
                                     owl:NamedIndividual;
                           ${entidades}
                           ${processos}

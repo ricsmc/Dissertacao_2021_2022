@@ -3,7 +3,7 @@ var router = express.Router();
 var LegislacaoControl = require('../controllers/legislacao')
 
 router.get('/', function(req, res, next) {
-    LegislacaoControl.legislacao()
+    LegislacaoControl.legislacao(req.query.info==='completa' ? true : false, req.query.fonte,req.query.estado,req.query.pn)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
 			res.status(500).jsonp(err)
@@ -27,7 +27,7 @@ router.get('/portarias', function(req, res, next) {
 });
 
 router.get('/:id', function(req, res, next) {
-    LegislacaoControl.legislacaoId(req.params.id)
+    LegislacaoControl.legislacaoId(req.query.info=='completa' ? true : false , req.params.id)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
 			res.status(500).jsonp(err)
@@ -36,6 +36,14 @@ router.get('/:id', function(req, res, next) {
 
 router.get('/:id/processos', function(req, res, next) {
     LegislacaoControl.processos(req.params.id)
+	    .then(dados =>  res.status(200).jsonp(dados))
+	    .catch(err => {
+			res.status(500).jsonp(err)
+		})
+});
+
+router.post('/', function(req, res, next) {
+    LegislacaoControl.edit(req.body)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
 			res.status(500).jsonp(err)
