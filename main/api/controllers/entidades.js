@@ -1,6 +1,6 @@
 var gdb = require("../utils/graphdb");
 
-module.exports.entidades = async function(completa,ents,sigla,designacao,internacional,sioe,estado){
+module.exports.entidades = async function(completa,ents,sigla,designacao,internacional,sioe,estado,pn){
     var vars = {
         filters : "",
         groupBy : "",
@@ -12,6 +12,7 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
         internacional : "?internacional",
         sioe : "?sioe",
         estado : "?estado",
+        pn:""
     }
     
     if(ents) {
@@ -45,6 +46,18 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
         optional{?id :participaEm ?p.}    
         optional{?id :pertenceTipologiaEnt ?t.}  `
     }
+
+    if(pn=="com") vars.pn = `{filter exists {?id :eDonoProcesso ?pn.}
+    filter exists {?id :participaEm ?pn.}}
+    union
+    {filter not exists {?id :eDonoProcesso ?pn.}
+    filter exists {?id :participaEm ?pn.}}
+    union
+    {filter exists {?id :eDonoProcesso ?pn.}
+    filter not exists {?id :participaEm ?pn.}}
+    `
+    else if (pn=="sem") vars.pn = `{filter not exists {?id :eDonoProcesso ?pn.}
+    filter not exists {?id :participaEm ?pn.}}`
     
     var myquery = `
     select ${vars.vars} ${vars.completa} where{
@@ -56,6 +69,7 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
             :entSIOE ${vars.sioe}.
         ${vars.optionals}
         ${vars.filters}
+        ${vars.pn}
     } ${vars.groupBy} order by asc(?id)
     `
 

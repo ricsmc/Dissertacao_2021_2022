@@ -4,7 +4,7 @@ var EntidadeControl = require('../controllers/entidades')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	EntidadeControl.entidades(req.query.info==='completa' ? true : false, req.query.ents,req.query.sigla,req.query.designacao,req.query.internacional,req.query.sioe,req.query.estado)
+	EntidadeControl.entidades(req.query.info==='completa' ? true : false, req.query.ents,req.query.sigla,req.query.designacao,req.query.internacional,req.query.sioe,req.query.estado,req.query.pn)
 	.then(dados =>  res.status(200).jsonp(dados))
 	.catch(err => {
 		res.status(500).jsonp(err)
