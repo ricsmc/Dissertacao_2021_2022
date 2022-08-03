@@ -5,9 +5,12 @@ var ClassControl = require('../controllers/classes')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    ClassControl.classes()
+    ClassControl.classes(req.query.estrutura,req.query.tipo,req.query.nivel,req.query.ents,req.query.tips,req.query.info)
 	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
+	    .catch(err => {
+			console.log(err)
+			res.status(500).jsonp(err)
+		})
 });
 
 
@@ -31,15 +34,21 @@ router.get('/titulo', function(req, res, next) {
 
 
 router.get('/:id', function(req, res, next) {
-    ClassControl.class(req.params.id)
+    ClassControl.class(req.params.id,req.query.tipo == 'subarvore' ? true : false)
 	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
+	    .catch(err => {
+			console.log(err)
+			res.status(500).jsonp(err)
+		})
 });
 
 router.get('/:id/descendencia', function(req, res, next) {
     ClassControl.classChildren(req.params.id)
 	    .then(dados =>  res.status(200).jsonp(dados))
-	    .catch(err => res.status(500).jsonp(err))
+	    .catch(err => {
+			console.log(err)
+			res.status(500).jsonp(err)
+		})
 });
 
 router.get('/:id/df', function(req, res, next) {

@@ -179,10 +179,8 @@ async function getNumCritJust (critJust, i) {
 module.exports.df = async function(df){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
-        {?s rdf:type :DestinoFinal;
-            :dfValor "${df}".
-        }
-        
+        ?i :temDF ?s .
+        ?s :dfValor "${df}".
         }
     `
     var dados = []
@@ -209,10 +207,8 @@ module.exports.dfstats = async function(){
 async function getNumDF (df) {
     var myquery = `
     select (count(distinct ?s) as ?count) where{
-        {?s rdf:type :DestinoFinal;
-            :dfValor "${df}".
-        }
-        
+        ?i :temDF ?s .
+        ?s :dfValor "${df}".
         }
     `
     var dados = []
@@ -352,8 +348,11 @@ module.exports.relstats = async function(){
 
 async function getNumRel(r) {
     var myquery = `
-    select (count(?s) as ?count) where{
-        ?s :${r} ?l.    
+    select (count(?l) as ?count) where{
+        ?s rdf:type :Classe_N3 .
+        ?l rdf:type ?x.
+        ?s :${r} ?l.   
+        filter(?x=:Classe_N3||?x=:Entidade||?x=:Legislacao) 
         }
     `
     var dados = []

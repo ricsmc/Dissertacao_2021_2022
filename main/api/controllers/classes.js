@@ -1,98 +1,230 @@
 var gdb = require("../utils/graphdb");
+const Classes = module.exports;
 
-module.exports.classes = async function(){
+
+Classes.classes = async function(est,tipo,nivel,ents,tips,info){
+    var x = {
+        sel : '',
+        v : '?id ?codigo ?titulo ?status',
+        opt : '',
+        g :'',
+        nivel :':Classe_N1',
+        filters : '',
+        tipo : '?tipo'
+    }
+    var sel = `?id  :codigo ?codigo;
+                   :titulo ?titulo;
+                   :classeStatus ?status.`
+    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
+        if(info==='completa'){
+            sel = `${sel.slice(0, -1)};
+                    rdf:type ?class.
+                filter(?class!=owl:NamedIndividual)
+            optional{?id :classeStatus ?status.}
+            optional{?id :temPai ?pai.
+                        ?pai :codigo ?codigoPai;
+                            :titulo ?tituloPai.}
+            optional{?id :processoTipoVC ?tpoProc.
+                    ?tpoProc skos:prefLabel ?tipoProc.
+                    filter(lang(?tipoProc)='pt')}
+            optional{?id :processoTransversal ?procTrans.}
+            `
+            x.v = `${x.v} ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans`
+        }
+    }
+    if(!nivel && est!='lista' && !tipo && !ents && !tips) {
+        x.sel = '(group_concat(distinct ?c2;separator=";") as ?filhos)  '
+        x.opt = 'optional{?id :temFilho ?c2.}'
+        x.g = `group by ${x.v}`
+        sel = `?id ?p :Classe_N1 .
+                ${sel}`
+    }
+    else if(nivel){
+        x.nivel = `:Classe_N${nivel}`
+        sel = `?id ?p ${x.nivel} .
+                   ${sel}`
+    } 
+    else if(est==='lista'){
+        sel = `{?id ?p :Classe_N1 .
+                    ${sel}}
+                union
+                {?id ?p :Classe_N2 .
+                    ${sel}}
+                union
+                {?id ?p :Classe_N3 .
+                    ${sel}}
+                union
+                {?id ?p :Classe_N4 .
+                    ${sel}}`
+    }
+    
+    else if (ents || tips){
+        var ents_tips = null
+        if(ents && tips)ents_tips = ents.split(',').concat(tips.split(','))
+        else if(ents) ents_tips = ents.split(',')
+        else ents_tips = tips.split(',')
+        var tip = ''
+        if(tipo) tip = `?id :processoTipoVC :vc_processoTipo_p${tipo.charAt(0)}.`
+        sel = `?id ?p :Classe_N3 .
+        ${sel}
+        ${tip}`
+        ents_tips.forEach((Element,i) => {
+            sel = `${sel} ${i>0 ? 'union':'{'} {
+                ?id :temDono :${Element}.
+            }
+            union{
+                ?id :temParticipante :${Element}.
+            }${i<ents_tips.length-1 ? '':'}'}`
+        })
+        x.g = `group by ${x.v}`
+    }
+    else if (tipo){
+        sel = `?id ?p :Classe_N3.
+                   ${sel}
+               ?id :processoTipoVC :vc_processoTipo_p${tipo.charAt(0)}.`
+    }
     var myquery = `
-    select ?id ?codigo ?titulo ?status (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
-        ?id ?p :Classe_N1 ;
-            :codigo ?codigo;
-             :titulo ?titulo;
-              :classeStatus ?status;
-             :temFilho ?c2.
-    } group by ?id ?codigo ?titulo ?status
-    order by ?id
+    select ${x.v} ${x.sel} where { 
+        ${sel}
+        ${x.filters}
+        ${x.opt}
+    } ${x.g} order by ?id
     `
+    console.log(myquery)
     var result = await gdb.execQuery(myquery);
 	let dados = await Promise.all(result.results.bindings.map(async function (C1) {
-		return {
+        var dado = {
             codigo: C1.codigo.value,
             titulo: C1.titulo.value,
 			id: C1.id.value,
-			status: C1.status.value,
-            filhos: await Promise.all (C1.filhos.value.split(';').map(C2 => {
-                let dados = getClass(C2,2)
-                return dados.then()
-            }))
+			status: C1.status.value
 		};
+        if(C1.filhos) dado.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
+            return await getClass(C2,2,info)
+        })) : []
+        if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
+            
+            let pca = await Classes.pca(dado.id.split('#')[1]);
+            if (pca.length > 0) dado.pca = pca[0];
+            if (dado.pca && dado.pca.idJust) {
+                dado.pca.justificacao = await Classes.justificacao(dado.pca.idJust);
+            }
+            let df = await Classes.classDF(dado.id.split('#')[1]);
+            if (df.length > 0) dado.df = df[0];
+            if (dado.df && dado.df.idJust) {
+                dado.df.justificacao = await Classes.justificacao(dado.df.idJust);
+            }
+            if(info==='completa'){
+                dado.pai = C1.codigoPai ? {
+                    codigo:C1.codigoPai.value,
+                    titulo:C1.tituloPai.value
+                } : {}
+                dado.tipoProc = C1.tipoProc ? C1.tipoProc.value : "",
+                dado.procTrans = C1.procTrans ? C1.procTrans.value : ""
+                dado.notasAp = await Classes.notasApEx(dado.id.split('#')[1],'Aplicacao');
+                dado.exemplosNotasAp = await Classes.exemplosNotasAp(dado.id.split('#')[1]);
+                dado.notasEx = await Classes.notasApEx(dado.id.split('#')[1],'Exclusao');
+                dado.termosInd = await Classes.ti(dado.id.split('#')[1]);
+                dado.donos = await Classes.classDono(dado.id.split('#')[1]);
+                dado.participantes = await Classes.participante(dado.id.split('#')[1]);
+                dado.processosRelacionados = await Classes.procRel(dado.id.split('#')[1]);
+                dado.legislacao = await Classes.legislacao(dado.id.split('#')[1]);
+            }
+        }
+		return dado
 	}));
     return dados
 }
 
-async function getClass(elem,x) { 
+async function getClass(elem,nivel,info) { 
     var e = elem.split('#')[1]
-    var myquery = `
-    select ?codigo ?titulo ?status (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
-        :${e} :codigo ?codigo;
-             :titulo ?titulo;
-              :classeStatus ?status;
-             :temFilho ?c2.
-    } group by ?id ?codigo ?titulo ?status
-    `
-    var myquery2 =  `
-    select ?codigo ?titulo ?status where { 
-        :${e} :codigo ?codigo;
-            :titulo ?titulo;
-            :classeStatus ?status.
+    var x = {
+        sel : '',
+        opt : '',
+        g :'',
+        v : '?codigo ?titulo ?status',
     }
+    var sel = `:${e} ?p :Classe_N${nivel} ;
+                   :codigo ?codigo;
+                   :titulo ?titulo;
+                   :classeStatus ?status.`
+    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
+        if(info==='completa'){
+            sel = `${sel.slice(0, -1)};
+                    rdf:type ?class.
+                filter(?class!=owl:NamedIndividual)
+            optional{?id :classeStatus ?status.}
+            optional{?id :temPai ?pai.
+                        ?pai :codigo ?codigoPai;
+                            :titulo ?tituloPai.}
+            optional{?id :processoTipoVC ?tpoProc.
+                    ?tpoProc skos:prefLabel ?tipoProc.
+                    filter(lang(?tipoProc)='pt')}
+            optional{?id :processoTransversal ?procTrans.}
+            `
+            x.v = `${x.v} ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans`
+        }
+    }
+    if(nivel<4) {
+        x.sel = '(group_concat(distinct ?c2;separator=";") as ?filhos)'
+        x.opt = `optional{:${e} :temFilho ?c2.}`
+        x.g = `group by ${x.v}`
+    }
+    var myquery = `
+    select ${x.v} ${x.sel} where { 
+        ${sel}
+        ${x.opt}
+    } ${x.g}
     `
-    var dados = ''
-    if(x >= 4) {
-        var result = await gdb.execQuery(myquery2);
-        var C1 = result.results.bindings[0]
-        dados = {
-                codigo: C1.codigo.value,
-                titulo: C1.titulo.value,
-                id: elem,
-                status: C1.status.value
-            }
-
+    var dados = null
+    var result = await gdb.execQuery(myquery);
+    var C1 = result.results.bindings[0]
+    dados = {
+        codigo: C1.codigo.value,
+        titulo: C1.titulo.value,
+        id: elem,
+        status: C1.status.value
+    };
+    if(C1.filhos) dados.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
+        return await getClass(C2,nivel+1,info)
+    })) : []
+    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
+        let pca = await Classes.pca(e);
+        if (pca.length > 0) dados.pca = pca[0];
+        if (dados.pca && dados.pca.idJust) {
+            dados.pca.justificacao = await Classes.justificacao(dados.pca.idJust);
+        }
+        let df = await Classes.classDF(e);
+        if (df.length > 0) dados.df = df[0];
+        if (dados.df && dados.df.idJust) {
+            dados.df.justificacao = await Classes.justificacao(dados.df.idJust);
+        }
+        if(info==='completa'){
+            dados.pai = C1.codigoPai ? {
+                codigo:C1.codigoPai.value,
+                titulo:C1.tituloPai.value
+            } : {}
+            dados.tipoProc = C1.tipoProc ? C1.tipoProc.value : "",
+            dados.procTrans = C1.procTrans ? C1.procTrans.value : ""
+            dados.notasAp = await Classes.notasApEx(e,'Aplicacao');
+            dados.exemplosNotasAp = await Classes.exemplosNotasAp(e);
+            dados.notasEx = await Classes.notasApEx(e,'Exclusao');
+            dados.termosInd = await Classes.ti(e);
+            dados.donos = await Classes.classDono(e);
+            dados.participantes = await Classes.participante(e);
+            dados.processosRelacionados = await Classes.procRel(e);
+            dados.legislacao = await Classes.legislacao(e);
+        }
     }
     
-    else {
-        var result = await gdb.execQuery(myquery);
-        var C1 = result.results.bindings[0]
-        if(C1 == undefined){
-            result = await gdb.execQuery(myquery2);
-            C1 = result.results.bindings[0]
-            dados = {
-                    codigo: C1.codigo.value,
-                    titulo: C1.titulo.value,
-                    id: elem,
-                    status: C1.status.value,
-                    filhos: []
-                }
-        }
-        else {
-            dados = {
-                codigo: C1.codigo.value,
-                titulo: C1.titulo.value,
-                id: elem,
-                status: C1.status.value,
-                filhos: await Promise.all (C1.filhos.value.split(';').map(C2 => {
-                    let dados = getClass(C2,x+1)
-                    return dados
-                }))
-            };
 
-        }
-        
-    }
     return dados
     
 }
 
-module.exports.class = async function(id){
+Classes.class = async function(id,subarvore){
     var myquery = `
-    select ?id ?class ?codigoPai ?tituloPai ?codigo ?titulo ?descricao ?status (group_concat(distinct ?c2;separator=";") as ?filhos) (group_concat(distinct ?c3;separator=";") as ?notasAp) (group_concat(distinct ?c4;separator=";") as ?exemplosNotasAp) (group_concat(distinct ?c5;separator=";") as ?notasEx) (group_concat(distinct ?c6;separator=";") as ?termosInd) ?tipoProc ?procTrans (group_concat(distinct ?c7;separator=";") as ?donos) (group_concat(distinct ?c8;separator=";") as ?participantes) (group_concat(distinct ?c9;separator=";") as ?temRelProc) (group_concat(distinct ?c10;separator=";") as ?temLegislacao) ?pca ?df where { 
+    select ?id ?class ?codigoPai ?tituloPai ?codigo ?titulo ?descricao ?status (group_concat(distinct ?c2;separator=";") as ?filhos) ?tipoProc ?procTrans where { 
         ?id :codigo ?codigo.
         :${id} :codigo ?codigo;
              :titulo ?titulo;
@@ -101,24 +233,17 @@ module.exports.class = async function(id){
         filter(?class!=owl:NamedIndividual)
     optional{:${id} :classeStatus ?status.}
     optional{:${id} :temFilho ?c2.}
-    optional{:${id} :temNotaAplicacao ?c3.}
-    optional{:${id} :temNotaExclusao ?c5.}
-    optional{:${id} :temExemploNA ?c4.}
-    optional{:${id} :temTI ?c6.}
-    optional{:${id} :temDono ?c7.}
-    optional{:${id} :temParticipante ?c8.}
-    optional{:${id} :temRelProc ?c9.}
-    optional{:${id} :temLegislacao ?c10.}
     optional{:${id} :temPai ?pai.
              ?pai :codigo ?codigoPai;
                   :titulo ?tituloPai.}
-    optional{:${id} :processoTipo ?tipoProc.}
-    optional{:${id} :processoUniform ?tipoProc.}
+    optional{:${id} :processoTipoVC ?tpoProc.
+            ?tpoProc skos:prefLabel ?tipoProc.
+            filter(lang(?tipoProc)='pt')}
     optional{:${id} :processoTransversal ?procTrans.}
-    optional{:${id} :temPCA ?pca.}
-    optional{:${id} :temDF ?df.}
-    } group by ?id ?class ?codigo ?titulo ?status ?codigoPai ?tituloPai ?descricao ?tipoProc ?procTrans ?pca ?df
+    
+    } group by ?id ?class ?codigo ?titulo ?status ?codigoPai ?tituloPai ?descricao ?tipoProc ?procTrans
     `
+    console.log(myquery)
     var dados = {}
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
@@ -132,333 +257,77 @@ module.exports.class = async function(id){
         titulo : C1.titulo.value,
         descricao : C1.descricao.value,
         status : C1.status ? C1.status.value : "",
-        filhos : C1.filhos.value.length > 0 ? await Promise.all(C1.filhos.value.split(';').map(Element =>  getChild(Element))) : [],
-        notasAp : C1.notasAp.value.length > 0 ? await Promise.all(C1.notasAp.value.split(';').map(Element =>  getNotaAP_ExNAP(Element))) : [],
-        exemplosNotasAp : C1.exemplosNotasAp.value.length > 0 ? await Promise.all(C1.exemplosNotasAp.value.split(';').map(Element =>  getNotaAP_ExNAP(Element))) : [],
-        notasEx : C1.notasEx.value.length > 0 ? await Promise.all(C1.notasEx.value.split(';').map(Element =>  getNotaAP_ExNAP(Element))) : [],
-        termosInd : C1.termosInd.value.length > 0 ? await Promise.all(C1.termosInd.value.split(';').map(Element =>  getTI(Element))) : [],
-        tipoProc : C1.tipoProc ? (C1.tipoProc.value=='S' ? "Processo Comum" : "Processo Não Comum") : "",
+        temSubclasses4Nivel: false,
+        temSubclasses4NivelPCA: false,
+        temSubclasses4NivelDF: false,
+        subdivisao4Nivel01Sintetiza02: true,
+        tipoProc : C1.tipoProc ? C1.tipoProc.value : "",
         procTrans : C1.procTrans ? C1.procTrans.value : "",
-        donos : C1.donos.value.length > 0 ? await Promise.all(C1.donos.value.split(';').map(Element => getDonos(Element,Element.split("#")[1].split("_")[0]))) : [],
-        participantes : C1.participantes.value.length > 0 ? await Promise.all(C1.participantes.value.split(';').map(Element => getParticipantes(id,Element,Element.split("#")[1].split("_")[0]))) : [],
-        temRelProc : C1.temRelProc.value.length > 0 ? await Promise.all(C1.temRelProc.value.split(';').map(Element => getRelacionados(id,Element))) : [],
-        temLegislacao : C1.temLegislacao.value.length > 0 ? await Promise.all(C1.temLegislacao.value.split(';').map(Element => getLegislacao(Element))) : [],
-        pca : C1.pca ? await (getPCA(C1.pca.value)) : {},
-        df : C1.df ? await (getDF(C1.df.value)) : {},
         id : C1.id.value
     }
-	
-    return dados
-}
 
-async function getChild(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?codigo ?titulo where { 
-        :${e} :codigo ?codigo;
-            :titulo ?titulo.
+    dados.filhos = await Classes.classChildren(id);
+    if (dados.filhos.length > 0) {
+      if (dados.nivel == 3) dados.temSubclasses4Nivel = true;
     }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            codigo: C1.codigo.value,
-            titulo: C1.titulo.value,
-        }    
-    
-    return dados
-    
-}
-
-async function getNotaAP_ExNAP(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?nota where { 
-        :${e} :conteudo ?nota.
+    dados.notasAp = await Classes.notasApEx(id,'Aplicacao');
+    dados.exemplosNotasAp = await Classes.exemplosNotasAp(id);
+    dados.notasEx = await Classes.notasApEx(id,'Exclusao');
+    dados.termosInd = await Classes.ti(id);
+    dados.donos = await Classes.classDono(id);
+    dados.participantes = await Classes.participante(id);
+    dados.processosRelacionados = await Classes.procRel(id);
+    dados.legislacao = await Classes.legislacao(id);
+    let pca = await Classes.pca(id);
+    if (pca.length > 0) dados.pca = pca[0];
+	if (dados.pca && dados.pca.idJust) {
+        dados.pca.justificacao = await Classes.justificacao(dados.pca.idJust);
     }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            idNota: elem,
-            nota: C1.nota.value,
-        }    
-    
-    return dados
-    
-}
-
-async function getTI(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?termo where { 
-        :${e} :termo ?termo.
+    let df = await Classes.classDF(id);
+    if (df.length > 0) dados.df = df[0];
+    if (dados.df && dados.df.idJust) {
+        console.log(dados.df)
+        dados.df.justificacao = await Classes.justificacao(dados.df.idJust);
     }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            idTI: elem,
-            termo: C1.termo.value,
-        }    
-    
-    return dados
-    
-}
-
-async function getDonos(elem,tipo) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?tipo ?sigla ?designacao where { 
-        :${e} rdf:type ?tipo;
-                 :${tipo}Sigla ?sigla;
-                 :${tipo}Designacao ?designacao.
-        filter(?tipo!=owl:NamedIndividual)
+    let filhos = dados.filhos
+    if(subarvore){
+        filhos = await Promise.all(filhos.map(async function (Element) {
+            return await Classes.class(Element.id.split('#')[1])
+        } ))
+        dados.filhos = filhos
     }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            tipo: C1.tipo.value,
-            sigla: C1.sigla.value,
-            idDono: e,
-            idTipo: C1.tipo.value.split('#')[1],
-            designacao:C1.designacao.value,
-            id:elem,
-
-        }    
-    
     return dados
-    
 }
 
-async function getParticipantes(id,elem,tipo) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?tipoPar ?tipo ?sigla ?designacao where { 
-        :${e} rdf:type ?tipo;
-                 :${tipo}Sigla ?sigla;
-                 :${tipo}Designacao ?designacao;
-                 ?tipoPar :${id}.
-        filter(?tipoPar != owl:NamedIndividual && ?tipoPar != :participaEm && ?tipoPar != :eDonoProcesso && ?tipo != owl:NamedIndividual)
-    }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    var tp = C1.tipoPar.value.split('#')[1]
-    var tipoPar = ''
-    if(tp=='participaEmApreciando') tipoPar = 'Apreciador'
-    else if(tp=='participaEmAssessorando') tipoPar = 'Assessor'
-    else if(tp=='participaEmComunicando') tipoPar = 'Comunicador'
-    else if(tp=='participaEmDecidindo') tipoPar = 'Decisor'
-    else if(tp=='participaEmExecutando') tipoPar = 'Executor'
-    else if(tp=='participaEmIniciando') tipoPar = 'Iniciador'
-    dados = {
-            participLabel: tipoPar,
-            sigla: C1.sigla.value,
-            idDono: e,
-            idTipo: C1.tipo.value.split('#')[1],
-            designacao:C1.designacao.value,
-            id:elem,
 
-        }    
-    
-    return dados
-    
-}
-
-async function getRelacionados(id,elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?tipoRel ?codigo ?titulo ?status where { 
-        :${e} :codigo ?codigo;
-              :titulo ?titulo;
-              ?tipoR :${id}.
-        ?tipoR owl:inverseOf ?tipoRel.
-        optional{:${e} :classeStatus ?status.}
-        filter(?tipoRel != owl:NamedIndividual && ?tipoRel != :temRelProc )
-    }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            codigo: C1.codigo.value,
-            tipoRel: C1.tipoRel.value,
-            idRel: C1.tipoRel.value.split('#')[1],
-            titulo:C1.titulo.value,
-            id:elem,
-            status:C1.status.value
-
-        }    
-    
-    return dados
-    
-}
-
-async function getLegislacao(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?tipo ?sumario ?numero where { 
-        :${e} :diplomaTipo ?tipo;
-              :diplomaSumario ?sumario;
-              :diplomaNumero ?numero.
-    }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            tipo: C1.tipo.value,
-            sumario: C1.sumario.value,
-            numero: C1.numero.value,
-            idLeg:e,
-            id:elem,
-
-        }    
-    
-    return dados
-    
-}
-
-async function getPCA(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?formaContagem ?idJust ?notas ?valores (group_concat(distinct ?c;separator=";")as ?crit ) ?sub where { 
-        :${e} :pcaValor ?valores;
-              :pcaFormaContagemNormalizada ?vc;
-              :temJustificacao ?idJust.
-        ?vc skos:prefLabel ?formaContagem.
-        ?idJust :temCriterio ?c.
-        optional{:${e} :pcaSubFormaContagem ?s.
-                 ?s skos:prefLabel ?sub.}
-        optional{:${e} :pcaNota ?notas.}
-    }group by ?formaContagem ?idJust ?notas ?valores ?sub
-    `
-    var dados = {}
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    
-    dados = {
-            idPCA: elem,
-            idJust: C1.idJust.value.split('#')[1],
-            notas:C1.notas ? C1.notas.value : "",
-            valores:C1.valores.value,
-            justificacao: C1.crit.value.length > 0 ? await Promise.all(C1.crit.value.split(';').map(Element => getJust(Element))) : [],
-        }   
-        result.results.bindings.forEach(element => {
-            var objName = element.formaContagem['xml:lang']=="pt" ? 'formaContagem' : 'formaContagem_' + element.formaContagem['xml:lang'] 
-            dados[objName] = element.formaContagem.value
-        });
-    if(C1.sub) dados['subFormaContagem'] = C1.sub.value
-    return dados
-    
-}
-
-async function getJust(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?tipoId ?conteudo (group_concat(distinct ?p;separator=";")as ?processos ) (group_concat(distinct ?l;separator=";")as ?legislacao ) where { 
-        :${e} rdf:type ?tipoId;
-                 :conteudo ?conteudo.
-        optional{:${e} :critTemProcRel ?p.}         
-        optional{:${e} :critTemLegAssoc ?l.}
-        filter(?tipoId != owl:NamedIndividual && ?tipoId != :AtributoComposto && ?tipoId != :CriterioJustificacao)
-    }group by ?tipoId ?conteudo
-    `
-    var dados = {}
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    
-    dados = {
-            tipoId: C1.tipoId.value.split('#')[1],
-            conteudo: C1.conteudo.value,
-            criterio:elem,
-            processos:C1.processos.value.length > 0 ? C1.processos.value.split(';').map(Element => { return {procId:Element.split('#')[1]}}) : [],
-            legislacao:C1.legislacao.value.length > 0 ? C1.legislacao.value.split(';').map(Element => {return {legId:Element.split('#')[1]}}) : []
-        }   
-    return dados
-
-    
-}
-
-async function getDF(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?idJust ?valor (group_concat(distinct ?c;separator=";")as ?crit ) where { 
-        :${e} :dfValor ?valor;
-              :temJustificacao ?idJust.
-        ?idJust :temCriterio ?c.
-    }group by ?idJust ?valor
-    `
-    var dados = {}
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    
-    dados = {
-            idJust: C1.idJust.value.split('#')[1],
-            valor:C1.valor.value,
-            idDF:elem,
-            justificacao: C1.crit.value.length > 0 ? await Promise.all(C1.crit.value.split(';').map(Element => getJust(Element))) : [],
-        }   
-    return dados
-    
-}
-
-module.exports.classChildren = async function(id){
+Classes.classChildren = async function(id){
     var myquery = `
-    select (group_concat(distinct ?c2;separator=";") as ?filhos) where { 
-        select ?c2 where { 
-            :${id} :temFilho ?c2.
-        }order by asc(?c2)
-     }
+    select * where { 
+        :${id} :temFilho ?c2.
+        ?c2 :classeStatus ?status;
+                :codigo ?codigo ;
+                :titulo ?titulo .
+    }order by asc(?c2)
     `
     var dados = []
     var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    if (C1.filhos.value != '') {
-        dados = await Promise.all (C1.filhos.value.split(';').map(C2 => {
-            let dados = getClass_noChildren(C2)
-            return dados
-        })) 
+    var C1 = result.results.bindings
+    dados = await Promise.all (C1.map(C2 => {
+        return {
+            codigo: C2.codigo.value,
+            titulo: C2.titulo.value,
+            id: C2.c2.value,
+            status: C2.status.value,
+        }
     }
+    )) 
 	
     return dados
 }
 
 
-async function getClass_noChildren(elem) { 
-    var e = elem.split('#')[1]
-    var myquery = `
-    select ?codigo ?titulo ?status where { 
-        :${e} :codigo ?codigo;
-             :titulo ?titulo;
-              :classeStatus ?status.
-    }
-    `
-    var dados = ''
 
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-
-    dados = {
-        codigo: C1.codigo.value,
-        titulo: C1.titulo.value,
-        id: elem,
-        status: C1.status.value,
-    };
-
-
-    return await dados
-    
-}
-
-module.exports.classDF = async function(id){
+Classes.classDF = async function(id){
     var myquery = `
     select ?df ?idJust ?valor where { 
         :${id} :temDF ?df.
@@ -466,19 +335,22 @@ module.exports.classDF = async function(id){
             :dfValor ?valor;
      }
     `
-    var dados = {}
+    var dados = []
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
-    dados = {
-        idJust : C1.idJust.value.split('#')[1],
-        valor : C1.valor.value,
-        idDF : C1.df.value
+    if(C1){
+        dados = {
+            idJust : C1.idJust.value.split('#')[1],
+            valor : C1.valor.value,
+            idDF : C1.df.value
+        }
     }
+    
 	
     return dados
 }
 
-module.exports.classDono = async function(id){
+Classes.classDono = async function(id){
     var myquery = `
     select distinct ?id ?tipo ?sigla ?designacao where { 
         {:${id} :temDono ?id.
@@ -510,7 +382,7 @@ module.exports.classDono = async function(id){
     return dados
 }
 
-module.exports.exemplosNotasAp = async function(id){
+Classes.exemplosNotasAp = async function(id){
     var myquery = `
     select ?id ?exemplo where { 
         :${id} :temExemploNA ?id.
@@ -529,7 +401,7 @@ module.exports.exemplosNotasAp = async function(id){
     return dados
 }
 
-module.exports.legislacao = async function(id){
+Classes.legislacao = async function(id){
     var myquery = `
     select ?id ?tipo ?sumario ?numero where { 
         :${id} :temLegislacao ?id.
@@ -553,7 +425,7 @@ module.exports.legislacao = async function(id){
     return dados
 }
 
-module.exports.meta = async function(id){
+Classes.meta = async function(id){
     var myquery = `
     select ?codigo ?pai ?desc ?pt ?procTrans ?status ?titulo ?tituloPai ?codigoPai ?procTipo (lang(?procTipo) as ?lang) where { 
         :${id} :codigo ?codigo;
@@ -592,7 +464,7 @@ module.exports.meta = async function(id){
     return dados
 }
 
-module.exports.notasApEx = async function(id,ap_ex){
+Classes.notasApEx = async function(id,ap_ex){
     var myquery = `
     select ?idNota ?nota where { 
         :${id} :temNota${ap_ex} ?idNota.
@@ -611,7 +483,7 @@ module.exports.notasApEx = async function(id,ap_ex){
     return dados
 }
 
-module.exports.participante = async function(id){
+Classes.participante = async function(id){
     var myquery = `
     select (group_concat(distinct ?lang;separator=";") as ?langs) (group_concat(distinct ?participLabel;separator=";") as ?participLabels) ?sigla ?designacao ?id ?idTipo where {
         select (lang(?participLabel) as ?lang) ?participLabel ?sigla ?designacao ?id ?idTipo where { 
@@ -653,7 +525,7 @@ module.exports.participante = async function(id){
     return dados
 }
 
-module.exports.pca = async function(id){
+Classes.pca = async function(id){
     var myquery = `
     select (group_concat(distinct ?lang;separator=";") as ?langs) (group_concat(distinct ?formaContagem;separator=";") as ?formaContagens) ?idPCA ?idJust ?notas ?valores where {
         select (lang(?formaContagem) as ?lang) ?formaContagem ?idPCA ?idJust ?notas ?valores where{
@@ -668,24 +540,27 @@ module.exports.pca = async function(id){
     `
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
-    console.log(C1)
-    var notas = ''
-    if(C1.notas !== undefined){
-        notas = C1.notas.value
-    }
-    var dados = {
-        ['formaContagem_' + C1.langs.value.split(';')[0]] : C1.formaContagens.value.split(';')[0],
-        ['formaContagem_' + C1.langs.value.split(';')[1]] : C1.formaContagens.value.split(';')[1],
-        idPCA : C1.idPCA.value,
-        idJust : C1.idJust.value,
-        notas: notas,
-        valores : C1.valores.value
-    }
+    var dados = []
+    if(C1){
+        var notas = ''
+        if(C1.notas !== undefined){
+            notas = C1.notas.value
+        }
+        dados = {
+            ['formaContagem_' + C1.langs.value.split(';')[0]] : C1.formaContagens.value.split(';')[0],
+            ['formaContagem_' + C1.langs.value.split(';')[1]] : C1.formaContagens.value.split(';')[1],
+            idPCA : C1.idPCA.value,
+            idJust : C1.idJust.value.split('#')[1],
+            notas: notas,
+            valores : C1.valores.value
+        }
 	
+    }
+    
     return dados
 }
 
-module.exports.procRel = async function(id,relacao){
+Classes.procRel = async function(id,relacao){
     relacao = relacao || 'temRelProc'
     var myquery = `
     select ?id ?codigo ?rel ?titulo ?status where{
@@ -713,7 +588,7 @@ module.exports.procRel = async function(id,relacao){
     return dados
 }
 
-module.exports.ti = async function(id){
+Classes.ti = async function(id){
     var myquery = `
     select ?idTI ?termo where{
         :${id} :temTI ?idTI.
@@ -732,7 +607,7 @@ module.exports.ti = async function(id){
     return dados
 }
 
-module.exports.codigo = async function(id){
+Classes.codigo = async function(id){
     var myquery = `
     select ?pred ?subj where{
         :${id} ?pred ?subj.
@@ -743,7 +618,7 @@ module.exports.codigo = async function(id){
     else return false;
 }
 
-module.exports.justificacao = async function(id){
+Classes.justificacao = async function(id){
     var myquery = `
     select ?tipoId ?conteudo ?criterio (group_concat(distinct ?p;separator=";") as ?processos) (group_concat(distinct ?l;separator=";") as ?legislacao) where{
         {
@@ -790,7 +665,7 @@ module.exports.justificacao = async function(id){
     return dados
 }
 
-module.exports.titulo = async function(title){
+Classes.titulo = async function(title){
     var myquery = `
     select ?id ?title where{
         {?id rdf:type :Classe_N1;
