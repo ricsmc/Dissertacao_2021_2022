@@ -1,6 +1,8 @@
 var gdb = require("../utils/graphdb");
+const NotasAp = module.exports;
 
-module.exports.notas = async function(){
+
+NotasAp.notas = async function(){
     var myquery = `
     select ?cProc ?idNota ?nota ?tituloProc where{
         ?idNota rdf:type :NotaAplicacao;
@@ -21,7 +23,7 @@ module.exports.notas = async function(){
     return dados
 }
 
-module.exports.nota = async function(nota){
+NotasAp.nota = async function(nota){
     var myquery = `
     select ?idNota where{
         ?idNota rdf:type :NotaAplicacao;

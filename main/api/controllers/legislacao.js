@@ -1,11 +1,11 @@
 var gdb = require("../utils/graphdb");
+const Legislacao = module.exports;
 
-module.exports.legislacao = async function(completa,fonte,estado,pn){
+
+Legislacao.legislacao = async function(completa,fonte,estado,pn){
     var vars = {
         groupBy : "",
         vars : '?data ?id ?link ?numero ?sumario ?tipo',
-        completa : "",
-        optionals : "",
         fonte : "?fonte",
         estado : "?estado",
         pn:""
@@ -17,16 +17,12 @@ module.exports.legislacao = async function(completa,fonte,estado,pn){
     if(estado) vars.estado = `"${estado}"`
     else vars.vars = `${vars.vars} ${vars.estado}`
 
-    if(completa){
-        vars.completa = '(group_concat(distinct ?r;separator=";") as ?regula)'
-        vars.optionals = `optional{?id :estaAssoc ?r.}`
-    }
     if(pn=="com") vars.pn = `filter exists {?id :estaAssoc ?pn.}`
     else if (pn=="sem") vars.pn = `filter not exists {?id :estaAssoc ?pn.}`
     vars.groupBy = `group by ${vars.vars}`
     
     var myquery = `
-    select ${vars.vars} ${vars.completa} (group_concat(distinct ?c2;separator=";") as ?entidades) where{
+    select ${vars.vars} (group_concat(distinct ?c2;separator=";") as ?entidades) where{
         ?id rdf:type :Legislacao;
      		:diplomaData ?data;
     		:diplomaEstado ?estado;
@@ -37,7 +33,6 @@ module.exports.legislacao = async function(completa,fonte,estado,pn){
         ${vars.pn}
         optional{?id :temEntidadeResponsavel ?c2.}
         optional{?id :diplomaFonte ?fonte.} 
-        ${vars.optionals}
     }${vars.groupBy}
     order by asc(?id)
     `
@@ -64,7 +59,7 @@ module.exports.legislacao = async function(completa,fonte,estado,pn){
         if(C1.tipo != undefined) dado['tipo'] = C1.tipo.value;
 
         if(completa) {
-            dado.regula = C1.regula.value.length > 0 ? await Promise.all(C1.regula.value.split(';').map(Element => getDono(Element))) : []
+            dado.regula = await Legislacao.processos(dado.id)
         }
 		return dado;
 	}));
@@ -92,7 +87,7 @@ async function getDono(elem) {
     
 }
 
-module.exports.legislacaoId = async function(completa,id){
+Legislacao.legislacaoId = async function(completa,id){
     var vars = {
         completa : "",
         optionals : "",
@@ -155,7 +150,7 @@ async function getSiglaEntidade(id) {
 
 }
 
-module.exports.processos = async function(id){
+Legislacao.processos = async function(id){
     var myquery = `
     select ?codigo ?id ?titulo where{
         ?id :temLegislacao :${id};
@@ -176,7 +171,7 @@ module.exports.processos = async function(id){
 
 }
 
-module.exports.numero = async function(num){
+Legislacao.numero = async function(num){
     var myquery = `
     select ?id where{
         ?id rdf:type :Legislacao;
@@ -189,7 +184,7 @@ module.exports.numero = async function(num){
     else return false
 }
 
-module.exports.portarias = async function(){
+Legislacao.portarias = async function(){
     var myquery = `
     select ?estado ?id ?numero ?sumario  where{
         ?id rdf:type :Legislacao;
@@ -215,7 +210,7 @@ module.exports.portarias = async function(){
 
 }
 
-module.exports.insert = async function(body){
+Legislacao.insert = async function(body){
     var entidades = body.entidadesSel.map(E => {
         return `:temEntidadeResponsavel :${E.id};`
     })
@@ -247,7 +242,7 @@ module.exports.insert = async function(body){
     return
 }
 
-module.exports.edit = async function(id,body){
+Legislacao.edit = async function(id,body){
     var entidades = body.entidadesSel.map(E => {
         return `:temEntidadeResponsavel :${E.id};`
     })
@@ -283,7 +278,7 @@ module.exports.edit = async function(id,body){
     return
 }
 
-module.exports.revogar = async function(id,body){
+Legislacao.revogar = async function(id,body){
     var myquery = `
     delete {
         :${id} :diplomaEstado ?d.

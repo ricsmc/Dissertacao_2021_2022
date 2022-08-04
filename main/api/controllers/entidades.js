@@ -1,11 +1,12 @@
 var gdb = require("../utils/graphdb");
+const Entidades = module.exports;
 
-module.exports.entidades = async function(completa,ents,sigla,designacao,internacional,sioe,estado,pn){
+
+Entidades.entidades = async function(completa,ents,sigla,designacao,internacional,sioe,estado,pn){
     var vars = {
         filters : "",
         groupBy : "",
         vars : "?id",
-        completa : "",
         optionals : "",
         sigla : "?sigla",
         designacao : "?designacao",
@@ -39,14 +40,6 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
     if(estado) vars.estado = `"${estado}"`
     else vars.vars = `${vars.vars} ${vars.estado}`
 
-    if(completa){
-        vars.groupBy = `group by ${vars.vars}`
-        vars.completa = '(group_concat(distinct ?d;separator=";") as ?dono) (group_concat(distinct ?p;separator=";") as ?participante) (group_concat(distinct ?t;separator=";") as ?tipologias)'
-        vars.optionals = `optional{?id :eDonoProcesso ?d.} 
-        optional{?id :participaEm ?p.}    
-        optional{?id :pertenceTipologiaEnt ?t.}  `
-    }
-
     if(pn=="com") vars.pn = `{filter exists {?id :eDonoProcesso ?pn.}
     filter exists {?id :participaEm ?pn.}}
     union
@@ -60,7 +53,7 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
     filter not exists {?id :participaEm ?pn.}}`
     
     var myquery = `
-    select ${vars.vars} ${vars.completa} where{
+    select ${vars.vars} where{
         ?id rdf:type :Entidade;
             :entDesignacao ${vars.designacao};
             :entEstado ${vars.estado};
@@ -95,9 +88,9 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
         else dado.estado = C1.estado.value
 
         if(completa) {
-            dado.dono = C1.dono.value.length > 0 ? await Promise.all(C1.dono.value.split(';').map(Element => getDono(Element))) : []
-            dado.participante = C1.participante.value.length > 0 ? await Promise.all(C1.participante.value.split(';').map(Element => getParticipante(Element,C1.id.value.split('#')[1]))) : []
-            dado.tipologias = C1.tipologias.value.length > 0 ? await Promise.all(C1.tipologias.value.split(';').map(Element => getTipologias(Element))) : []
+            dado.dono =  await Entidades.intDono(dado.id);
+            dado.participante =  await Entidades.intParticipante(dado.id);
+            dado.tipologias = await Entidades.intParticipante(dado.id);
         }
 
         return dado
@@ -107,101 +100,20 @@ module.exports.entidades = async function(completa,ents,sigla,designacao,interna
 
 }
 
-
-async function getParticipante(elem,id) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?codigo ?titulo ?tipoPar where { 
-        :${e} :codigo ?codigo;
-            :titulo ?titulo;
-            ?tipoPar :${id}.
-        filter(?tipoPar != owl:NamedIndividual && ?tipoPar != :temParticipante && ?tipoPar != :temDono)
-    }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            codigo: C1.codigo.value,
-            id:e,
-            tipoPar:C1.tipoPar.value.split('#')[1],
-            titulo: C1.titulo.value,
-        }    
-    
-    return dados
-    
-}
-
-async function getTipologias(elem) {
-    
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?designacao ?sigla where { 
-        :${e} :tipDesignacao ?designacao;
-            :tipSigla ?sigla.
-    }
-    `
-
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    if (C1==undefined) dados =  {id:e}
-    else {
-        dados = {
-            designacao: C1.designacao.value,
-            id:e,
-            sigla: C1.sigla.value,
-        }    
-    }
-    return dados
-    
-}
-
-async function getDono(elem) { 
-    var e = elem.split('#')[1]
-    var myquery =  `
-    select ?codigo ?titulo where { 
-        :${e} :codigo ?codigo;
-            :titulo ?titulo.
-    }
-    `
-    var dados = ''
-    var result = await gdb.execQuery(myquery);
-    var C1 = result.results.bindings[0]
-    dados = {
-            codigo: C1.codigo.value,
-            id:e,
-            titulo: C1.titulo.value,
-        }    
-    
-    return dados
-    
-}
-
-
-module.exports.id = async function(completa,id){
+Entidades.id = async function(completa,id){
     var vars = {
         groupBy : "",
-        completa : "",
         optionals : "",
     }
-
-    if(completa){
-        vars.groupBy = `group by ?designacao ?estado ?internacional ?sigla ?sioe`
-        vars.completa = '(group_concat(distinct ?d;separator=";") as ?dono) (group_concat(distinct ?p;separator=";") as ?participante) (group_concat(distinct ?t;separator=";") as ?tipologias)'
-        vars.optionals = `optional{:${id} :eDonoProcesso ?d.} 
-        optional{:${id} :participaEm ?p.}    
-        optional{:${id} :pertenceTipologiaEnt ?t.}  `
-    }
     var myquery = `
-    select ?designacao ?estado ?internacional ?sigla ?sioe ${vars.completa} where{
+    select ?designacao ?estado ?internacional ?sigla ?sioe where{
         :${id} :entDesignacao ?designacao;
               :entEstado ?estado;
               :entInternacional ?internacional;
               :entSigla ?sigla;
               :entSIOE ?sioe.
         ${vars.optionals}
-    }${vars.groupBy}
+    }
     `
     var dados = []
     var result = await gdb.execQuery(myquery);
@@ -214,17 +126,17 @@ module.exports.id = async function(completa,id){
             sigla: C1.sigla.value,
             sioe: C1.sioe.value
         }
-    if(completa) {
-        dados.dono = C1.dono.value.length > 0 ? await Promise.all(C1.dono.value.split(';').map(Element => getDono(Element))) : []
-        dados.participante = C1.participante.value.length > 0 ? await Promise.all(C1.participante.value.split(';').map(Element => getParticipante(Element,id))) : []
-        dados.tipologias = C1.tipologias.value.length > 0 ? await Promise.all(C1.tipologias.value.split(';').map(Element => getTipologias(Element))) : []
-    }
+        if(completa) {
+            dados.dono =  await Entidades.intDono(id);
+            dados.participante =  await Entidades.intParticipante(id);
+            dados.tipologias = await Entidades.intParticipante(id);
+        }
     
     return dados
 
 }
 
-module.exports.intDono = async function(id){
+Entidades.intDono = async function(id){
     var myquery = `
     select ?id ?codigo ?titulo where{
         :${id} :eDonoProcesso ?id.
@@ -246,7 +158,7 @@ module.exports.intDono = async function(id){
 
 }
 
-module.exports.intParticipante = async function(id){
+Entidades.intParticipante = async function(id){
     var myquery = `
     select ?id ?codigo ?titulo ?tipoPar where{
         :${id} :participaEm ?id.
@@ -271,7 +183,7 @@ module.exports.intParticipante = async function(id){
 
 }
 
-module.exports.tipologias = async function(id){
+Entidades.tipologias = async function(id){
     var myquery = `
     select ?id ?sigla ?designacao where{
         :ent_CMADL :pertenceTipologiaEnt ?id.
@@ -293,7 +205,7 @@ module.exports.tipologias = async function(id){
 
 }
 
-module.exports.designacao = async function(designacao){
+Entidades.designacao = async function(designacao){
     var myquery = `
     select ?id where{
     	?id rdf:type :Entidade;
@@ -307,7 +219,7 @@ module.exports.designacao = async function(designacao){
 
 }
 
-module.exports.sigla = async function(sigla){
+Entidades.sigla = async function(sigla){
     var myquery = `
     select ?id where{
     	?id rdf:type :Entidade;
@@ -321,7 +233,7 @@ module.exports.sigla = async function(sigla){
 
 }
 
-module.exports.insert = async function(body){
+Entidades.insert = async function(body){
     var tip = listaTriplos(body.tipologiasSel,'pertenceTipologiaEnt ')
     
     var myquery = `
@@ -340,7 +252,7 @@ module.exports.insert = async function(body){
     return
 }
 
-module.exports.edit = async function(id,body){
+Entidades.edit = async function(id,body){
     var tip = listaTriplos(body.tipologiasSel,'pertenceTipologiaEnt ')
     
     var myquery = `
@@ -377,7 +289,7 @@ module.exports.edit = async function(id,body){
     return
 }
 
-module.exports.delete = async function(id){
+Entidades.delete = async function(id){
     var myquery = `
     delete {
         :${id} rdf:type :Entidade,

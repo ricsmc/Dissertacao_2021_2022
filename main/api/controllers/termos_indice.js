@@ -1,6 +1,8 @@
 var gdb = require("../utils/graphdb");
+const TermosInd = module.exports;
 
-module.exports.termos = async function(){
+
+TermosInd.termos = async function(){
     var myquery = `
     select ?codigoClasse ?estado ?id ?idClasse ?termo ?tituloClasse where{
         ?id rdf:type :TermoIndice;
@@ -25,7 +27,7 @@ module.exports.termos = async function(){
     return dados
 }
 
-module.exports.quantos = async function(nota){
+TermosInd.quantos = async function(nota){
     console.log(nota)
     var myquery = `
     select (count(distinct ?id) as ?count) where{
@@ -37,7 +39,7 @@ module.exports.quantos = async function(nota){
     return parseInt(result.results.bindings[0].count.value)
 }
 
-module.exports.termo = async function(termo){
+TermosInd.termo = async function(termo){
     var myquery = `
     select ?id where{
         ?id rdf:type :TermoIndice;

@@ -1,7 +1,8 @@
 var gdb = require("../utils/graphdb");
+const Indicadores = module.exports
 
 
-module.exports.classes = async function(){
+Indicadores.classes = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         {?s rdf:type :Classe_N1.}
@@ -26,7 +27,7 @@ module.exports.classes = async function(){
 
 }
 
-module.exports.classesN1 = async function(){
+Indicadores.classesN1 = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Classe_N1.
@@ -45,7 +46,7 @@ module.exports.classesN1 = async function(){
 
 }
 
-module.exports.classesN2 = async function(){
+Indicadores.classesN2 = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Classe_N2.
@@ -64,7 +65,7 @@ module.exports.classesN2 = async function(){
 
 }
 
-module.exports.classesN3 = async function(){
+Indicadores.classesN3 = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Classe_N3.
@@ -83,7 +84,7 @@ module.exports.classesN3 = async function(){
 
 }
 
-module.exports.classesN4 = async function(){
+Indicadores.classesN4 = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Classe_N4.
@@ -102,7 +103,7 @@ module.exports.classesN4 = async function(){
 
 }
 
-module.exports.critJust = async function(){
+Indicadores.critJust = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :CriterioJustificacao.
@@ -121,7 +122,7 @@ module.exports.critJust = async function(){
 
 }
 
-module.exports.critJustType = async function(critJust){
+Indicadores.critJustType = async function(critJust){
     const critJust2 = critJust.charAt(0).toUpperCase() + critJust.slice(1);
     var myquery = `
     select (count(distinct ?s) as ?count) where{
@@ -141,7 +142,7 @@ module.exports.critJustType = async function(critJust){
 
 }
 
-module.exports.critstats = async function(){
+Indicadores.critstats = async function(){
     var v = ["legal", "gestionario", "utilidadeAdministrativa", "densidadeInfo", "complementaridadeInfo"]
 
     var dados = []
@@ -176,7 +177,7 @@ async function getNumCritJust (critJust, i) {
 
 }
 
-module.exports.df = async function(df){
+Indicadores.df = async function(df){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?i :temDF ?s .
@@ -195,7 +196,7 @@ module.exports.df = async function(df){
 
 }
 
-module.exports.dfstats = async function(){
+Indicadores.dfstats = async function(){
     var v = ["C","CP","E","NE"]
 
     var dados = []
@@ -222,7 +223,7 @@ async function getNumDF (df) {
 
 }
 
-module.exports.entidades = async function(){
+Indicadores.entidades = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Entidade.
@@ -240,7 +241,7 @@ module.exports.entidades = async function(){
 
 }
 
-module.exports.entidadesAtivas = async function(){
+Indicadores.entidadesAtivas = async function(){
     var v = ["Ativa","Inativa","Harmonização"]
 
     var dados = []
@@ -269,7 +270,7 @@ async function getNumEntidades (estado) {
 
 }
 
-module.exports.leg = async function(){
+Indicadores.leg = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :Legislacao.
@@ -287,7 +288,7 @@ module.exports.leg = async function(){
 
 }
 
-module.exports.legVigor = async function(){
+Indicadores.legVigor = async function(){
     var v = ["Ativo","Revogado"]
 
     var dados = []
@@ -316,7 +317,7 @@ async function getNumLeg (estado) {
 
 }
 
-module.exports.relacoes = async function(r){
+Indicadores.relacoes = async function(r){
     var rel = r
     if(r=="dono") rel = "eDonoProcesso"
     else if(r=="participante") rel= "participaEm"
@@ -337,7 +338,7 @@ module.exports.relacoes = async function(r){
 
 }
 
-module.exports.relstats = async function(){
+Indicadores.relstats = async function(){
     var v = ["temRelProc","eAntecessorDe", "eSucessorDe","eComplementarDe","eCruzadoCom","eSinteseDe","eSintetizadoPor","eSuplementoDe","eSuplementoPara","temDono","temParticipante","temParticipanteApreciador","temParticipanteComunicador","temParticipanteDecisor","temParticipanteAssessor","temParticipanteIniciador","temParticipanteExecutor"]
 
     var dados = []
@@ -367,7 +368,7 @@ async function getNumRel(r) {
 
 }
 
-module.exports.tipologias = async function(){
+Indicadores.tipologias = async function(){
     var myquery = `
     select (count(distinct ?s) as ?count) where{
         ?s rdf:type :TipologiaEntidade.
@@ -385,20 +386,20 @@ module.exports.tipologias = async function(){
 
 }
 
-module.exports.tabela = async function(){
+Indicadores.tabela = async function(){
     var dados = []
-    dados.push(await module.exports.classesN1())
-    dados.push(await module.exports.classesN2())
-    dados.push(await module.exports.classesN3())
-    dados.push(await module.exports.classesN4())
-    dados.push.apply(dados,await module.exports.relstats())
-    dados.push.apply(dados,await module.exports.critstats())
-    dados.push.apply(dados,await module.exports.dfstats())
-    dados.push(await module.exports.entidades())
-    dados.push.apply(dados,await module.exports.entidadesAtivas())
-    dados.push(await module.exports.leg())
-    dados.push.apply(dados,await module.exports.legVigor())
-    dados.push(await module.exports.tipologias())
+    dados.push(await Indicadores.classesN1())
+    dados.push(await Indicadores.classesN2())
+    dados.push(await Indicadores.classesN3())
+    dados.push(await Indicadores.classesN4())
+    dados.push.apply(dados,await Indicadores.relstats())
+    dados.push.apply(dados,await Indicadores.critstats())
+    dados.push.apply(dados,await Indicadores.dfstats())
+    dados.push(await Indicadores.entidades())
+    dados.push.apply(dados,await Indicadores.entidadesAtivas())
+    dados.push(await Indicadores.leg())
+    dados.push.apply(dados,await Indicadores.legVigor())
+    dados.push(await Indicadores.tipologias())
     return dados
 
 }
