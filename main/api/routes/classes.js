@@ -5,10 +5,10 @@ var ClassControl = require('../controllers/classes')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    ClassControl.classes(req.query.estrutura,req.query.tipo,req.query.nivel,req.query.ents,req.query.tips,req.query.info)
+    ClassControl.classes(req.query.estrutura,req.query.tipo,parseInt(req.query.nivel),req.query.ents,req.query.tips,req.query.info)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
-			console.log(err)
+			
 			res.status(500).jsonp(err)
 		})
 });

@@ -5,34 +5,39 @@ const Classes = module.exports;
 Classes.classes = async function(est,tipo,nivel,ents,tips,info){
     var x = {
         sel : '',
-        v : '?id ?codigo ?titulo ?status',
+        v : '?id ?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans',
         opt : '',
         g :'',
-        nivel :':Classe_N1',
-        filters : '',
-        tipo : '?tipo'
+        dono :{
+            codigo: '',
+            titulo: '',
+            id: '',
+            status: '',
+        },
+        participante :{
+            participLabel : '',
+            sigla: '',
+            designacao: '',
+            idTipo: '',
+            id: '',
+            idParticipante: ''
+        } 
     }
     var sel = `?id  :codigo ?codigo;
                    :titulo ?titulo;
-                   :classeStatus ?status.`
-    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
-        if(info==='completa'){
-            sel = `${sel.slice(0, -1)};
-                    rdf:type ?class.
-                filter(?class!=owl:NamedIndividual)
-            optional{?id :classeStatus ?status.}
-            optional{?id :temPai ?pai.
-                        ?pai :codigo ?codigoPai;
-                            :titulo ?tituloPai.}
-            optional{?id :processoTipoVC ?tpoProc.
-                    ?tpoProc skos:prefLabel ?tipoProc.
-                    filter(lang(?tipoProc)='pt')}
-            optional{?id :processoTransversal ?procTrans.}
-            `
-            x.v = `${x.v} ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans`
-        }
-    }
-    if(!nivel && est!='lista' && !tipo && !ents && !tips) {
+                   :classeStatus ?status;
+                   rdf:type ?class.
+               filter(?class!=owl:NamedIndividual)
+           optional{?id :classeStatus ?status.}
+           optional{?id :temPai ?pai.
+                       ?pai :codigo ?codigoPai;
+                           :titulo ?tituloPai.}
+           optional{?id :processoTipoVC ?tpoProc.
+                   ?tpoProc skos:prefLabel ?tipoProc.
+                   filter(lang(?tipoProc)='pt')}
+           optional{?id :processoTransversal ?procTrans.}`
+
+    if(!nivel && est!='lista' && !tipo && !((ents || tips) && info != 'pre-selecionados')) {
         x.sel = '(group_concat(distinct ?c2;separator=";") as ?filhos)  '
         x.opt = 'optional{?id :temFilho ?c2.}'
         x.g = `group by ${x.v}`
@@ -40,8 +45,7 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                 ${sel}`
     }
     else if(nivel){
-        x.nivel = `:Classe_N${nivel}`
-        sel = `?id ?p ${x.nivel} .
+        sel = `?id ?p :Classe_N${nivel} .
                    ${sel}`
     } 
     else if(est==='lista'){
@@ -58,7 +62,7 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                     ${sel}}`
     }
     
-    else if (ents || tips){
+    else if ((ents || tips) && info != 'pre-selecionados'){
         var ents_tips = null
         if(ents && tips)ents_tips = ents.split(',').concat(tips.split(','))
         else if(ents) ents_tips = ents.split(',')
@@ -76,21 +80,22 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                 ?id :temParticipante :${Element}.
             }${i<ents_tips.length-1 ? '':'}'}`
         })
+
         x.g = `group by ${x.v}`
     }
+
     else if (tipo){
         sel = `?id ?p :Classe_N3.
                    ${sel}
                ?id :processoTipoVC :vc_processoTipo_p${tipo.charAt(0)}.`
     }
+
     var myquery = `
     select ${x.v} ${x.sel} where { 
         ${sel}
-        ${x.filters}
         ${x.opt}
     } ${x.g} order by ?id
     `
-    console.log(myquery)
     var result = await gdb.execQuery(myquery);
 	let dados = await Promise.all(result.results.bindings.map(async function (C1) {
         var dado = {
@@ -100,17 +105,21 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
 			status: C1.status.value
 		};
         if(C1.filhos) dado.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
-            return await getClass(C2,2,info)
+            return await getClass(C2,2,info,ents,tips)
         })) : []
         if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
             
+            dado.pca = ''
+            dado.df = ''
             let pca = await Classes.pca(dado.id.split('#')[1]);
             if (pca.length > 0) dado.pca = pca[0];
+            else if(!Array.isArray(pca)) dado.pca = pca
             if (dado.pca && dado.pca.idJust) {
                 dado.pca.justificacao = await Classes.justificacao(dado.pca.idJust);
             }
             let df = await Classes.classDF(dado.id.split('#')[1]);
             if (df.length > 0) dado.df = df[0];
+            else if(!Array.isArray(df)) dado.df = df
             if (dado.df && dado.df.idJust) {
                 dado.df.justificacao = await Classes.justificacao(dado.df.idJust);
             }
@@ -130,42 +139,80 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                 dado.processosRelacionados = await Classes.procRel(dado.id.split('#')[1]);
                 dado.legislacao = await Classes.legislacao(dado.id.split('#')[1]);
             }
+            if(info==='esqueleto'){
+                dado.donos = [x.dono]
+                dado.participantes = [x.participante]    
+            }
+            if(info==='pre-selecionados'){
+                dado.donos = []
+                dado.participantes = []
+                if((nivel === 3 || C1.class.value.split('#')[1] == 'Classe_N3') && ents.length>0 && tips.length>0){
+                    var donos = await Classes.classDono(dado.id.split('#')[1]);
+                    var participantes = await Classes.participante(dado.id.split('#')[1]);
+                    var e = ents ? ents.split(',') : []
+                    var t = tips ? tips.split(',') : []
+                    e.forEach(element => {
+                        if(donos.some(e => e.idDono === element))
+                            dado.donos.push('Sim')
+                        else dado.donos.push('Nao')
+                        if(participantes.some(e => e.idParticipante === element))
+                            dado.participantes.push(participantes.find(e => e.idParticipante === element).participLabel)
+                        else dado.participantes.push('Nao')
+                    });
+                    t.forEach(element => {
+                        if(donos.some(e => e.idDono === element))
+                            dado.donos.push('Sim')
+                        else dado.donos.push('Nao')
+                        if(participantes.some(e => e.idParticipante === element))
+                            dado.participantes.push(participantes.find(e => e.idParticipante === element).participLabel)
+                        else dado.participantes.push('Nao')
+                    });
+                }
+                
+            }
         }
 		return dado
 	}));
     return dados
 }
 
-async function getClass(elem,nivel,info) { 
+async function getClass(elem,nivel,info,ents,tips) { 
     var e = elem.split('#')[1]
     var x = {
         sel : '',
         opt : '',
         g :'',
-        v : '?codigo ?titulo ?status',
+        v : '?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans',
+        dono :{
+            codigo: '',
+            titulo: '',
+            id: '',
+            status: '',
+        },
+        participante :{
+            participLabel : '',
+            sigla: '',
+            designacao: '',
+            idTipo: '',
+            id: '',
+            idParticipante: ''
+        } 
     }
     var sel = `:${e} ?p :Classe_N${nivel} ;
                    :codigo ?codigo;
                    :titulo ?titulo;
-                   :classeStatus ?status.`
-    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
-        if(info==='completa'){
-            sel = `${sel.slice(0, -1)};
-                    rdf:type ?class.
-                filter(?class!=owl:NamedIndividual)
-            optional{?id :classeStatus ?status.}
-            optional{?id :temPai ?pai.
-                        ?pai :codigo ?codigoPai;
-                            :titulo ?tituloPai.}
-            optional{?id :processoTipoVC ?tpoProc.
-                    ?tpoProc skos:prefLabel ?tipoProc.
-                    filter(lang(?tipoProc)='pt')}
-            optional{?id :processoTransversal ?procTrans.}
-            `
-            x.v = `${x.v} ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans`
-        }
-    }
-    if(nivel<4) {
+                   :classeStatus ?status;
+                   rdf:type ?class.
+               filter(?class!=owl:NamedIndividual)
+           optional{?id :classeStatus ?status.}
+           optional{?id :temPai ?pai.
+                       ?pai :codigo ?codigoPai;
+                           :titulo ?tituloPai.}
+           optional{?id :processoTipoVC ?tpoProc.
+                   ?tpoProc skos:prefLabel ?tipoProc.
+                   filter(lang(?tipoProc)='pt')}
+           optional{?id :processoTransversal ?procTrans.}`
+    if(nivel<4 && !((ents || tips) && info != 'pre-selecionados')) {
         x.sel = '(group_concat(distinct ?c2;separator=";") as ?filhos)'
         x.opt = `optional{:${e} :temFilho ?c2.}`
         x.g = `group by ${x.v}`
@@ -186,16 +233,21 @@ async function getClass(elem,nivel,info) {
         status: C1.status.value
     };
     if(C1.filhos) dados.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
-        return await getClass(C2,nivel+1,info)
+        return await getClass(C2,nivel+1,info,ents,tips)
     })) : []
     if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
+
+        dado.pca = ''
+        dado.df = ''
         let pca = await Classes.pca(e);
         if (pca.length > 0) dados.pca = pca[0];
+        else if(!Array.isArray(pca)) dados.pca = pca
         if (dados.pca && dados.pca.idJust) {
             dados.pca.justificacao = await Classes.justificacao(dados.pca.idJust);
         }
         let df = await Classes.classDF(e);
         if (df.length > 0) dados.df = df[0];
+        else if(!Array.isArray(df)) dados.df = df
         if (dados.df && dados.df.idJust) {
             dados.df.justificacao = await Classes.justificacao(dados.df.idJust);
         }
@@ -214,6 +266,37 @@ async function getClass(elem,nivel,info) {
             dados.participantes = await Classes.participante(e);
             dados.processosRelacionados = await Classes.procRel(e);
             dados.legislacao = await Classes.legislacao(e);
+        }
+        if(info==='esqueleto'){
+            dados.donos = [x.dono]
+            dados.participantes = [x.participante]    
+        }
+        if(info==='pre-selecionados' && ents.length>0 && tips.length>0){
+            dados.donos = []
+            dados.participantes = []
+            if(nivel === 3){
+                var donos = await Classes.classDono(e);
+                var participantes = await Classes.participante(e);
+                var e = ents ? ents.split(',') : []
+                var t = tips ? tips.split(',') : []
+                e.forEach(element => {
+                    if(donos.some(e => e.idDono === element))
+                        dados.donos.push('Sim')
+                    else dados.donos.push('Nao')
+                    if(participantes.some(e => e.idParticipante === element))
+                        dados.participantes.push(participantes.find(e => e.idParticipante === element).participLabel)
+                    else dados.participantes.push('Nao')
+                });
+                t.forEach(element => {
+                    if(donos.some(e => e.idDono === element))
+                        dados.donos.push('Sim')
+                    else dados.donos.push('Nao')
+                    if(participantes.some(e => e.idParticipante === element))
+                        dados.participantes.push(participantes.find(e => e.idParticipante === element).participLabel)
+                    else dados.participantes.push('Nao')
+                });
+            }
+            
         }
     }
     
@@ -243,7 +326,6 @@ Classes.class = async function(id,subarvore){
     
     } group by ?id ?class ?codigo ?titulo ?status ?codigoPai ?tituloPai ?descricao ?tipoProc ?procTrans
     `
-    console.log(myquery)
     var dados = {}
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
@@ -286,7 +368,6 @@ Classes.class = async function(id,subarvore){
     let df = await Classes.classDF(id);
     if (df.length > 0) dados.df = df[0];
     if (dados.df && dados.df.idJust) {
-        console.log(dados.df)
         dados.df.justificacao = await Classes.justificacao(dados.df.idJust);
     }
     let filhos = dados.filhos
@@ -485,15 +566,15 @@ Classes.notasApEx = async function(id,ap_ex){
 
 Classes.participante = async function(id){
     var myquery = `
-    select (group_concat(distinct ?lang;separator=";") as ?langs) (group_concat(distinct ?participLabel;separator=";") as ?participLabels) ?sigla ?designacao ?id ?idTipo where {
-        select (lang(?participLabel) as ?lang) ?participLabel ?sigla ?designacao ?id ?idTipo where { 
+    select ?participLabel ?sigla ?designacao ?id ?idTipo where{
         {:${id} :temParticipante ?id.
         ?id rdf:type ?idTipo;
             ?obj :${id};
             :entDesignacao ?designacao;
             :entSigla ?sigla.
         ?obj rdfs:subPropertyOf :participaEm;
-             rdfs:label ?participLabel.}
+             rdfs:label ?participLabel.
+             filter(lang(?participLabel)='pt')}
         union
         {:${id} :temParticipante ?id.
         ?id rdf:type ?idTipo;
@@ -501,19 +582,16 @@ Classes.participante = async function(id){
             :tipDesignacao ?designacao;
             :tipSigla ?sigla.
         ?obj rdfs:subPropertyOf :participaEm;
-             rdfs:label ?participLabel.}
+             rdfs:label ?participLabel.
+             filter(lang(?participLabel)='pt')}
         filter( ?idTipo != owl:NamedIndividual && ?obj != :participaEm)
-    } order by asc(?id)
-    }group by ?sigla ?designacao ?id ?idTipo
+    }group by ?sigla ?designacao ?id ?idTipo ?participLabel order by asc(?id)
     `
     var dados = []
     var result = await gdb.execQuery(myquery);
 	dados = await Promise.all(result.results.bindings.map(C1 => {
-        var langs = C1.langs.value.split(';')
-        var participLabel = C1.participLabels.value.split(';')
 		return {
-            ['participLabel_' + langs[0]] : participLabel[0].split(' ')[3],
-            ['participLabel_' + langs[1]] : participLabel[1].split(' ')[2],
+            participLabel : C1.participLabel.value.split(' ')[2],
             sigla: C1.sigla.value,
             designacao: C1.designacao.value,
             idTipo: C1.idTipo.value.split('#')[1],
