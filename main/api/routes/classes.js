@@ -8,14 +8,13 @@ router.get('/', function(req, res, next) {
     ClassControl.classes(req.query.estrutura,req.query.tipo,parseInt(req.query.nivel),req.query.ents,req.query.tips,req.query.info)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => {
-			
 			res.status(500).jsonp(err)
 		})
 });
 
 
 router.get('/codigo', function(req, res, next) {
-    ClassControl.codigo(req.query.codigo)
+    ClassControl.codigo(req.query.valor)
 	    .then(dados =>  res.status(200).jsonp(dados))
 	    .catch(err => res.status(500).jsonp(err))
 });

@@ -21,9 +21,9 @@ servers:
           - 'http://localhost'
       port:
         description: Porta
-        default: '8000'
+        default: '8080'
         enum:
-          - '8000'
+          - '8080'
 tags:
   - name: Classes
     description: >-
@@ -65,8 +65,8 @@ paths:
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       description: >
@@ -229,8 +229,6 @@ paths:
                   $ref: '#/components/examples/ClassesPreSelecionadosExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -243,8 +241,8 @@ paths:
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       description: >
@@ -252,7 +250,7 @@ paths:
         classes com raiz na classe com id igual a 'id'
 
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       parameters:
         - name: id
           in: path
@@ -307,8 +305,6 @@ paths:
                   $ref: '#/components/examples/ClasseSubarvoreExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -319,14 +315,14 @@ paths:
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       description: |
         Verifica se o código já está presente numa classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       parameters:
         - in: query
           name: valor
@@ -343,8 +339,6 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -355,14 +349,14 @@ paths:
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       description: |
         Verifica se o título já está presente numa classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       parameters:
         - in: query
           name: valor
@@ -381,8 +375,6 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -393,12 +385,12 @@ paths:
       description: |
         Devolve a informação base do DF
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -421,8 +413,6 @@ paths:
                 idDF: 'http://jcr.di.uminho.pt/m51-clav#df_c200.10.100'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -433,12 +423,12 @@ paths:
       description: |
         Devolve os termos de índice de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -468,8 +458,6 @@ paths:
                     incumprimento)
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -480,12 +468,12 @@ paths:
       description: |
         Devolve a informação base do PCA
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -510,8 +498,6 @@ paths:
                 valores: '10'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -522,12 +508,12 @@ paths:
       description: |
         Devolve a(s) entidade(s) dona(s) do processo
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -699,8 +685,6 @@ paths:
                   id: 'http://jcr.di.uminho.pt/m51-clav#tip_AP'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -711,12 +695,12 @@ paths:
       description: |
         Devolve a metainformação de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -760,8 +744,8 @@ paths:
                   regulação
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -772,12 +756,12 @@ paths:
       description: |
         Devolve a lista de notas de aplicação de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -806,8 +790,6 @@ paths:
                     por Portugal
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -818,12 +800,12 @@ paths:
       description: |
         Devolve a lista de notas de exclusão de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -859,8 +841,6 @@ paths:
                     reclamações e sugestões
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -871,12 +851,12 @@ paths:
       description: |
         Devolve o(s) processo(s) relacionado(s)
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -908,8 +888,6 @@ paths:
                   status: A
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -920,12 +898,12 @@ paths:
       description: |
         Devolve a legislação associada ao contexto de avaliação
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -955,8 +933,6 @@ paths:
                   id: 'http://jcr.di.uminho.pt/m51-clav#leg_vnl0ddrPegvsguyfyFb-C'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -969,12 +945,12 @@ paths:
         critérios
 
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -1012,8 +988,6 @@ paths:
                   legislacao: []
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1024,12 +998,12 @@ paths:
       description: |
         Devolve a lista de filhos de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -1107,8 +1081,6 @@ paths:
                   titulo: Celebração de acordos e outros atos internacionais
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1119,12 +1091,12 @@ paths:
       description: |
         Devolve a(s) entidade(s) participante(s) do processo
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -1320,8 +1292,8 @@ paths:
                   idParticipante: tip_AP
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1332,12 +1304,12 @@ paths:
       description: |
         Devolve o(s) processo(s) relacionado(s) por uma relação específica
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -1375,8 +1347,8 @@ paths:
                   status: A
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1387,12 +1359,12 @@ paths:
       description: |
         Devolve a lista de exemplos das notas de aplicação de uma classe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Classes
       parameters:
@@ -1423,8 +1395,8 @@ paths:
                   exemplo: Código Civil
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1435,12 +1407,12 @@ paths:
       description: |
         Lista todas as entidades
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1549,8 +1521,8 @@ paths:
                   $ref: '#/components/examples/EntidadesCompletasExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1560,12 +1532,13 @@ paths:
       description: |
         Cria uma entidade a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Entidades
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
       requestBody:
         description: Entidade a criar
         required: true
@@ -1586,9 +1559,9 @@ paths:
         '200':
           description: Entidade criada
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1599,12 +1572,12 @@ paths:
       description: |
         Consulta de uma entidade
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1660,8 +1633,8 @@ paths:
                   $ref: '#/components/examples/EntidadeCompletaExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '404':
           description: A entidade não existe
         '422':
@@ -1673,12 +1646,14 @@ paths:
       description: |
         Atualiza uma entidade a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Entidades
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       parameters:
         - name: id
           in: path
@@ -1707,9 +1682,9 @@ paths:
         '200':
           description: Entidade atualizada
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1720,12 +1695,12 @@ paths:
       description: |
         Verifica se a sigla já está presente numa entidade
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1744,8 +1719,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1756,12 +1731,12 @@ paths:
       description: |
         Verifica se a designação já está presente numa entidade
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1782,8 +1757,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1794,12 +1769,12 @@ paths:
       description: |
         Lista as tipologias a que uma entidade pertence
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1825,8 +1800,8 @@ paths:
                   sigla: FA
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1837,12 +1812,12 @@ paths:
       description: |
         Lista os processos em que uma entidade intervem como dono
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1870,8 +1845,8 @@ paths:
                     da circulação e segurança das linhas de comunicação
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1882,12 +1857,12 @@ paths:
       description: |
         Lista os processos em que uma entidade intervem como participante
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Entidades
       parameters:
@@ -1911,8 +1886,8 @@ paths:
                   titulo: Vigilância da fronteira
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1923,12 +1898,14 @@ paths:
       description: |
         Extingue uma entidade, dada uma data de Extinção
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Entidades
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       parameters:
         - name: id
           in: path
@@ -1953,9 +1930,9 @@ paths:
         '200':
           description: Entidade extinta
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -1966,12 +1943,12 @@ paths:
       description: |
         Lista todos os documentos legislativos
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Legislação
       parameters:
@@ -2049,8 +2026,8 @@ paths:
                   $ref: '#/components/examples/LegislacaoCompletaListaExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2060,12 +2037,14 @@ paths:
       description: |
         Cria um diploma legislativo a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Legislação
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       requestBody:
         description: Diploma legislativo a criar
         required: true
@@ -2089,9 +2068,9 @@ paths:
         '200':
           description: Diploma legislativo criado
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2102,12 +2081,12 @@ paths:
       description: |
         Devolve a informação associada a um documento legislativo
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Legislação
       parameters:
@@ -2163,8 +2142,8 @@ paths:
                   $ref: '#/components/examples/LegislacaoCompletaExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2174,12 +2153,14 @@ paths:
       description: |
         Atualiza um diploma legislativo a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Legislação
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       parameters:
         - name: id
           in: path
@@ -2210,9 +2191,9 @@ paths:
         '200':
           description: Diploma legislativo atualizado
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2223,12 +2204,12 @@ paths:
       description: |
         Verifica a existência do número de um documento legislativo
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Legislação
       parameters:
@@ -2247,8 +2228,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2259,12 +2240,12 @@ paths:
       description: |
         Lista legislações do tipo Portaria
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Legislação
       responses:
@@ -2298,8 +2279,8 @@ paths:
                     I. P.
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   '/legislacao/{id}/revogar':
@@ -2308,12 +2289,14 @@ paths:
       description: |
         Revoga um diploma legislativo, dada uma data de Revogação
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Legislação
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       parameters:
         - name: id
           in: path
@@ -2338,9 +2321,9 @@ paths:
         '200':
           description: Diploma legislativo revogado
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2351,12 +2334,12 @@ paths:
       description: |
         Devolve a lista de processos regulados pelo documento
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Legislação
       parameters:
@@ -2403,8 +2386,8 @@ paths:
                   titulo: Realização de fiscalização
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2415,12 +2398,12 @@ paths:
       description: |
         Devolve a lista dos termos de índice
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Termos de Indice
       responses:
@@ -2451,8 +2434,8 @@ paths:
                   tituloClasse: 'Designação para cargos de direção, coordenação e controlo'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /termosIndice/quantos:
@@ -2461,12 +2444,12 @@ paths:
       description: |
         Devolve o número de termos índice
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Termos de Indice
       responses:
@@ -2480,8 +2463,8 @@ paths:
               example: '7066'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /termosIndice/termoIndice:
@@ -2490,12 +2473,12 @@ paths:
       description: |
         Verifica se um determinado termo índice existe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Termos de Indice
       parameters:
@@ -2516,8 +2499,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2528,12 +2511,12 @@ paths:
       description: |
         Lista todas as tipologias podendo a lista ser filtrada
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2607,8 +2590,8 @@ paths:
                   $ref: '#/components/examples/TipologiaCompletaListaExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2618,12 +2601,14 @@ paths:
       description: |
         Cria uma tipologia a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Tipologias
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       requestBody:
         description: Tipologia a criar
         required: true
@@ -2641,9 +2626,9 @@ paths:
         '200':
           description: Tipologia criada
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2654,12 +2639,12 @@ paths:
       description: |
         Consulta de uma tipologia
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2715,8 +2700,8 @@ paths:
                   $ref: '#/components/examples/TipologiaCompletaExcelCSV'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '404':
           description: A tipologia não existe
         '422':
@@ -2728,12 +2713,13 @@ paths:
       description: |
         Atualiza uma tipologia a partir da informação enviada no pedido
 
-        **Acesso permitido a:** Utilizadores com nível 4, 5, 6 e 7
+
       tags:
         - Tipologias
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
       parameters:
         - name: id
           in: path
@@ -2758,9 +2744,9 @@ paths:
         '200':
           description: Tipologia atualizada
         '401':
-          $ref: '#/components/responses/UnauthorizedUser'
-        '403':
-          $ref: '#/components/responses/PermissionsUser'
+          $ref: '#/components/responses/UnauthorizedKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2771,12 +2757,12 @@ paths:
       description: |
         Verifica se a sigla já está presente numa tipologia
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2795,8 +2781,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2807,12 +2793,12 @@ paths:
       description: |
         Verifica se a designação já está presente numa tipologia
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2833,8 +2819,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2845,12 +2831,12 @@ paths:
       description: |
         Lista as entidades que pertencem à tipologia
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2903,8 +2889,8 @@ paths:
                   sigla: EN
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2915,12 +2901,12 @@ paths:
       description: |
         Lista os processos em que uma tipologia intervem como dono
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2949,8 +2935,8 @@ paths:
                   titulo: Desenvolvimento experimental e aplicacional
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -2961,12 +2947,12 @@ paths:
       description: |
         Lista os processos em que uma tipologia intervem como participante
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       tags:
         - Tipologias
       parameters:
@@ -2998,8 +2984,8 @@ paths:
                   titulo: Desenvolvimento experimental e aplicacional
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -3008,14 +2994,16 @@ paths:
     get:
       summary: Número total de diplomas legislativos
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de diplomas legislativos
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de diplomas legislativos
@@ -3028,16 +3016,18 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   '/indicadores/df/{df}':
     get:
       summary: 'Número total de PNs com destino final igual a C, CP ou E'
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: >
@@ -3045,7 +3035,7 @@ paths:
         (Conservação Parcial) ou E (Eliminação)
 
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       parameters:
         - name: df
           in: path
@@ -3065,8 +3055,8 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -3075,8 +3065,10 @@ paths:
     get:
       summary: Listagem de vários indicadores
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
@@ -3122,7 +3114,7 @@ paths:
           - Número total de diplomas legislativos ativos e revogados
           - Número total de tipologias
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Indicadores relacionais dos PNs
@@ -3137,22 +3129,24 @@ paths:
                   valor: '10'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/classes:
     get:
       summary: Número total de classes
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de classes
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de classes
@@ -3165,16 +3159,18 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/dfstats:
     get:
       summary: Indicadores dos destinos finais (DFs) das classes
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
@@ -3184,7 +3180,7 @@ paths:
           - Número total de PNs com destino final igual a E (Eliminação)
           - Número total de PNs com destino final igual a NE (Não Especificado)
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Indicadores dos destinos finais (DFs) das classes
@@ -3203,22 +3199,24 @@ paths:
                   valor: '5'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/critJust:
     get:
       summary: Número total de Critérios de Justificação
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de Critérios de Justificação
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de Critérios de Justificação
@@ -3231,22 +3229,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/legVigor:
     get:
       summary: Número total de diplomas legislativos em vigor e revogadas
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de diplomas legislativos em vigor e revogadas
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de diplomas legislativos em vigor e revogadas
@@ -3261,16 +3261,18 @@ paths:
                   valor: '16'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/relstats:
     get:
       summary: Indicadores relacionais dos PNs
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
@@ -3294,7 +3296,7 @@ paths:
           - Número total de relações entre PNs e entidades como participantes do tipo Executor (temParticipanteExecutor)
           - Número total de relações entre PNs e Legislação (temLegislacao)
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Indicadores relacionais dos PNs
@@ -3309,22 +3311,24 @@ paths:
                   valor: '10'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/classesN1:
     get:
       summary: Número total de classes de nível 1
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de classes de nível 1
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de classes de nível 1
@@ -3337,22 +3341,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/classesN2:
     get:
       summary: Número total de classes de nível 2
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de classes de nível 2
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de classes de nível 2
@@ -3365,22 +3371,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/classesN3:
     get:
       summary: Número total de classes de nível 3
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de classes de nível 3
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de classes de nível 3
@@ -3393,22 +3401,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/classesN4:
     get:
       summary: Número total de classes de nível 4
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de classes de nível 4
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de classes de nível 4
@@ -3421,16 +3431,18 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/critstats:
     get:
       summary: Indicadores dos Critérios de Justificação
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
@@ -3442,7 +3454,7 @@ paths:
           - Número total de Critérios de Justificação de Complementariedade Informacional (CriterioJustificacaoComplementaridadeInfo)
           - Número total de Critérios de Justificação de Densidade Informacional (CriterioJustificacaoDensidadeInfo)
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Indicadores dos Critérios de Justificação
@@ -3457,22 +3469,24 @@ paths:
                   valor: '21'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/entidades:
     get:
       summary: Número total de entidades
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de entidades
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de entidades
@@ -3485,22 +3499,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/tipologias:
     get:
       summary: Número total de tipologias
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de tipologias
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: Número total de tipologias
@@ -3513,22 +3529,24 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /indicadores/entidadesAtivas:
     get:
       summary: 'Número total de entidades ativas, inativas e em harmonização'
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
         Número total de entidades ativas, inativas e em harmonização
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       responses:
         '200':
           description: 'Número total de entidades ativas, inativas e em harmonização'
@@ -3545,16 +3563,18 @@ paths:
                   valor: '22'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   '/indicadores/relacoes/{relacao}':
     get:
       summary: Número total de relações
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: |
@@ -3572,7 +3592,7 @@ paths:
           - Número total de relações entre PNs e entidades como participantes (participante)
           - Número total de relações entre PNs e Legislação (temLeg)
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       parameters:
         - name: relacao
           in: path
@@ -3605,8 +3625,8 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -3615,8 +3635,10 @@ paths:
     get:
       summary: Número total de Critérios de Justificação 'critJust'
       security:
-        - userQuery: []
-        - userAuth: []
+        - apiKeyQuery: []
+        - apiKeyAuth: []
+
+
       tags:
         - Indicadores Estatísticos
       description: >
@@ -3625,7 +3647,7 @@ paths:
         complementaridadeInfo)
 
 
-        **Acesso permitido a:** Utilizadores com nível 3, 3.5, 4, 5, 6 e 7
+
       parameters:
         - name: critJust
           in: path
@@ -3651,8 +3673,8 @@ paths:
                 valor: '23'
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -3663,14 +3685,14 @@ paths:
       description: |
         Devolve a lista de todas as notas de aplicação
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       tags:
         - Notas de Aplicação
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       responses:
         '200':
           description: Devolve a lista de todas as notas de aplicação
@@ -3699,8 +3721,8 @@ paths:
                   tituloProc: Apoio à mobilidade
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '500':
           description: Erro
   /notasAp/notaAp:
@@ -3709,14 +3731,14 @@ paths:
       description: |
         Verifica se uma determinada nota de aplicação existe
 
-        **Acesso permitido a:** Chaves API e Todos os Utilizadores
+
       tags:
         - Notas de Aplicação
       security:
         - apiKeyQuery: []
         - apiKeyAuth: []
-        - userQuery: []
-        - userAuth: []
+
+
       parameters:
         - in: query
           name: valor
@@ -3735,8 +3757,8 @@ paths:
                 type: boolean
         '401':
           $ref: '#/components/responses/UnauthorizedKey'
-        '403':
-          $ref: '#/components/responses/PermissionsKey'
+
+
         '422':
           $ref: '#/components/responses/ValidationParameters'
         '500':
@@ -5297,37 +5319,21 @@ components:
           - titulo
           - tipoPar
   securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Introduza a sua chave API
     apiKeyQuery:
       type: apiKey
       in: query
       name: apikey
       description: Introduza a sua chave API
-    apiKeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: 'Introduza a sua chave API no formato: **apikey &lt;chaveAPI>**'
-    userQuery:
-      type: apiKey
-      in: query
-      name: token
-      description: Introduza o seu token
-    userAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: 'Introduza o seu token no formato: **token &lt;token>**'
   responses:
     UnauthorizedKey:
       description: >-
-        Precisa de estar autenticado ou de usar uma chave API. O seu token ou a
+        Precisa de usar uma chave API. O seu token ou a
         chave API expirou?
-    UnauthorizedUser:
-      description: Precisa de estar autenticado. O seu token expirou?
-    PermissionsKey:
-      description: >-
-        Não tem permissões suficientes para realizar o pedido ou a sua chave API
-        foi desativada.
     PermissionsUser:
       description: Não tem permissões suficientes para realizar o pedido.
     ValidationParameters:

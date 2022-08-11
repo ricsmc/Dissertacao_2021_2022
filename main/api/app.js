@@ -33,7 +33,7 @@ var swaggerDocument = yaml.load(fs.readFileSync('./openapi.yaml'))
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(function(req,res,next){
-  var myToken = req.headers.authorization || req.body.token;
+  var myToken = req.headers.authorization || req.body.token || req.query.apiKey;
   jwt.verify(myToken, 'CLAV', function(e){
     if(e) {
       res.status(401).jsonp({error:'TOKEN VERIFICATION ERROR (ACCESS DENIED): ' + e})

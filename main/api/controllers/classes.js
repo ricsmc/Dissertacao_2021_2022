@@ -5,7 +5,7 @@ const Classes = module.exports;
 Classes.classes = async function(est,tipo,nivel,ents,tips,info){
     var x = {
         sel : '',
-        v : '?id ?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans',
+        v : '?id ?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans ?descricao',
         opt : '',
         g :'',
         dono :{
@@ -25,6 +25,7 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
     }
     var sel = `?id  :codigo ?codigo;
                    :titulo ?titulo;
+                   :descricao ?descricao;
                    :classeStatus ?status;
                    rdf:type ?class.
                filter(?class!=owl:NamedIndividual)
@@ -36,6 +37,8 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                    ?tpoProc skos:prefLabel ?tipoProc.
                    filter(lang(?tipoProc)='pt')}
            optional{?id :processoTransversal ?procTrans.}`
+    
+    
 
     if(!nivel && est!='lista' && !tipo && !((ents || tips) && info != 'pre-selecionados')) {
         x.sel = '(group_concat(distinct ?c2;separator=";") as ?filhos)  '
@@ -107,8 +110,8 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
         if(C1.filhos) dado.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
             return await getClass(C2,2,info,ents,tips)
         })) : []
-        if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
-            
+        if(info==='completa' || info==='pesquisa' || info==='esqueleto' || info==='pre-selecionados'){
+            dado.descricao = C1.descricao.value
             dado.pca = ''
             dado.df = ''
             let pca = await Classes.pca(dado.id.split('#')[1]);
@@ -123,7 +126,7 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
             if (dado.df && dado.df.idJust) {
                 dado.df.justificacao = await Classes.justificacao(dado.df.idJust);
             }
-            if(info==='completa'){
+            if(info==='completa' || info==='pesquisa'){
                 dado.pai = C1.codigoPai ? {
                     codigo:C1.codigoPai.value,
                     titulo:C1.tituloPai.value
@@ -136,8 +139,48 @@ Classes.classes = async function(est,tipo,nivel,ents,tips,info){
                 dado.termosInd = await Classes.ti(dado.id.split('#')[1]);
                 dado.donos = await Classes.classDono(dado.id.split('#')[1]);
                 dado.participantes = await Classes.participante(dado.id.split('#')[1]);
-                dado.processosRelacionados = await Classes.procRel(dado.id.split('#')[1]);
-                dado.legislacao = await Classes.legislacao(dado.id.split('#')[1]);
+                if(info==='pesquisa'){
+                    dado.pai = undefined
+                    dado.id = dado.codigo
+                    dado.codigo = undefined
+                    dado.nome = `${dado.id} - ${dado.titulo}`
+                    dado.tp = dado.tipoProc
+                    dado.tipoProc = undefined
+                    dado.pt = dado.procTrans
+                    dado.procTrans = undefined
+                    dado.na = ''
+                    await dado.notasAp.forEach(E => dado.na = `${dado.na}${dado.na.length>0 ? ' ' : ''}${E.nota}`)
+                    dado.notasAp = undefined
+                    dado.exemploNA = ''
+                    await dado.exemplosNotasAp.forEach(E => dado.exemploNA = `${dado.exemploNA}${dado.exemploNA.length>0 ? ' ' : ''}${E.nota}`)
+                    dado.exemplosNotasAp = undefined
+                    dado.ne = ''
+                    await dado.notasEx.forEach(E => dado.ne = `${dado.ne}${dado.ne.length>0 ? ' ' : ''}${E.nota}`)
+                    dado.notasEx = undefined
+                    dado.ti = ''
+                    await dado.termosInd.forEach(E => dado.ti = `${dado.ti}${dado.ti.length>0 ? ' ' : ''}${E.termo}`)
+                    dado.termosInd = undefined
+                    dado.fc_pca = dado.pca ? dado.pca.formaContagem : ''
+                    dado.sfc_pca = dado.pca ? dado.pca.subformaContagem : ''
+                    dado.pca = dado.pca ? dado.pca.valores : '' 
+                    dado.crit_pca = dado.pca ? (dado.pca.justificacao ? await dado.pca.justificacao.map(E => E.tipoId) : []): []
+                    dado.pca.justificacao = undefined
+                    dado.pca = dado.pca ? dado.pca.valores : ''
+                    dado.crit_df = dado.df ? (dado.df.justificacao ? await dado.df.justificacao.map(E => E.tipoId) : []): []
+                    dado.df.justificacao = undefined
+                    dado.df = dado.df ? dado.df.valor : ''
+                    dado.donos = await dado.donos.map(E => E.idDono)
+                    dado.tipo_participacao = dado.participantes.length>0 ? await dado.participantes.map(E => E.participLabel) : []
+                    dado.participantes = dado.participantes.length>0 ? await dado.participantes.map(E => E.idParticipante) : []
+                    
+                    }
+                if(info==='completa'){
+                    dado.processosRelacionados = await Classes.procRel(dado.id.split('#')[1]);
+                    dado.legislacao = await Classes.legislacao(dado.id.split('#')[1]);
+                }
+                
+
+
             }
             if(info==='esqueleto'){
                 dado.donos = [x.dono]
@@ -182,7 +225,7 @@ async function getClass(elem,nivel,info,ents,tips) {
         sel : '',
         opt : '',
         g :'',
-        v : '?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans',
+        v : '?codigo ?titulo ?status ?class ?codigoPai ?tituloPai ?tipoProc ?procTrans ?descricao',
         dono :{
             codigo: '',
             titulo: '',
@@ -199,6 +242,7 @@ async function getClass(elem,nivel,info,ents,tips) {
         } 
     }
     var sel = `:${e} ?p :Classe_N${nivel} ;
+                   :descricao ?descricao;
                    :codigo ?codigo;
                    :titulo ?titulo;
                    :classeStatus ?status;
@@ -235,10 +279,10 @@ async function getClass(elem,nivel,info,ents,tips) {
     if(C1.filhos) dados.filhos = C1.filhos.value.length> 0 ? await Promise.all(C1.filhos.value.split(';').map(async function (C2) {
         return await getClass(C2,nivel+1,info,ents,tips)
     })) : []
-    if(info==='completa' || info==='esqueleto' || info==='pre-selecionados'){
-
-        dado.pca = ''
-        dado.df = ''
+    if(info==='completa' || info==='pesquisa' || info==='esqueleto' || info==='pre-selecionados'){
+        dados.descricao = C1.descricao.value
+        dados.pca = ''
+        dados.df = ''
         let pca = await Classes.pca(e);
         if (pca.length > 0) dados.pca = pca[0];
         else if(!Array.isArray(pca)) dados.pca = pca
@@ -251,7 +295,7 @@ async function getClass(elem,nivel,info,ents,tips) {
         if (dados.df && dados.df.idJust) {
             dados.df.justificacao = await Classes.justificacao(dados.df.idJust);
         }
-        if(info==='completa'){
+        if(info==='completa' || info==='pesquisa'){
             dados.pai = C1.codigoPai ? {
                 codigo:C1.codigoPai.value,
                 titulo:C1.tituloPai.value
@@ -264,8 +308,46 @@ async function getClass(elem,nivel,info,ents,tips) {
             dados.termosInd = await Classes.ti(e);
             dados.donos = await Classes.classDono(e);
             dados.participantes = await Classes.participante(e);
-            dados.processosRelacionados = await Classes.procRel(e);
-            dados.legislacao = await Classes.legislacao(e);
+            if(info==='pesquisa'){
+                dados.pai = undefined
+                dados.id = dados.codigo
+                dados.codigo = undefined
+                dados.nome = `${dados.id} - ${dados.titulo}`
+                dados.tp = dados.tipoProc
+                dados.tipoProc = undefined
+                dados.pt = dados.procTrans
+                dados.procTrans = undefined
+                dados.na = ''
+                await dados.notasAp.forEach(E => dados.na = `${dados.na}${dados.na.length>0 ? ' ' : ''}${E.nota}`)
+                dados.notasAp = undefined
+                dados.exemploNA = ''
+                await dados.exemplosNotasAp.forEach(E => dados.exemploNA = `${dados.exemploNA}${dados.exemploNA.length>0 ? ' ' : ''}${E.nota}`)
+                dados.exemplosNotasAp = undefined
+                dados.ne = ''
+                await dados.notasEx.forEach(E => dados.ne = `${dados.ne}${dados.ne.length>0 ? ' ' : ''}${E.nota}`)
+                dados.notasEx = undefined
+                dados.ti = ''
+                await dados.termosInd.forEach(E => dados.ti = `${dados.ti}${dados.ti.length>0 ? ' ' : ''}${E.termo}`)
+                dados.termosInd = undefined
+                dados.fc_pca = dados.pca ? (dados.pca.formaContagem ? dados.pca.formaContagem : '') : ''
+                dados.sfc_pca = dados.pca ? (dados.pca.subformaContagem ? dados.pca.subformaContagem : '') : ''
+                dados.crit_pca = dados.pca ? (dados.pca.justificacao ? await dados.pca.justificacao.map(E => E.tipoId) : []): []
+                dados.pca.justificacao = undefined
+                dados.pca = dados.pca ? dados.pca.valores : ''
+                dados.crit_df = dados.df ? (dados.df.justificacao ? await dados.df.justificacao.map(E => E.tipoId) : []): []
+                dados.df.justificacao = undefined
+                dados.df = dados.df ? dados.df.valor : ''
+                dados.donos = await dados.donos.map(E => E.idDono)
+                dados.tipo_participacao = dados.participantes.length>0 ? await dados.participantes.map(E => E.participLabel) : []
+                dados.participantes = dados.participantes.length>0 ? await dados.participantes.map(E => E.idParticipante) : []
+                
+
+            }
+            if(info==='completa'){
+                dados.processosRelacionados = await Classes.procRel(e);
+                dados.legislacao = await Classes.legislacao(e);
+            }
+            
         }
         if(info==='esqueleto'){
             dados.donos = [x.dono]
@@ -421,7 +503,7 @@ Classes.classDF = async function(id){
     var C1 = result.results.bindings[0]
     if(C1){
         dados = {
-            idJust : C1.idJust.value.split('#')[1],
+            idJust : C1.idJust ? C1.idJust.value.split('#')[1] : '',
             valor : C1.valor.value,
             idDF : C1.df.value
         }
@@ -605,16 +687,19 @@ Classes.participante = async function(id){
 
 Classes.pca = async function(id){
     var myquery = `
-    select (group_concat(distinct ?lang;separator=";") as ?langs) (group_concat(distinct ?formaContagem;separator=";") as ?formaContagens) ?idPCA ?idJust ?notas ?valores where {
-        select (lang(?formaContagem) as ?lang) ?formaContagem ?idPCA ?idJust ?notas ?valores where{
+    select ?formaContagem ?subformaContagem ?idPCA ?idJust (group_concat(distinct ?nota;separator="_") as ?notas) (group_concat(distinct ?valor;separator=";") as ?valores) where {
         :${id} :temPCA ?idPCA.
-        ?idPCA :temJustificacao ?idJust;
-               :pcaValor ?valores.
-        optional{?idPCA :pcaNota ?notas.}
-        ?idPCA :pcaFormaContagemNormalizada ?fc.
-        ?fc skos:prefLabel ?formaContagem.  
-    }
-    } group by ?idPCA ?idJust ?notas ?valores
+        optional{?idPCA :pcaValor ?valor.}
+        optional{?idPCA :pcaNota ?nota.}
+        optional{?idPCA :temJustificacao ?idJust.}
+        optional{?idPCA :pcaFormaContagemNormalizada ?fc.
+            ?fc skos:prefLabel ?formaContagem.
+            filter(lang(?formaContagem)='pt')}
+        optional{?idPCA :pcaSubformaContagem ?sfc.
+            ?sfc skos:prefLabel ?subformaContagem.
+            filter(lang(?subformaContagem)='pt')}
+    } group by ?formaContagem ?subformaContagem ?idPCA ?idJust
+
     `
     var result = await gdb.execQuery(myquery);
     var C1 = result.results.bindings[0]
@@ -622,15 +707,15 @@ Classes.pca = async function(id){
     if(C1){
         var notas = ''
         if(C1.notas !== undefined){
-            notas = C1.notas.value
+            notas = C1.notas.value.split('_').length > 1 ? C1.notas.value.split('_') : C1.notas.value
         }
         dados = {
-            ['formaContagem_' + C1.langs.value.split(';')[0]] : C1.formaContagens.value.split(';')[0],
-            ['formaContagem_' + C1.langs.value.split(';')[1]] : C1.formaContagens.value.split(';')[1],
+            formaContagem : C1.formaContagem ? C1.formaContagem.value : undefined,
+            subformaContagem: C1.subformaContagem ? C1.subformaContagem.value : undefined,
             idPCA : C1.idPCA.value,
-            idJust : C1.idJust.value.split('#')[1],
+            idJust : C1.idJust ? C1.idJust.value.split('#')[1] : '',
             notas: notas,
-            valores : C1.valores.value
+            valores : C1.valores.value.split(';').length > 1 ? C1.valores.value.split(';') : C1.valores.value
         }
 	
     }
@@ -687,13 +772,12 @@ Classes.ti = async function(id){
 
 Classes.codigo = async function(id){
     var myquery = `
-    select ?pred ?subj where{
-        :${id} ?pred ?subj.
+    ask {
+        ?id :codigo "${id.slice(1)}".
     }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length > 0) return true;
-    else return false;
+    return result.boolean;
 }
 
 Classes.justificacao = async function(id){
