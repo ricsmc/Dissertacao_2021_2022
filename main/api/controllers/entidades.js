@@ -207,30 +207,25 @@ Entidades.tipologias = async function(id){
 
 Entidades.designacao = async function(designacao){
     var myquery = `
-    select ?id where{
+    ask{
     	?id rdf:type :Entidade;
     		:entDesignacao "${designacao}".
     }
     `
-    var dados = []
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length > 0) return true;
-    else return false;
+    return result.boolean;
 
 }
 
 Entidades.sigla = async function(sigla){
     var myquery = `
-    select ?id where{
+    ask{
     	?id rdf:type :Entidade;
     		:entSigla "${sigla}".
     }
     `
-    var dados = []
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length > 0) return true;
-    else return false;
-
+    return result.boolean;
 }
 
 Entidades.insert = async function(body){

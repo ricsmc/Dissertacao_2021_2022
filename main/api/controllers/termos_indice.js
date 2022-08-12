@@ -41,12 +41,11 @@ TermosInd.quantos = async function(nota){
 
 TermosInd.termo = async function(termo){
     var myquery = `
-    select ?id where{
+    ask{
         ?id rdf:type :TermoIndice;
             :termo "${termo}".
-    }order by asc(?id)
+    }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length >= 1) return true;
-    else return false
+    return result.boolean;
 }

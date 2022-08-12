@@ -173,15 +173,14 @@ Legislacao.processos = async function(id){
 
 Legislacao.numero = async function(num){
     var myquery = `
-    select ?id where{
+    ask{
         ?id rdf:type :Legislacao;
             :diplomaNumero "${num}";
     }
 
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length >= 1) return true;
-    else return false
+    return result.boolean;
 }
 
 Legislacao.portarias = async function(){

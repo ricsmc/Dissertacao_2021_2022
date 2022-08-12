@@ -151,24 +151,24 @@ Tipologias.participante = async function(id){
 
 Tipologias.designacao = async function(designacao){
     var myquery = `
-    select ?id where{
-        ?id :tipDesignacao "${designacao}".
+    ask{
+        ?id rdf:type :TipologiaEntidade;
+            :tipDesignacao "${designacao}".
     }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length >= 1) return true;
-    else return false
+    return result.boolean;
 }
 
 Tipologias.sigla = async function(sigla){
     var myquery = `
-    select ?id where{
-        ?id :tipSigla "${sigla}".
+    ask{
+        ?id rdf:type :TipologiaEntidade;
+            :tipSigla "${sigla}".
     }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length >= 1) return true;
-    else return false
+    return result.boolean;
 }
 
 Tipologias.insert = async function(body){

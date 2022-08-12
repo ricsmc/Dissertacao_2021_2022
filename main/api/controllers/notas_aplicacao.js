@@ -25,12 +25,11 @@ NotasAp.notas = async function(){
 
 NotasAp.nota = async function(nota){
     var myquery = `
-    select ?idNota where{
+    ask{
         ?idNota rdf:type :NotaAplicacao;
                 :conteudo "${nota}".
-    }order by asc(?idNota)
+    }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length >= 1) return true;
-    else return false
+    return result.boolean;
 }
