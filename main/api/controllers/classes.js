@@ -829,7 +829,7 @@ Classes.justificacao = async function(id){
 
 Classes.titulo = async function(title){
     var myquery = `
-    select ?id ?title where{
+    ask{
         {?id rdf:type :Classe_N1;
             :titulo "${title}".}
         union
@@ -845,7 +845,6 @@ Classes.titulo = async function(title){
     }
     `
     var result = await gdb.execQuery(myquery);
-    if(result.results.bindings.length > 0) return true;
-    else return false;
+    return result.boolean;
 }
 
